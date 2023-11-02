@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             InitializeComponent();
             connection = GetConnection();
             connection.Open();
+            updateDataGrid();
         }
         public static OracleConnection GetConnection()
         {
@@ -41,6 +43,28 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
         private string read(OracleDataReader reader, int columnIndex)
         {
             return reader.IsDBNull(columnIndex) ? "..." : reader.GetString(columnIndex);
+        }
+
+        private void updateDataGrid()
+        {
+            OracleCommand cmd = connection.CreateCommand();
+            cmd.CommandText = "select * from zakaznici";
+            cmd.CommandType = System.Data.CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            myDataGrid.ItemsSource = dt.DefaultView;
+            dr.Close();
+        }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnRegister_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
