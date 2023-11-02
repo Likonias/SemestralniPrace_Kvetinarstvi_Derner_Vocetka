@@ -29,7 +29,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             InitializeComponent();
             connection = GetConnection();
             connection.Open();
-
         }
         public static OracleConnection GetConnection()
         {
