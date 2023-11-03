@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
 {
-    internal class Class1
+    internal class Customer
     {
+       
     }
 }

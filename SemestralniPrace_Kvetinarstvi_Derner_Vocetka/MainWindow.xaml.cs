@@ -59,11 +59,16 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+            Login login = new Login();
+            login.ShowDialog();
 
         }
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
+
+            Register register = new Register();
+            register.ShowDialog();
 
         }
     }
