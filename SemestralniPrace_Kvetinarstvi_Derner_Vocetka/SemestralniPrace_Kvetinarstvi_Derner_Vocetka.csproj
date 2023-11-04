@@ -11,4 +11,33 @@
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.120" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Login.xaml">
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Register.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Include="Views\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+
 </Project>

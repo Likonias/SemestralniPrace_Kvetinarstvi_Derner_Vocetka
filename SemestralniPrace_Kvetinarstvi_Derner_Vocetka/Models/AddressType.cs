@@ -8,5 +8,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
 {
     enum AddressType
     {
+        Permanent,
+        Billing,
+        Mailing
     }
 }

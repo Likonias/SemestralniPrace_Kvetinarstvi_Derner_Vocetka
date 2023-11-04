@@ -8,6 +8,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
 {
     internal class Customer
     {
-       
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Tel { get; set; }
+        public string Password { get; set; }
     }
 }
