@@ -6,4 +6,10 @@ public class State
 {
     public DateTime DateOfDelivery { get; set; }
     public DateTime DateOfBilling { get; set; }
+
+    public State(DateTime dateOfDelivery, DateTime dateOfBilling)
+    {
+        DateOfDelivery = dateOfDelivery;
+        DateOfBilling = dateOfBilling;
+    }
 }

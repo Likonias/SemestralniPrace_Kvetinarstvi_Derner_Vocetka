@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
 {
-    internal class FlowerState1
+    public enum FlowerState
     {
+        A,
+        B, 
+        C, 
+        D, 
+        E, 
+        F
     }
 }

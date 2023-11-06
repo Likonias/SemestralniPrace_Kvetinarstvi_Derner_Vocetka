@@ -11,7 +11,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
         public FlowerState State { get; set; }
         public int Age { get; set; }
 
-        public Flower(FlowerState state, int age)
+        public Flower(string name, double price, byte[] image, FlowerState state, int age) : base(name, price, image)
         {
             State = state;
             Age = age;

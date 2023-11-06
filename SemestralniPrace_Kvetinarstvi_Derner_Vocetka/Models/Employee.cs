@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
 {
-    internal class Employee 
+    public class Employee 
     { 
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -15,5 +15,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
         public string Tel { get; set; }
         public string Password { get; set; }
         public double Wage { get; set; }
+
+        public Employee(string firstName, string lastName, string email, string tel, string password, double wage)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            Tel = tel;
+            Password = password;
+            Wage = wage;
+        }
     }
+
+
 }

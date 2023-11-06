@@ -6,4 +6,10 @@ public class Billing
 {
     public BillingType BillingType { get; set; }
     public string Note { get; set; }
+
+    public Billing(BillingType billingType, string note)
+    {
+        BillingType = billingType;
+        Note = note;
+    }
 }
