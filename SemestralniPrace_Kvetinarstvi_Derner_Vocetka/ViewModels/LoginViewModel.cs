@@ -7,6 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
@@ -22,7 +24,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             set
             {
                 email = value;
-                OnPropertyChanged(nameof(Email));
+                OnPropertyChanged("Email");
             }
         }
 
@@ -31,9 +33,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             get { return password; }
             set
             {
-                passwordBox.
                 password = value;
-                OnPropertyChanged(nameof(Password));
+                OnPropertyChanged("Password");
             }
         }
 
@@ -43,7 +44,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             set
             {
                 errorMessage = value;
-                OnPropertyChanged(nameof(ErrorMessage));
+                OnPropertyChanged("ErrorMessage");
             }
         }
 
