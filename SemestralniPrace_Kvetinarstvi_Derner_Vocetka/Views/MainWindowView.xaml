@@ -3,13 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka"
+        xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
         xmlns:views = "clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1000">
     <Grid>
-        <Button Content="Login" HorizontalAlignment="Left" Margin="925,25,0,0" VerticalAlignment="Top" Width="60" Command="{Binding ShowLoginView}"/>
-        <Button Content="Register" HorizontalAlignment="Left" Margin="925,64,0,0" VerticalAlignment="Top" Width="60"/>
-        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Height="301" VerticalAlignment="Top" Margin="383,104,0,0"/>
+        <views:LoginView x:Name = "LoginView"/>
     </Grid>
 </Window>

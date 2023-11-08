@@ -12,12 +12,20 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+
         public MainWindow()
         {
             InitializeComponent();
 
         }
-       
+
+        private void Login(object sender, RoutedEventArgs e)
+        {
+            SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels.LoginViewModel login =
+               new SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels.LoginViewModel();
+            
+            this.DataContext = login;
+        }
+
     }
 }
