@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1000">
     <Grid>
-        <views:LoginView x:Name = "LoginView"/>
+        <views:MainView x:Name = "MainView"/>
     </Grid>
 </Window>
