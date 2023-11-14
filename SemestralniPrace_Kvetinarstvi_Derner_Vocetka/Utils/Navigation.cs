@@ -13,7 +13,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils
         private ViewModelBase currentViewModel;
         public ViewModelBase CurrentViewModel { get => currentViewModel; set { currentViewModel = value; OnCurrentViewModelChanged(); } }
 
-        public ViewModelBase CurrentViewModel { get; set; }
-
+        private void OnCurrentViewModelChanged()
+        {
+            CurrentViewModelChanged?.Invoke();
+        }
     }
 }
