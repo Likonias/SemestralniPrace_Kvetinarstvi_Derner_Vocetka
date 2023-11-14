@@ -52,7 +52,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private OracleDbUtil dbUtil; // Use your OracleDbUtil class for database operations
 
-        public LoginViewModel()
+        public LoginViewModel(Navigation navigation)
         {
             dbUtil = new OracleDbUtil(); // Initialize the database utility with the connection string
             LoginCommand = new RelayCommand(Login, CanLogin);
