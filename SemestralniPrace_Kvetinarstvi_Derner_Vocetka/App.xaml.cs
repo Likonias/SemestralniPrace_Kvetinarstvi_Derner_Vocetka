@@ -19,9 +19,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
             MainWindow = new MainWindow()
             {
-                DataContext = navigation.CurrentViewModel
+                DataContext = new MainWindowViewModel(navigation)
             };
-
+            MainWindow.Show();
 
             base.OnStartup(e);
         }
