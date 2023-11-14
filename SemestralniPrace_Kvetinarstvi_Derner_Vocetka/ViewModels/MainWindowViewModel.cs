@@ -18,13 +18,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public MainWindowViewModel(Navigation navigation)
         {
             this.navigation = navigation;
-            this.navigation.CurrentViewModelChanged += OnCurrentViewModelChanged;
         }
-        
-        private void OnCurrentViewModelChanged()
-        {
-            //Update of the viewModel when the change occours
-            OnPropertyChanged(nameof(CurrentViewModel));
-        }
+
     }
 }

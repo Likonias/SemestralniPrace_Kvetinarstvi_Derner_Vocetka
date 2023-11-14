@@ -6,7 +6,6 @@
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
 		<ApplicationDefinition>App.xaml</ApplicationDefinition>
-		<BaseOutputPath>bin\Debug\net6.0-windows\</BaseOutputPath>
 	</PropertyGroup>
 
 	<ItemGroup>

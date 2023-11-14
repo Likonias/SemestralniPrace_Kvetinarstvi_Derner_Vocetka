@@ -11,7 +11,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
     public class MainViewModel : ViewModelBase
     {
 
-        public ICommand NavigateLoginCommand { get; }
+        public ICommand NavigateLoginCommand { get; set; }
 
         public MainViewModel(Navigation navigation)
         {
