@@ -12,16 +12,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public ICommand LoadLoginCommand { get; private set; }
-        public MainWindowViewModel()
+        private readonly Navigation navigation;
+        public ViewModelBase CurrentViewModel => navigation.CurrentViewModel;
+
+        public MainWindowViewModel(Navigation navigation)
         {
-            //LoadLoginCommand = new RelayCommand(ShowLoginView);
+            this.navigation = navigation;
         }
 
-        private void ShowLoginView()
-        {
-            LoginView loginView = new LoginView();
-            
-        }
     }
 }

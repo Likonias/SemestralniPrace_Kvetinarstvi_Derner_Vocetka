@@ -5,7 +5,7 @@ using Oracle.ManagedDataAccess.Client;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels;
 
-namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views
+namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
