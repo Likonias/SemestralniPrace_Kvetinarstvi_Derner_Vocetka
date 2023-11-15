@@ -7,6 +7,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 
 public class OracleDbUtil
 {
+    //Login string for Derner
     private string connectionString = "User Id=st67018;Password=abcde;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=fei-sql3.upceucebny.cz)(PORT=1521))(CONNECT_DATA=(SID=BDAS)(SERVER=DEDICATED)))";
 
     public bool TestConnection()

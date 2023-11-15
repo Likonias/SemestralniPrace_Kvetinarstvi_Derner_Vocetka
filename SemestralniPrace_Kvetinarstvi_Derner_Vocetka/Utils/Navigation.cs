@@ -15,6 +15,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils
 
         private void OnCurrentViewModelChanged()
         {
+            //event handler for a change of the view
             CurrentViewModelChanged?.Invoke();
         }
     }
