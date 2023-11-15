@@ -55,7 +55,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public LoginViewModel(Navigation navigation)
         {
             dbUtil = new OracleDbUtil(); // Initialize the database utility with the connection string
-            LoginCommand = new RelayCommand(Login, CanLogin);
+            
         }
 
         private bool CanLogin(object parameter)
