@@ -12,10 +12,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
     {
 
         public ICommand NavigateLoginCommand { get; }
+        public ICommand NavigateRegisterCommand { get; }
 
         public MainViewModel(Navigation navigation)
         {
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(navigation, () => new LoginViewModel(navigation));
+            NavigateRegisterCommand = new NavigateCommand<RegisterViewModel>(navigation, () => new RegisterViewModel(navigation));
         }
     }
 }

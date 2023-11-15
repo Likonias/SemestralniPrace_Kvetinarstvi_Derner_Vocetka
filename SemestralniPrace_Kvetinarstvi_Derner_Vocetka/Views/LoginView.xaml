@@ -20,12 +20,13 @@
         <TextBlock Grid.Row="0" Text="Login" HorizontalAlignment="Center" FontSize="18"/>
 
         <Label Grid.Row="1" Content="Email:"/>
-        <TextBox Grid.Row="1" Name="EmailTextBox" Text="{Binding Email, Mode=TwoWay}"/>
+        <TextBox Grid.Row="2" Name="EmailTextBox" Text="{Binding Email, Mode=TwoWay}"/>
 
-        <Label Grid.Row="2" Content="Password:"/>
-        <TextBox Grid.Row="2" Name="PasswordBox" Text="{Binding Password, Mode=TwoWay}"/>
+        <Label Grid.Row="3" Content="Password:"/>
+        <TextBox Grid.Row="4" Name="PasswordBox" Text="{Binding Password, Mode=TwoWay}"/>
 
-        <Button Grid.Row="3" Content="Login" Command="{Binding LoginCommand}"/>
-        <TextBlock Grid.Row="4" Text="{Binding ErrorMessage, Mode=TwoWay}" Foreground="Red"/>
+        <Button Grid.Row="5" Content="Login" Command="{Binding LoginCommand}" Margin="0,21,0,-41"/>
+        <Button Grid.Row="5" Content="Cancel" Command="{Binding CancelCommand}" Margin="0,62,0,-82"/>
+        <TextBlock Grid.Row="6" Text="{Binding ErrorMessage, Mode=TwoWay}" Foreground="Red"/>
     </Grid>
 </UserControl>
