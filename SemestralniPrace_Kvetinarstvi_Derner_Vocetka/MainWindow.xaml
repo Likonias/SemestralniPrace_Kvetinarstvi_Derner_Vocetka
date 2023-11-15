@@ -8,6 +8,7 @@
         xmlns:viewmodels="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1000">
+    <!--Here is a datamanagement of the views and their view models, with every view added you have to add DataTemplate into the mainWindow ContentControl-->
     <ContentControl Content="{Binding CurrentViewModel}">
         <ContentControl.Resources>
             <DataTemplate DataType="{x:Type viewmodels:MainViewModel}" >
