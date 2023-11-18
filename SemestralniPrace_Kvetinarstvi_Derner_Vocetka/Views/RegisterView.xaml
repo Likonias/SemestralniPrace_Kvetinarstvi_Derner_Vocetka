@@ -7,6 +7,26 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1000">
     <Grid>
-            
+        <StackPanel Margin="10">
+            <TextBlock Text="First Name:"/>
+            <TextBox x:Name="FirstNameTextBox" HorizontalAlignment="Stretch"/>
+
+            <TextBlock Text="Last Name:"/>
+            <TextBox x:Name="LastNameTextBox" HorizontalAlignment="Stretch"/>
+
+            <TextBlock Text="Email:"/>
+            <TextBox x:Name="EmailTextBox" HorizontalAlignment="Stretch"/>
+
+            <TextBlock Text="Phone Number:"/>
+            <TextBox x:Name="TelTextBox" HorizontalAlignment="Stretch"/>
+
+            <TextBlock Text="Password:"/>
+            <PasswordBox x:Name="PasswordBox" HorizontalAlignment="Stretch"/>
+
+            <Button Content="Register" Command="{Binding RegisterCommand}" Margin="0,21,0,-41"/>
+            <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="0,62,0,-82"/>
+            <TextBlock Grid.Row="6" Text="{Binding ErrorMessage, Mode=TwoWay}" Foreground="Red"/>
+        </StackPanel>
+        
     </Grid>
 </UserControl>

@@ -49,13 +49,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         }
 
         public ICommand LoginCommand { get; }
+        public ICommand CancelCommand { get; }
 
         private OracleDbUtil dbUtil; // Use your OracleDbUtil class for database operations
 
         public LoginViewModel(Navigation navigation)
         {
             dbUtil = new OracleDbUtil(); // Initialize the database utility with the connection string
-            
+            CancelCommand = new NavigateCommand<MainViewModel>(navigation, () => new MainViewModel(navigation));
         }
 
         private bool CanLogin(object parameter)

@@ -8,25 +8,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1000">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <StackPanel Margin="10">
+            <TextBlock Text="Email:"/>
+            <TextBox x:Name="EmailTextBox" HorizontalAlignment="Stretch"/>
 
-        <TextBlock Grid.Row="0" Text="Login" HorizontalAlignment="Center" FontSize="18"/>
+            <TextBlock Text="Password:"/>
+            <PasswordBox x:Name="PasswordBox" HorizontalAlignment="Stretch"/>
 
-        <Label Grid.Row="1" Content="Email:"/>
-        <TextBox Grid.Row="2" Name="EmailTextBox" Text="{Binding Email, Mode=TwoWay}"/>
-
-        <Label Grid.Row="3" Content="Password:"/>
-        <TextBox Grid.Row="4" Name="PasswordBox" Text="{Binding Password, Mode=TwoWay}"/>
-
-        <Button Grid.Row="5" Content="Login" Command="{Binding LoginCommand}" Margin="0,21,0,-41"/>
-        <Button Grid.Row="5" Content="Cancel" Command="{Binding CancelCommand}" Margin="0,62,0,-82"/>
-        <TextBlock Grid.Row="6" Text="{Binding ErrorMessage, Mode=TwoWay}" Foreground="Red"/>
+            <Button Content="Login" Command="{Binding LoginCommand}" Margin="0,21,0,-41"/>
+            <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="0,62,0,-82"/>
+            <TextBlock Grid.Row="6" Text="{Binding ErrorMessage, Mode=TwoWay}" Foreground="Red"/>
+        </StackPanel>
     </Grid>
 </UserControl>
