@@ -19,6 +19,6 @@
         <Button Content="Register" HorizontalAlignment="Left" Margin="94,15,0,0" VerticalAlignment="Top" Width="60" Command="{Binding NavigateRegisterCommand}" Grid.Column="1" Height="20"/>
         <ComboBox HorizontalAlignment="Left" Margin="94,14,0,0" VerticalAlignment="Top" Width="120" Height="22"/>
         <Label Content="Selected View: " HorizontalAlignment="Left" Margin="5,12,0,0" VerticalAlignment="Top" Height="26" Width="89"/>
-        <DataGrid Grid.Row="1" d:ItemsSource="{Binding DataGridItems}" Margin="10,0,0,10"/>
+        <DataGrid Grid.Row="1" DataGrid.ItemsSource="{Binding SelectedTableData}" AutoGenerateColumns="True" Margin="10,0,0,10"/>
     </Grid>
 </UserControl>
