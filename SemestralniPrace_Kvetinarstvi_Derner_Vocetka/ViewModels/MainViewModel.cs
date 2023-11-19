@@ -1,4 +1,5 @@
 ﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,7 +40,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 OnPropertyChanged(nameof(SelectedTableName));
             }
         }
-
+        public RelayCommand BtnFun { get; }
         public ICommand NavigateLoginCommand { get; }
         public ICommand NavigateRegisterCommand { get; }
        
@@ -47,6 +48,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         {
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(navigation, () => new LoginViewModel(navigation));
             NavigateRegisterCommand = new NavigateCommand<RegisterViewModel>(navigation, () => new RegisterViewModel(navigation));
+            BtnFun = new RelayCommand(BtnFunPressed);
 
             dbUtil = new OracleDbUtil(); // Initialize the database utility
 
@@ -76,6 +78,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 
             }
             SelectedTableData = dbUtil.ExecuteQuery($"SELECT * FROM zakaznici");
+        }
+        
+        private void BtnFunPressed()
+        {
+            PopupView loginView = new PopupView();
+            
+            loginView.Show();
         }
 
     }

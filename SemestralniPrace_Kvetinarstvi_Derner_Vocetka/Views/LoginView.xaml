@@ -5,15 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
              xmlns:viewModel = "clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels" 
+             xmlns:components="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1000">
     <Grid>
         <StackPanel Margin="10">
             <TextBlock Text="Email:"/>
-            <TextBox x:Name="EmailTextBox" HorizontalAlignment="Stretch"/>
+            <TextBox x:Name="EmailTextBox" HorizontalAlignment="Stretch" Text="{Binding Email, Mode=TwoWay}"/>
 
             <TextBlock Text="Password:"/>
-            <PasswordBox x:Name="PasswordBox" HorizontalAlignment="Stretch"/>
+            <components:BindablePasswordBox x:Name="PasswordBox" HorizontalAlignment="Stretch" Password="{Binding Password, Mode=TwoWay}"/>
 
             <Button Content="Login" Command="{Binding LoginCommand}" Margin="0,21,0,-41"/>
             <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="0,62,0,-82"/>
