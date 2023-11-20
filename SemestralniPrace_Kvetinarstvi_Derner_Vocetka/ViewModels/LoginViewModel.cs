@@ -44,11 +44,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public ICommand CancelCommand { get; }
 
         private OracleDbUtil dbUtil; // Instance OracleDbUtil, díky které jsme schopni komunikovat s databází
-        public LoginViewModel(NavigationStore navigationStore)
+        public LoginViewModel(INavigationService<MainViewModel> createMainNavigationService)
         {
             dbUtil = new OracleDbUtil();
             LoginCommand = new RelayCommand(Login);
-            //CancelCommand = new NavigateCommand<MainViewModel>(new NavigationService<MainViewModel>(navigationStore, () => new MainViewModel(navigationStore)));
+            CancelCommand = new NavigateCommand<MainViewModel>(createMainNavigationService);
         }
 
         private void Login()

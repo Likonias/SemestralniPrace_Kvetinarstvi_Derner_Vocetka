@@ -12,19 +12,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
     public partial class App : Application
     {
         private readonly NavigationStore navigationStore;
-        private readonly NavigationBarViewModel navigationBarViewModel;
+        
         public App()
         {
             navigationStore = new NavigationStore();
-            navigationBarViewModel = new NavigationBarViewModel(CreateLoginNavigationService(), CreateRegisterNavigationService());
+            CreateNavigationBarViewModel(); 
         }
-
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            //TODO this should be redone to a home view or something like that
-            //NavigationService<HomeVIewModel> homeNavigationService = CreateHomeNavigationService();
-            //homeNavigationService.Navigate();
             INavigationService<MainViewModel> mainNavigationService = CreateMainNavigationService();
             mainNavigationService.Navigate();
 
@@ -39,18 +35,23 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService<MainViewModel> CreateMainNavigationService()
         {
-            return new LayoutNavigationService<MainViewModel>(navigationStore, () => new MainViewModel(navigationStore), navigationBarViewModel);
+            return new LayoutNavigationService<MainViewModel>(navigationStore, () => new MainViewModel(CreateLoginNavigationService()), CreateNavigationBarViewModel);
         }
 
         private INavigationService<LoginViewModel> CreateLoginNavigationService()
         {
-            return new NavigationService<LoginViewModel>(navigationStore, () => new LoginViewModel(navigationStore));
+            return new NavigationService<LoginViewModel>(navigationStore, () => new LoginViewModel(CreateMainNavigationService()));
         }
 
 
         private INavigationService<RegisterViewModel> CreateRegisterNavigationService()
         {
-            return new NavigationService<RegisterViewModel>(navigationStore, () => new RegisterViewModel(navigationStore));
+            return new NavigationService<RegisterViewModel>(navigationStore, () => new RegisterViewModel(CreateMainNavigationService()));
+        }
+
+        private NavigationBarViewModel CreateNavigationBarViewModel()
+        {
+            return new NavigationBarViewModel(CreateLoginNavigationService(), CreateRegisterNavigationService());
         }
     }
 }
