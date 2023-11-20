@@ -12,18 +12,18 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
         private readonly NavigationStore navigationStore;
         
         private readonly Func<TViewModel> createViewModel;
-        private readonly NavigationBarViewModel navigationBarViewModel;
+        private readonly Func<NavigationBarViewModel> createNavigationBarViewModel;
 
-        public LayoutNavigationService(NavigationStore navigationStore, Func<TViewModel> createViewModel, NavigationBarViewModel navigationBarViewModel)
+        public LayoutNavigationService(NavigationStore navigationStore, Func<TViewModel> createViewModel, Func<NavigationBarViewModel> createNavigationBarViewModel)
         {
             this.navigationStore = navigationStore;
             this.createViewModel = createViewModel;
-            this.navigationBarViewModel = navigationBarViewModel;
+            this.createNavigationBarViewModel = createNavigationBarViewModel;
         }
 
         public void Navigate()
         {
-            navigationStore.CurrentViewModel = new LayoutViewModel(navigationBarViewModel, createViewModel());
+            navigationStore.CurrentViewModel = new LayoutViewModel(createNavigationBarViewModel(), createViewModel());
         }
     }
 }
