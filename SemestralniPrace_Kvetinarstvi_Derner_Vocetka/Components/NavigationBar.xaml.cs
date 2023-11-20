@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views
+namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components
 {
     /// <summary>
-    /// Interaction logic for NavigationBarView.xaml
+    /// Interaction logic for NavigationBar.xaml
     /// </summary>
-    public partial class NavigationBarView : UserControl
+    public partial class NavigationBar : UserControl
     {
-        public NavigationBarView()
+        public NavigationBar()
         {
             InitializeComponent();
         }

@@ -19,12 +19,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public RelayCommand BtnFun { get; }
         public ICommand NavigateLoginCommand { get; }
         public ICommand NavigateRegisterCommand { get; }
-        public NavigationBarViewModel NavigationBarViewModel { get; }
-
-        public MainViewModel(NavigationBarViewModel navigationBarViewModel, NavigationStore navigation)
+        public MainViewModel(NavigationStore navigationStore)
         {
-            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(new NavigationService<LoginViewModel>(navigation, () => new LoginViewModel(navigation)));
-            NavigateRegisterCommand = new NavigateCommand<RegisterViewModel>(new NavigationService<RegisterViewModel>(navigation, () => new RegisterViewModel(navigation)));
+            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(new NavigationService<LoginViewModel>(navigationStore, () => new LoginViewModel(navigationStore)));
+            NavigateRegisterCommand = new NavigateCommand<RegisterViewModel>(new NavigationService<RegisterViewModel>(navigationStore, () => new RegisterViewModel(navigationStore)));
             BtnFun = new RelayCommand(BtnFunPressed);
 
             dbUtil = new OracleDbUtil(); // Initialize the database utility

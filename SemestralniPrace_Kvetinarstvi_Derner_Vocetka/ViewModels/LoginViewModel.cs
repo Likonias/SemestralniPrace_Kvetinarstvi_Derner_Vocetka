@@ -48,7 +48,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         {
             dbUtil = new OracleDbUtil();
             LoginCommand = new RelayCommand(Login);
-            CancelCommand = new NavigateCommand<MainViewModel>(new NavigationService<MainViewModel>(navigationStore, () => new MainViewModel(navigationStore)));
+            //CancelCommand = new NavigateCommand<MainViewModel>(new NavigationService<MainViewModel>(navigationStore, () => new MainViewModel(navigationStore)));
         }
 
         private void Login()

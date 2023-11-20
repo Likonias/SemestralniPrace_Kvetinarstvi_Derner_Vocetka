@@ -10,9 +10,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
     public class NavigateCommand<TViewModel> : CommandBase
         where TViewModel : ViewModelBase
     {
-        private readonly NavigationService<TViewModel> navigationService;
+        private readonly INavigationService<TViewModel> navigationService;
 
-        public NavigateCommand(NavigationService<TViewModel> navigationService)
+        public NavigateCommand(INavigationService<TViewModel> navigationService)
         {
             this.navigationService = navigationService;
         }

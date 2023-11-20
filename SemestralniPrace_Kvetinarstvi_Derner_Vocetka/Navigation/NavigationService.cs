@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
 {
-    public class NavigationService<TViewModel>
-        where TViewModel : ViewModelBase
+    public class NavigationService<TViewModel> : INavigationService<TViewModel> where TViewModel : ViewModelBase
     {
         private readonly NavigationStore navigationStore;
         private readonly Func<TViewModel> createViewModel;

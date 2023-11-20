@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka"
         xmlns:views = "clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
-        xmlns:viewmodels="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels"
+        xmlns:viewmodels="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels" xmlns:components="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1000">
     <!--Here is a datamanagement of the views and their view models, with every view added you have to add DataTemplate into the mainWindow ContentControl-->
@@ -19,6 +19,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:RegisterViewModel}" >
                 <views:RegisterView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:LayoutViewModel}" >
+                <components:Layout/>
             </DataTemplate>
         </ContentControl.Resources>
     </ContentControl>

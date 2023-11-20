@@ -16,7 +16,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public RegisterViewModel(NavigationStore navigation)
         {
             RegisterCommand = new RelayCommand(Register);
-            CancelCommand = new NavigateCommand<MainViewModel>(new NavigationService<MainViewModel>(navigation, () => new MainViewModel(navigation)));
+            //CancelCommand = new NavigateCommand<MainViewModel>(new NavigationService<MainViewModel>(navigation, () => new MainViewModel(navigation)));
         }
 
         public void Register()

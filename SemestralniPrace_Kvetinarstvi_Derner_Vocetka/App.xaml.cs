@@ -25,7 +25,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             //TODO this should be redone to a home view or something like that
             //NavigationService<HomeVIewModel> homeNavigationService = CreateHomeNavigationService();
             //homeNavigationService.Navigate();
-            navigationStore.CurrentViewModel = new MainViewModel(navigationBarViewModel, navigationStore);
+            navigationStore.CurrentViewModel = new MainViewModel(navigationStore);
 
             MainWindow = new MainWindow()
             {
@@ -36,13 +36,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             base.OnStartup(e);
         }
 
-        private NavigationService<LoginViewModel> CreateLoginNavigationService()
+
+        private INavigationService<LoginViewModel> CreateLoginNavigationService()
         {
             return new NavigationService<LoginViewModel>(navigationStore, () => new LoginViewModel(navigationStore));
         }
 
 
-        private NavigationService<RegisterViewModel> CreateRegisterNavigationService()
+        private INavigationService<RegisterViewModel> CreateRegisterNavigationService()
         {
             return new NavigationService<RegisterViewModel>(navigationStore, () => new RegisterViewModel(navigationStore));
         }

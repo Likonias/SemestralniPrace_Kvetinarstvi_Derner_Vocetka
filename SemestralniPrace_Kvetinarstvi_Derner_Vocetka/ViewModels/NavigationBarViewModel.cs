@@ -16,7 +16,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public ICommand NavigateAccountCommand { get; }
         public ICommand NavigateViewCommand { get; }
 
-        public NavigationBarViewModel(NavigationService<LoginViewModel> loginNavigationService, NavigationService<RegisterViewModel> registerNavigationService)
+        public NavigationBarViewModel(INavigationService<LoginViewModel> loginNavigationService, INavigationService<RegisterViewModel> registerNavigationService)
         {
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
             NavigateRegisterCommand = new NavigateCommand<RegisterViewModel>(registerNavigationService);
