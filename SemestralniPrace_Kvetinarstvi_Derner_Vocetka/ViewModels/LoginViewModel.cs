@@ -1,15 +1,6 @@
-﻿using Oracle.ManagedDataAccess.Client;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
+﻿using System.Windows.Input;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
-using System.ComponentModel;
-using System.Windows.Input;
-using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Services;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
@@ -52,17 +43,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public RelayCommand LoginCommand { get; }
         public ICommand CancelCommand { get; }
 
-        private OracleDbUtil dbUtil; // Use your OracleDbUtil class for database operations
-        public LoginViewModel(Navigation navigation)
+        private OracleDbUtil dbUtil; // Instance OracleDbUtil, díky které jsme schopni komunikovat s databází
+        public LoginViewModel(NavigationStore navigationStore)
         {
-            dbUtil = new OracleDbUtil(); // Initialize the database utility with the connection string
+            dbUtil = new OracleDbUtil();
             LoginCommand = new RelayCommand(Login);
-            CancelCommand = new NavigateCommand<MainViewModel>(navigation, () => new MainViewModel(navigation));
+            CancelCommand = new NavigateCommand<MainViewModel>(new NavigationService<MainViewModel>(navigationStore, () => new MainViewModel(navigationStore)));
         }
 
         private void Login()
         {
-
+            //TODO logika loginu, načtení z databáze, nalezení dle emailu a následné checknutí hesla přes PasswordHash (nejdříve se heslo musí hashnout)
         }
 
     }

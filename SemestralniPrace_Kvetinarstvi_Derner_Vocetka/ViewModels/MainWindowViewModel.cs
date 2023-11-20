@@ -1,4 +1,4 @@
-﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
+﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views;
 using System;
 using System.Collections.Generic;
@@ -12,10 +12,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private readonly Navigation navigation;
+        private readonly NavigationStore navigation;
         public ViewModelBase CurrentViewModel => navigation.CurrentViewModel;
 
-        public MainWindowViewModel(Navigation navigation)
+        public MainWindowViewModel(NavigationStore navigation)
         {
             this.navigation = navigation;
             this.navigation.CurrentViewModelChanged += OnCurrentViewModelChanged;

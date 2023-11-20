@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils
+namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
 {
-    public class Navigation
+    public class NavigationStore
     {
         public event Action CurrentViewModelChanged;
         private ViewModelBase currentViewModel;

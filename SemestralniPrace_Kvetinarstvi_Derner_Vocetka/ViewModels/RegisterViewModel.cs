@@ -1,4 +1,5 @@
-﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
+﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +13,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
     {
         public RelayCommand RegisterCommand { get; }
         public ICommand CancelCommand { get; }
-        public RegisterViewModel(Navigation navigation)
+        public RegisterViewModel(NavigationStore navigation)
         {
             RegisterCommand = new RelayCommand(Register);
-            CancelCommand = new NavigateCommand<MainViewModel>(navigation, () => new MainViewModel(navigation));
+            CancelCommand = new NavigateCommand<MainViewModel>(new NavigationService<MainViewModel>(navigation, () => new MainViewModel(navigation)));
         }
 
         public void Register()
         {
-            Console.WriteLine("clicked");
+            //TODO založení nového uživatele, basic privileges a přidání do databáze
         }
     }
 }

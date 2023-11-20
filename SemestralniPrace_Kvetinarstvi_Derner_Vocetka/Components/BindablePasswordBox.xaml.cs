@@ -15,9 +15,7 @@ using System.Windows.Shapes;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components
 {
-    /// <summary>
-    /// Interaction logic for BindablePasswordBox.xaml
-    /// </summary>
+    //Tato třída je na obejdutí xaml PasswordBox, jelikož nelze samotnou třídu bindovat, tak se musí využít této třídy
     public partial class BindablePasswordBox : UserControl
     {
 
@@ -28,7 +26,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components
             set { SetValue(PasswordProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PasswordProperty =
             DependencyProperty.Register("Password", typeof(string), typeof(BindablePasswordBox), new PropertyMetadata(string.Empty));
 

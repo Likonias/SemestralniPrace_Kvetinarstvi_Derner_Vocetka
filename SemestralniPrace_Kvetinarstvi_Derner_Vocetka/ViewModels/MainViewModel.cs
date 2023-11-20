@@ -1,24 +1,39 @@
-﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
+﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private OracleDbUtil dbUtil; // Initialize this in the constructor
+        private OracleDbUtil dbUtil;
 
         public ObservableCollection<string> TableNames { get; set; } // Bind this to ComboBox.ItemsSource
 
         private DataTable selectedTableData;
+
+        public RelayCommand BtnFun { get; }
+        public ICommand NavigateLoginCommand { get; }
+        public ICommand NavigateRegisterCommand { get; }
+        public NavigationBarViewModel NavigationBarViewModel { get; }
+
+        public MainViewModel(NavigationBarViewModel navigationBarViewModel, NavigationStore navigation)
+        {
+            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(new NavigationService<LoginViewModel>(navigation, () => new LoginViewModel(navigation)));
+            NavigateRegisterCommand = new NavigateCommand<RegisterViewModel>(new NavigationService<RegisterViewModel>(navigation, () => new RegisterViewModel(navigation)));
+            BtnFun = new RelayCommand(BtnFunPressed);
+
+            dbUtil = new OracleDbUtil(); // Initialize the database utility
+
+            // Populate the ComboBox with table names on initialization
+            TableNames = new ObservableCollection<string>(GetTableNamesFromDatabase());
+
+            LoadSelectedTableData();
+        }
         public DataTable SelectedTableData
         {
             get => selectedTableData;
@@ -40,24 +55,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 OnPropertyChanged(nameof(SelectedTableName));
             }
         }
-        public RelayCommand BtnFun { get; }
-        public ICommand NavigateLoginCommand { get; }
-        public ICommand NavigateRegisterCommand { get; }
-       
-        public MainViewModel(Navigation navigation)
-        {
-            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(navigation, () => new LoginViewModel(navigation));
-            NavigateRegisterCommand = new NavigateCommand<RegisterViewModel>(navigation, () => new RegisterViewModel(navigation));
-            BtnFun = new RelayCommand(BtnFunPressed);
-
-            dbUtil = new OracleDbUtil(); // Initialize the database utility
-
-            // Populate the ComboBox with table names on initialization
-            TableNames = new ObservableCollection<string>(GetTableNamesFromDatabase());
-
-            LoadSelectedTableData();
-        }
-
+        
         private List<string> GetTableNamesFromDatabase()
         {
             // Implement a method in OracleDbUtil to fetch table names from the database

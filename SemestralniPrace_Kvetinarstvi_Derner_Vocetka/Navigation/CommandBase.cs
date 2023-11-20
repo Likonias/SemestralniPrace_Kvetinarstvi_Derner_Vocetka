@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils
+namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
 {
     public abstract class CommandBase : ICommand
     {
@@ -14,7 +14,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils
         public virtual bool CanExecute(object parameter) => true;
         public abstract void Execute(object parameter);
 
-        protected void OnCanExecuteChanged() 
+        protected void OnCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, new EventArgs());
         }
