@@ -12,10 +12,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
     public partial class App : Application
     {
         private readonly NavigationStore navigationStore;
+        private readonly AccountStore accountStore;
         
         public App()
         {
             navigationStore = new NavigationStore();
+            accountStore = new AccountStore();
             CreateNavigationBarViewModel(); 
         }
 
@@ -51,7 +53,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private NavigationBarViewModel CreateNavigationBarViewModel()
         {
-            return new NavigationBarViewModel(CreateLoginNavigationService(), CreateRegisterNavigationService());
+            return new NavigationBarViewModel(accountStore, CreateLoginNavigationService(), CreateRegisterNavigationService());
         }
     }
 }

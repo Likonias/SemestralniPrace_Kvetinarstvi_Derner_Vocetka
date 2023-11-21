@@ -12,9 +12,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
         where TViewModel : ViewModelBase
     {
         private readonly LoginViewModel viewModel;
-        private readonly ParameterNavigationService<Account, AccountViewModel> navigationService;
+        private readonly NavigationService<AccountViewModel> navigationService;
 
-        public LoginCommand(LoginViewModel viewModel, ParameterNavigationService<Account, AccountViewModel> navigationService)
+        public LoginCommand(LoginViewModel viewModel, NavigationService<AccountViewModel> navigationService)
         {
             this.viewModel = viewModel;
             this.navigationService = navigationService;
@@ -22,7 +22,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
 
         public override void Execute(object parameter)
         {
-            throw new NotImplementedException();
+            navigationService.Navigate();
         }
     }
 }
