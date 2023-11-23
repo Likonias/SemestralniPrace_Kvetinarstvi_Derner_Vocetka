@@ -51,12 +51,16 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             return new NavigationService<RegisterViewModel>(navigationStore, () => new RegisterViewModel(CreateMainNavigationService()));
         }
 
-        private NavigationBarViewModel CreateNavigationBarViewModel()
+        private INavigationService<FlowersViewModel> CreateFlowersNavigationService()
         {
-            return new NavigationBarViewModel(accountStore, CreateLoginNavigationService(), CreateRegisterNavigationService());
+            return new LayoutNavigationService<FlowersViewModel>(navigationStore, () => new FlowersViewModel(), CreateNavigationBarViewModel);
         }
 
+        private NavigationBarViewModel CreateNavigationBarViewModel()
+        {
+            return new NavigationBarViewModel(accountStore, CreateLoginNavigationService(), CreateRegisterNavigationService(), CreateFlowersNavigationService());
+        }
 
-
+        
     }
 }

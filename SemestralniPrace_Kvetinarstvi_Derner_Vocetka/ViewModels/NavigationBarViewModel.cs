@@ -20,9 +20,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         public ICommand NavigateLoginCommand { get; }
         public ICommand NavigateRegisterCommand { get; }
+        public ICommand NavigateFlowersCommand { get; }
         public ICommand NavigateAccountCommand { get; }
-        public ICommand NavigateViewCommand { get; }
-
+        
         public ObservableCollection<string> ComboBoxItems { get; set; }
 
         private string selectedComboBoxItem;
@@ -50,16 +50,18 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                         break;
                     }
                 }
+                SelectedViewCommandComboBox();
             }
         }
 
         //todo finish setting up an account
         private readonly AccountStore accountStore;
 
-        public NavigationBarViewModel(AccountStore accountStore, INavigationService<LoginViewModel> loginNavigationService, INavigationService<RegisterViewModel> registerNavigationService)
+        public NavigationBarViewModel(AccountStore accountStore, INavigationService<LoginViewModel> loginNavigationService, INavigationService<RegisterViewModel> registerNavigationService, INavigationService<FlowersViewModel> flowersNavigationService)
         {
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
             NavigateRegisterCommand = new NavigateCommand<RegisterViewModel>(registerNavigationService);
+            NavigateFlowersCommand = new NavigateCommand<FlowersViewModel>(flowersNavigationService);
             this.accountStore = accountStore;
             ComboBoxItems = new ObservableCollection<string>();
             PopulateComboBox();
@@ -88,7 +90,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             switch(selectedEnumValue)
             {
                 case ComboBoxTableNamesEnum.Flowers:
-                    
+                    NavigateFlowersCommand.Execute(null);
                     break;
             }
         }
