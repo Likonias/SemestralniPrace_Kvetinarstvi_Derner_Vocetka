@@ -12,8 +12,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
     {
 
         private OracleDbUtil dbUtil;
-        private DataTable TableData { get; }
+        private DataTable tableData;
 
+        public DataTable TableData
+        {
+            get { return tableData; }
+            set
+            {
+                tableData = value;
+                OnPropertyChanged(nameof(TableData));
+            }
+        }
         public FlowersViewModel()
         {
             dbUtil = new OracleDbUtil();
