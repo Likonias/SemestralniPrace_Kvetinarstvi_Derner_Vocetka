@@ -2,6 +2,7 @@
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
@@ -45,7 +46,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             return new NavigationService<LoginViewModel>(navigationStore, () => new LoginViewModel(CreateMainNavigationService()));
         }
 
-
         private INavigationService<RegisterViewModel> CreateRegisterNavigationService()
         {
             return new NavigationService<RegisterViewModel>(navigationStore, () => new RegisterViewModel(CreateMainNavigationService()));
@@ -55,5 +55,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
         {
             return new NavigationBarViewModel(accountStore, CreateLoginNavigationService(), CreateRegisterNavigationService());
         }
+
+
+
     }
 }

@@ -14,7 +14,7 @@
         <Button Content="Login" HorizontalAlignment="Left" Margin="29,15,0,0" VerticalAlignment="Top" Width="60" Command="{Binding NavigateLoginCommand}" Grid.Column="1" Height="20"/>
         <Button Content="Register" HorizontalAlignment="Left" Margin="94,15,0,0" VerticalAlignment="Top" Width="60" Command="{Binding NavigateRegisterCommand}" Grid.Column="1" Height="20"/>
         <Label Content="Selected View: " HorizontalAlignment="Left" Margin="5,12,0,0" VerticalAlignment="Top" Height="26" Width="89"/>
-        <ComboBox HorizontalAlignment="Left" Grid.Column="0" Margin="94,14,0,0" VerticalAlignment="Top" Width="120" Height="22"/>
+        <ComboBox HorizontalAlignment="Left" ItemsSource="{Binding ComboBoxItems}" SelectedItem="{Binding SelectedComboBoxItem, Mode=TwoWay}" Grid.Column="0" Margin="94,14,0,0" VerticalAlignment="Top" Width="120" Height="22"/>
 
     </Grid>
 </UserControl>
