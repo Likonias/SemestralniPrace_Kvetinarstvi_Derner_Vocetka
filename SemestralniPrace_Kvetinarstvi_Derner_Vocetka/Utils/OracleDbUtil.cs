@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 using Oracle.ManagedDataAccess.Client;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 
 public class OracleDbUtil
 {
-    //Login string for Derner
+    // Same connection string as before
     private string connectionString = "User Id=st67018;Password=abcde;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=fei-sql3.upceucebny.cz)(PORT=1521))(CONNECT_DATA=(SID=BDAS)(SERVER=DEDICATED)))";
 
-    public bool TestConnection()
+    public async Task<bool> TestConnectionAsync()
     {
         using (OracleConnection connection = new OracleConnection(connectionString))
         {
             try
             {
-                connection.Open();
+                await connection.OpenAsync();
                 return true;
             }
             catch (Exception e)
@@ -26,7 +27,7 @@ public class OracleDbUtil
         }
     }
 
-    public DataTable ExecuteQuery(string query, List<OracleParameter> parameters = null)
+    public async Task<DataTable> ExecuteQueryAsync(string query, List<OracleParameter> parameters = null)
     {
         using (OracleConnection connection = new OracleConnection(connectionString))
         {
@@ -39,11 +40,11 @@ public class OracleDbUtil
 
                 try
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
                     using (OracleDataAdapter adapter = new OracleDataAdapter(command))
                     {
                         DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
+                        await Task.Run(() => adapter.Fill(dataTable)); // Asynchronous fill operation
                         return dataTable;
                     }
                 }
@@ -55,7 +56,7 @@ public class OracleDbUtil
         }
     }
 
-    public int ExecuteNonQuery(string query, List<OracleParameter> parameters = null)
+    public async Task<int> ExecuteNonQueryAsync(string query, List<OracleParameter> parameters = null)
     {
         using (OracleConnection connection = new OracleConnection(connectionString))
         {
@@ -68,8 +69,8 @@ public class OracleDbUtil
 
                 try
                 {
-                    connection.Open();
-                    return command.ExecuteNonQuery();
+                    await connection.OpenAsync();
+                    return await command.ExecuteNonQueryAsync();
                 }
                 catch
                 {
@@ -78,4 +79,36 @@ public class OracleDbUtil
             }
         }
     }
+
+    public async Task<DataTable> ExecuteStoredProcedureAsync(string procedureName, List<OracleParameter> parameters = null)
+    {
+        using (OracleConnection connection = new OracleConnection(connectionString))
+        {
+            using (OracleCommand command = new OracleCommand(procedureName, connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+
+                if (parameters != null)
+                {
+                    command.Parameters.AddRange(parameters.ToArray());
+                }
+
+                try
+                {
+                    await connection.OpenAsync();
+                    using (OracleDataAdapter adapter = new OracleDataAdapter(command))
+                    {
+                        DataTable dataTable = new DataTable();
+                        await Task.Run(() => adapter.Fill(dataTable)); // Asynchronous fill operation
+                        return dataTable;
+                    }
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+    }
+
 }

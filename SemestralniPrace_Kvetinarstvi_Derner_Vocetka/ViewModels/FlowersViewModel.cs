@@ -26,7 +26,16 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public FlowersViewModel()
         {
             dbUtil = new OracleDbUtil();
-            TableData = dbUtil.ExecuteQuery($"SELECT * FROM zakaznici");
+            InitializeTableData();
+        }
+        private async void InitializeTableData()
+        {
+            TableData = await GetTable();
+        }
+
+        private async Task<DataTable> GetTable()
+        {
+            return await dbUtil.ExecuteQueryAsync("SELECT * FROM zakaznici");
         }
     }
 }
