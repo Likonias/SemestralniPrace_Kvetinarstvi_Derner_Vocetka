@@ -8,7 +8,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 
 public class OracleDbUtil
 {
-    // Same connection string as before
+    // Connection string Derner
     private string connectionString = "User Id=st67018;Password=abcde;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=fei-sql3.upceucebny.cz)(PORT=1521))(CONNECT_DATA=(SID=BDAS)(SERVER=DEDICATED)))";
 
     public async Task<bool> TestConnectionAsync()
@@ -27,7 +27,7 @@ public class OracleDbUtil
         }
     }
 
-    public async Task<DataTable> ExecuteQueryAsync(string query, List<OracleParameter> parameters = null)
+    public async Task<DataTable> ExecuteQueryAsync(string query, Dictionary<string, object> parameters = null)
     {
         using (OracleConnection connection = new OracleConnection(connectionString))
         {
@@ -35,7 +35,10 @@ public class OracleDbUtil
             {
                 if (parameters != null)
                 {
-                    command.Parameters.AddRange(parameters.ToArray());
+                    foreach (var param in parameters)
+                    {
+                        command.Parameters.Add(param.Key, param.Value);
+                    }
                 }
 
                 try
@@ -56,7 +59,7 @@ public class OracleDbUtil
         }
     }
 
-    public async Task<int> ExecuteNonQueryAsync(string query, List<OracleParameter> parameters = null)
+    public async Task<int> ExecuteNonQueryAsync(string query, Dictionary<string, object> parameters = null)
     {
         using (OracleConnection connection = new OracleConnection(connectionString))
         {
@@ -64,7 +67,10 @@ public class OracleDbUtil
             {
                 if (parameters != null)
                 {
-                    command.Parameters.AddRange(parameters.ToArray());
+                    foreach (var param in parameters)
+                    {
+                        command.Parameters.Add(param.Key, param.Value);
+                    }
                 }
 
                 try
@@ -80,7 +86,7 @@ public class OracleDbUtil
         }
     }
 
-    public async Task<DataTable> ExecuteStoredProcedureAsync(string procedureName, List<OracleParameter> parameters = null)
+    public async Task<DataTable> ExecuteStoredProcedureAsync(string procedureName, Dictionary<string, object> parameters = null)
     {
         using (OracleConnection connection = new OracleConnection(connectionString))
         {
@@ -90,7 +96,10 @@ public class OracleDbUtil
 
                 if (parameters != null)
                 {
-                    command.Parameters.AddRange(parameters.ToArray());
+                    foreach (var param in parameters)
+                    {
+                        command.Parameters.Add(param.Key, param.Value);
+                    }
                 }
 
                 try
@@ -110,5 +119,4 @@ public class OracleDbUtil
             }
         }
     }
-
 }

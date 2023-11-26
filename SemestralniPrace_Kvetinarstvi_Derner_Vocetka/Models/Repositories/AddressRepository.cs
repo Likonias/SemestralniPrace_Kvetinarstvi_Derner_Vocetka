@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,12 +24,20 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dbUtil = new OracleDbUtil();
         }
 
-        public Task Add(Address entity)
+        public async Task Add(Address entity)
         {
-            throw new NotImplementedException();
+            var parameters = new Dictionary<string, object>
+            {
+                { "street", entity.Street },
+                { "streetNumber", entity.StreetNumber },
+                { "city", entity.City },
+                { "zip", entity.Zip },
+                
+            };
+            await dbUtil.ExecuteStoredProcedureAsync("addAddress", parameters);
         }
 
-        public Task Delete(Address entity)
+        public async Task Delete(Address entity)
         {
             throw new NotImplementedException();
         }
@@ -41,12 +50,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Address> GetById(int id)
+        public async Task<Address> GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task Update(Address entity)
+        public async Task Update(Address entity)
         {
             throw new NotImplementedException();
         }
