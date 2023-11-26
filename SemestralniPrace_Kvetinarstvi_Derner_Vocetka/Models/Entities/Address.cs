@@ -9,17 +9,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
 {
     public class Address
     {
+        public int Id { get; set; }
         public string Street { get; set; }
         public string StreetNumber { get; set; }
-        public string Zip { get; set; }
         public string City { get; set; }
-
-        public Address(string street, string streetNumber, string zip, string city)
-        {
-            Street = street;
-            StreetNumber = streetNumber;
-            Zip = zip;
-            City = city;
-        }
+        public string Zip { get; set; }
+        public int? EmployeeId {get; set;}
+        public int? CustomerId { get; set; }
+        public AddressType? AddressType { get; set; }
+        
     }
 }

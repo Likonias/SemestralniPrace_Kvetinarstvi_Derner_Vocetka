@@ -8,15 +8,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
 {
     public class OtherGoods : Goods
     {
-        
-        public string CountryOfOrigin { get; set; }
-        public DateOnly ExpirationDate { get; set; }
-
-        public OtherGoods(string name, double price, byte[] image, string countryOfOrigin, DateOnly expirationDate) : base(name, price, image)
+        public OtherGoods(int idGoods, string name, double price, byte type, int warehouse, byte[]? image, int idOtherGoods, string countryOfOrigin, DateOnly expirationDate) : base(idGoods, name, price, type, warehouse, image)
         {
+            IdOtherGoods = idOtherGoods;
             CountryOfOrigin = countryOfOrigin;
             ExpirationDate = expirationDate;
         }
+        public int IdOtherGoods { get; set; }
+        public string? CountryOfOrigin { get; set; }
+        public DateOnly? ExpirationDate { get; set; }
 
     }
 }

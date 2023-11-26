@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,13 +9,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
 {
     public class Flower : Goods
     {
-        public FlowerState State { get; set; }
-        public int Age { get; set; }
-
-        public Flower(string name, double price, byte[] image, FlowerState state, int age) : base(name, price, image)
+        public Flower(int idGoods, string name, double price, byte type, int warehouse, byte[]? image, int idFlower, StateEnum state, int age) : base(idGoods, name, price, type, warehouse, image)
         {
+            IdFlower = idFlower;
             State = state;
             Age = age;
         }
+
+        public int IdFlower { get; set; }
+        public FlowerStateEnum? State { get; set; }
+        public int Age { get; set; }
+        
+
     }
 }

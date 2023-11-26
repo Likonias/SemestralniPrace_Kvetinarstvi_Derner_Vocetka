@@ -30,6 +30,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
         {
             return navigationServices.Values;
         }
+
+        public void ClearNavigationService()
+        {
+            navigationServices.Clear();
+        }
     }
 
 }

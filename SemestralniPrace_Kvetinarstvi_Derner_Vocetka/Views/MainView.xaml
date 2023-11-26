@@ -15,7 +15,7 @@
             <ColumnDefinition Width="33*"/>
             <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid Grid.Row="1" DataGrid.ItemsSource="{Binding SelectedTableData}" AutoGenerateColumns="True" Margin="10,0,0,10"/>
+        <Label Content="Welcome to the database application!"/>
         <Button Grid.Column="1" Command="{Binding BtnFun}" Content="Popup" HorizontalAlignment="Left" Margin="89,34,0,0" Grid.Row="1" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>

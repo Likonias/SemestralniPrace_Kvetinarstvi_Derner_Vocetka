@@ -43,14 +43,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             base.OnStartup(e);
         }
 
-        private void ReDo()
-        {
-            
-            serviceManager.RegisterNavigationService(CreateLoginNavigationService());
-            serviceManager.RegisterNavigationService(CreateRegisterNavigationService());
-            serviceManager.RegisterNavigationService(CreateAccountNavigationService());
-        }
-
         private INavigationService<MainViewModel> CreateMainNavigationService()
         {
             return new LayoutNavigationService<MainViewModel>(navigationStore, () => new MainViewModel(CreateLoginNavigationService()), CreateNavigationBarViewModel);
@@ -76,18 +68,21 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             return new LayoutNavigationService<FlowersViewModel>(navigationStore, () => new FlowersViewModel(), CreateNavigationBarViewModel);
         }
 
-        //private NavigationBarViewModel CreateNavigationBarViewModel()
-        //{
-        //    return new NavigationBarViewModel(accountStore, CreateLoginNavigationService(), CreateRegisterNavigationService(), CreateAccountNavigationService(), CreateFlowersNavigationService());
-        //}
-
-        //this is test of another way navbar to be initialized
         private NavigationBarViewModel CreateNavigationBarViewModel()
         {
-            ReDo();
+            UpdateServiceManager();
             return new NavigationBarViewModel(accountStore, serviceManager);
         }
 
+
+        private void UpdateServiceManager()
+        {
+            serviceManager.ClearNavigationService();
+            serviceManager.RegisterNavigationService(CreateLoginNavigationService());
+            serviceManager.RegisterNavigationService(CreateRegisterNavigationService());
+            serviceManager.RegisterNavigationService(CreateAccountNavigationService());
+            serviceManager.RegisterNavigationService(CreateFlowersNavigationService());
+        }
 
     }
 }

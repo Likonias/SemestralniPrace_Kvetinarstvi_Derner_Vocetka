@@ -60,25 +60,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public NavigationBarViewModel(AccountStore accountStore, NavigationServiceManager navigationServiceManager)
         {
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(navigationServiceManager.GetNavigationService<LoginViewModel>());
+            NavigateRegisterCommand = new NavigateCommand<RegisterViewModel>(navigationServiceManager.GetNavigationService<RegisterViewModel>());
+            NavigateAccountCommand = new NavigateCommand<AccountViewModel>(navigationServiceManager.GetNavigationService<AccountViewModel>());
+            NavigateFlowersCommand = new NavigateCommand<FlowersViewModel>(navigationServiceManager.GetNavigationService<FlowersViewModel>());
+
             this.accountStore = accountStore;
             ComboBoxItems = new ObservableCollection<string>();
             PopulateComboBox();
 
         }
-
-        //public NavigationBarViewModel(AccountStore accountStore, INavigationService<LoginViewModel> loginNavigationService, 
-        //    INavigationService<RegisterViewModel> registerNavigationService, INavigationService<AccountViewModel> accountNavigationService, 
-        //    INavigationService<FlowersViewModel> flowersNavigationService)
-        //{
-        //    NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
-        //    NavigateRegisterCommand = new NavigateCommand<RegisterViewModel>(registerNavigationService);
-        //    NavigateAccountCommand = new NavigateCommand<AccountViewModel>(accountNavigationService);
-        //    NavigateFlowersCommand = new NavigateCommand<FlowersViewModel>(flowersNavigationService);
-        //    this.accountStore = accountStore;
-        //    ComboBoxItems = new ObservableCollection<string>();
-        //    PopulateComboBox();
-
-        //}
 
         private void PopulateComboBox()
         {
@@ -103,17 +93,5 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             }
         }
 
-        //private void LoadSelectedTableData()
-        //{
-        //    if (!string.IsNullOrEmpty(SelectedTableName))
-        //    {
-        //        // Fetch data for the selected table using OracleDbUtil
-        //        // Example:
-        //        // SelectedTableData = dbUtil.ExecuteQuery($"SELECT * FROM {SelectedTableName}");
-        //        SelectedTableData = dbUtil.ExecuteQuery($"SELECT * FROM zakaznici");
-
-        //    }
-        //    SelectedTableData = dbUtil.ExecuteQuery($"SELECT * FROM zakaznici");
-        //}
     }
 }
