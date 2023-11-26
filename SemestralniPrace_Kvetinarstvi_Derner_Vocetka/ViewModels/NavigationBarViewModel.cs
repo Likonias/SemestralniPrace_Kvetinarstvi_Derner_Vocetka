@@ -20,8 +20,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         public ICommand NavigateLoginCommand { get; }
         public ICommand NavigateRegisterCommand { get; }
-        public ICommand NavigateFlowersCommand { get; }
         public ICommand NavigateAccountCommand { get; }
+        public ICommand NavigateFlowersCommand { get; }
         
         public ObservableCollection<string> ComboBoxItems { get; set; }
 
@@ -57,20 +57,28 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         //todo finish setting up an account
         private readonly AccountStore accountStore;
 
-        public NavigationBarViewModel(AccountStore accountStore, INavigationService<LoginViewModel> loginNavigationService, INavigationService<RegisterViewModel> registerNavigationService, INavigationService<FlowersViewModel> flowersNavigationService)
+        public NavigationBarViewModel(AccountStore accountStore, NavigationServiceManager navigationServiceManager)
         {
-            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
-            NavigateRegisterCommand = new NavigateCommand<RegisterViewModel>(registerNavigationService);
-            NavigateFlowersCommand = new NavigateCommand<FlowersViewModel>(flowersNavigationService);
+            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(navigationServiceManager.GetNavigationService<LoginViewModel>());
             this.accountStore = accountStore;
             ComboBoxItems = new ObservableCollection<string>();
             PopulateComboBox();
 
-            //TODO implement account
-            //NavigateAccountCommand =
-            //NavigateViewCommand = 
-            
         }
+
+        //public NavigationBarViewModel(AccountStore accountStore, INavigationService<LoginViewModel> loginNavigationService, 
+        //    INavigationService<RegisterViewModel> registerNavigationService, INavigationService<AccountViewModel> accountNavigationService, 
+        //    INavigationService<FlowersViewModel> flowersNavigationService)
+        //{
+        //    NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
+        //    NavigateRegisterCommand = new NavigateCommand<RegisterViewModel>(registerNavigationService);
+        //    NavigateAccountCommand = new NavigateCommand<AccountViewModel>(accountNavigationService);
+        //    NavigateFlowersCommand = new NavigateCommand<FlowersViewModel>(flowersNavigationService);
+        //    this.accountStore = accountStore;
+        //    ComboBoxItems = new ObservableCollection<string>();
+        //    PopulateComboBox();
+
+        //}
 
         private void PopulateComboBox()
         {
