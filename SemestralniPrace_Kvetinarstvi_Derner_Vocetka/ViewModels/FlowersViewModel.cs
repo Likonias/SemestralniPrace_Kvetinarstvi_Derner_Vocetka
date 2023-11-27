@@ -1,4 +1,6 @@
-﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
+﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,6 +27,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         }
         public FlowersViewModel()
         {
+            
+            
             dbUtil = new OracleDbUtil();
             InitializeTableData();
         }
@@ -35,7 +39,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private async Task<DataTable> GetTable()
         {
-            return await dbUtil.ExecuteQueryAsync("SELECT * FROM zakaznici");
+            AddressRepository addressRepository = new AddressRepository();
+            //await addressRepository.Add(new Address(1, "chrudimská", "1144", "Pardubice", "53002", null, null, null));
+            await addressRepository.GetAll();
+            return addressRepository.DataTable;
         }
     }
 }

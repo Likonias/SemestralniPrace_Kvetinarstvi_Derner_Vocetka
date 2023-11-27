@@ -10,7 +10,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Interfaces
     {
         //TODO všechny repositories k Entities
         Task<T> GetById(int id);
-        Task<IEnumerable<T>> GetAll();
+        Task GetAll();
         Task Add(T entity);
         Task Update(T entity);
         Task Delete(T entity);
