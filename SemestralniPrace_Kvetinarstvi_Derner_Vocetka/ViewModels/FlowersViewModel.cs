@@ -39,11 +39,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private async Task<DataTable> GetTable()
         {
-            AddressRepository addressRepository = new AddressRepository();
-            //await addressRepository.Add(new Address(1, "ab", "1144", "PRAGA", "55555", null, null, null));
-            //addressRepository.Delete(new Address(1, "ULICI", "1144", "PRAGA", "55555", null, null, null));
-            await addressRepository.GetAll();
-            return await addressRepository.ConvertToDataTable();
+            //AddressRepository addressRepository = new AddressRepository();
+            ////await addressRepository.Add(new Address(1, "ab", "1144", "PRAGA", "55555", null, null, null));
+            ////addressRepository.Delete(new Address(1, "ULICI", "1144", "PRAGA", "55555", null, null, null));
+            //await addressRepository.GetAll();
+            //return await addressRepository.ConvertToDataTable();
+            BillingRepository billingRepository = new BillingRepository();
+            await billingRepository.Delete(new Billing(1, Models.Enums.BillingTypeEnum.Card, "Lovely Note"));
+
+            return await billingRepository.ConvertToDataTable();
         }
     }
 }

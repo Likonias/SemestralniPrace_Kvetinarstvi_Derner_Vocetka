@@ -47,7 +47,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             {
                 { "ID_ADRESA", entity.Id }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("deleteAddress", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("deleteadresy", parameters);
         }
 
         public async Task GetAll()

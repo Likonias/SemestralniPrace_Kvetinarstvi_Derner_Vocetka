@@ -9,4 +9,10 @@ public class Billing
     public BillingTypeEnum BillingType { get; set; }
     public string? Note { get; set; }
 
+    public Billing(int id, BillingTypeEnum billingType, string? note)
+    {
+        Id = id;
+        BillingType = billingType;
+        Note = note;
+    }
 }
