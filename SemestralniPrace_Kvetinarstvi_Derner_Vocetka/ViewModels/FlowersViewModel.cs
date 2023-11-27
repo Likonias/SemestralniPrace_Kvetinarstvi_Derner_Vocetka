@@ -40,9 +40,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private async Task<DataTable> GetTable()
         {
             AddressRepository addressRepository = new AddressRepository();
-            //await addressRepository.Add(new Address(1, "chrudimská", "1144", "Pardubice", "53002", null, null, null));
+            //await addressRepository.Add(new Address(1, "ab", "1144", "PRAGA", "55555", null, null, null));
+            //addressRepository.Delete(new Address(1, "ULICI", "1144", "PRAGA", "55555", null, null, null));
             await addressRepository.GetAll();
-            return addressRepository.DataTable;
+            return await addressRepository.ConvertToDataTable();
         }
     }
 }

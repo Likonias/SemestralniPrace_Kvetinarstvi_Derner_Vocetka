@@ -8,6 +8,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Enums
 {
     public enum EmployeePosition
     {
-        //toto finish setting up
+        ADMIN,
+        MAJITEL,
+        PRODAVAC
     }
 }

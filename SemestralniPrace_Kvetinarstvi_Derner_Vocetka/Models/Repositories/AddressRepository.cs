@@ -17,14 +17,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
     {
 
         public ObservableCollection<Address> Addresses { get; set; }
-        public DataTable DataTable { get; set; }
         private OracleDbUtil dbUtil;
 
         public AddressRepository() 
         {
             Addresses = new ObservableCollection<Address>();
             dbUtil = new OracleDbUtil();
-            DataTable = new DataTable();
         }
 
         public async Task Add(Address entity)
@@ -47,32 +45,30 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             var parameters = new Dictionary<string, object>
             {
-                { "AddressId", entity.Id }
+                { "ID_ADRESA", entity.Id }
             };
             await dbUtil.ExecuteStoredProcedureAsync("deleteAddress", parameters);
         }
 
         public async Task GetAll()
         {
-            string command = "SELECT * FROM Adresy"; // Modify this query based on your database schema
+            string command = "SELECT * FROM Adresy";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
 
-            //foreach (DataRow row in dataTable.Rows)
-            //{
-            //    var address = new Address(
-            //        Convert.ToInt32(row["Id"]),
-            //        row["Street"].ToString(),
-            //        row["StreetNumber"].ToString(),
-            //        row["City"].ToString(),
-            //        row["Zip"].ToString(),
-            //        row["EmployeeId"] != DBNull.Value ? Convert.ToInt32(row["EmployeeId"]) : (int?)null,
-            //        row["CustomerId"] != DBNull.Value ? Convert.ToInt32(row["CustomerId"]) : (int?)null,
-            //        row["AddressType"] != DBNull.Value ? (AddressType?)Enum.Parse(typeof(AddressType), row["AddressType"].ToString()) : null
-            //    );
-            //    Addresses.Add(address);
-            //}
-
-            DataTable = dataTable;
+            foreach (DataRow row in dataTable.Rows)
+            {
+                var address = new Address(
+                    Convert.ToInt32(row["ID_ADRESA"]),
+                    row["ULICE"].ToString(),
+                    row["CISLO_POPISNE"].ToString(),
+                    row["MESTO"].ToString(),
+                    row["PSC"].ToString(),
+                    row["ZAMESTNANCI_ID_ZAMESTNANEC"] != DBNull.Value ? Convert.ToInt32(row["EmployeeId"]) : (int?)null,
+                    row["ZAKAZNICI_ID_ZAKAZNIK"] != DBNull.Value ? Convert.ToInt32(row["CustomerId"]) : (int?)null,
+                    row["DRUHY_ADRES_ID_DRUH_ADRESY"] != DBNull.Value ? (AddressType?)Enum.Parse(typeof(AddressType), row["AddressType"].ToString()) : null
+                );
+                Addresses.Add(address);
+            }
 
         }
 
@@ -103,7 +99,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             var parameters = new Dictionary<string, object>
             {
-                { "AddressId", entity.Id }, // Assuming AddressId is the identifier for update
+                { "ID_ADRESA", entity.Id },
                 { "ULICE", entity.Street },
                 { "CISLO_POPISNE", entity.StreetNumber },
                 { "MESTO", entity.City },
@@ -115,12 +111,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await dbUtil.ExecuteStoredProcedureAsync("updateAddress", parameters);
         }
 
-        public DataTable ConvertToDataTable()
+        public async Task<DataTable> ConvertToDataTable()
         {
             GetAll();
             DataTable dataTable = new DataTable();
 
-            // Adding columns to the DataTable based on Address properties
             dataTable.Columns.Add("Street", typeof(string));
             dataTable.Columns.Add("StreetNumber", typeof(string));
             dataTable.Columns.Add("City", typeof(string));
@@ -131,17 +126,16 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
             foreach (var address in Addresses)
             {
-                // Creating a new row in the DataTable and assigning values
+                
                 DataRow row = dataTable.NewRow();
                 row["Street"] = address.Street;
                 row["StreetNumber"] = address.StreetNumber;
                 row["City"] = address.City;
                 row["Zip"] = address.Zip;
-                row["EmployeeId"] = address.EmployeeId ?? 0; // Handle nullable types
-                row["CustomerId"] = address.CustomerId ?? 0; // Handle nullable types
-                row["AddressType"] = address.AddressType ?? null; // Handle nullable types
+                row["EmployeeId"] = address.EmployeeId ?? 0;
+                row["CustomerId"] = address.CustomerId ?? 0;
+                row["AddressType"] = address.AddressType ?? null; 
 
-                // Adding the populated row to the DataTable
                 dataTable.Rows.Add(row);
             }
 
