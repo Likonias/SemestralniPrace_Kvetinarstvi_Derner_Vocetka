@@ -16,13 +16,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
     {
         public ObservableCollection<Delivery> Deliveries { get; set; }
         private OracleDbUtil dbUtil;
-        
+
         public DeliveryRepository()
         {
             Deliveries = new ObservableCollection<Delivery>();
             dbUtil = new OracleDbUtil();
         }
-        
+
         public async Task<Delivery> GetById(Int32 id)
         {
             string command = $"SELECT * FROM doruceni WHERE ID_DORUCENI = {id}";
@@ -30,15 +30,25 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
             if (dataTable.Rows.Count == 0)
                 return null;
-            
+
             var row = dataTable.Rows[0];
             var delivery = new Delivery(
                 Convert.ToInt32(row["ID_DORUCENI"]),
+                Convert.ToDateTime(row["WarehouseReleaseDate"]),
+                row["IdOrder"] != DBNull.Value ? Convert.ToInt32(row["IdOrder"]) : (int?)null,
+                (DeliveryMethodEnum)Enum.Parse(typeof(DeliveryMethodEnum), row["Method"].ToString()),
+                Convert.ToInt32(row["ID_DORUCENI"]),
                 row["SPOLECNOST"].ToString()
             );
-            
-            return (Delivery)Convert.ChangeType(delivery, typeof(Delivery));
+
+            // Set additional properties
+            delivery.WarehouseReleaseDate = Convert.ToDateTime(row["WarehouseReleaseDate"]);
+            delivery.IdOrder = row["IdOrder"] != DBNull.Value ? Convert.ToInt32(row["IdOrder"]) : (int?)null;
+            delivery.Method = (DeliveryMethodEnum)Enum.Parse(typeof(DeliveryMethodEnum), row["Method"].ToString());
+
+            return delivery;
         }
+
 
         public async Task GetAll()
         {
@@ -49,8 +59,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             {
                 var delivery = new Delivery(
                     Convert.ToInt32(row["ID_DORUCENI"]),
+                    Convert.ToDateTime(row["WarehouseReleaseDate"]),
+                    row["IdOrder"] != DBNull.Value ? Convert.ToInt32(row["IdOrder"]) : (int?)null,
+                    (DeliveryMethodEnum)Enum.Parse(typeof(DeliveryMethodEnum), row["Method"].ToString()),
+                    Convert.ToInt32(row["ID_DORUCENI"]),
                     row["SPOLECNOST"].ToString()
                 );
+
+                delivery.WarehouseReleaseDate = Convert.ToDateTime(row["WarehouseReleaseDate"]);
+                delivery.IdOrder = row["IdOrder"] != DBNull.Value ? Convert.ToInt32(row["IdOrder"]) : (int?)null;
+                delivery.Method = (DeliveryMethodEnum)Enum.Parse(typeof(DeliveryMethodEnum), row["Method"].ToString());
+
                 Deliveries.Add(delivery);
             }
         }
@@ -59,7 +78,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             var parameters = new Dictionary<string, object>
             {
-                {"SPOLECNOST", entity.TransportCompany},
+                { "SPOLECNOST", entity.TransportCompany },
             };
             await dbUtil.ExecuteStoredProcedureAsync("adddoruceni", parameters);
         }
@@ -68,8 +87,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             var parameters = new Dictionary<string, object>
             {
-                {"ID_DORUCENI", entity.IdDelivery},
-                {"SPOLECNOST", entity.TransportCompany},
+                { "ID_DORUCENI", entity.IdDelivery },
+                { "SPOLECNOST", entity.TransportCompany },
             };
         }
 
@@ -77,7 +96,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             var parameters = new Dictionary<string, object>
             {
-                {"ID_DORUCENI", entity.IdDelivery}
+                { "ID_DORUCENI", entity.IdDelivery }
             };
             await dbUtil.ExecuteStoredProcedureAsync("deletedoruceni", parameters);
         }
@@ -86,16 +105,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             await GetAll();
             DataTable dataTable = new DataTable();
-            
+
             dataTable.Columns.Add("TransportCompany", typeof(string));
-            
+
             foreach (var delivery in Deliveries)
             {
                 DataRow row = dataTable.NewRow();
                 row["TransportCompany"] = delivery.TransportCompany;
                 dataTable.Rows.Add(row);
             }
-            
+
+            return dataTable;
         }
     }
 }
