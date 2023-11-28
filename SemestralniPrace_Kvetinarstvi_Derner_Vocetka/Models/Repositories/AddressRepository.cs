@@ -113,7 +113,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task<DataTable> ConvertToDataTable()
         {
-            GetAll();
+            await GetAll();
             DataTable dataTable = new DataTable();
 
             dataTable.Columns.Add("Street", typeof(string));
