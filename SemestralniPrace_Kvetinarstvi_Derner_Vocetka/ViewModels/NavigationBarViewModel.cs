@@ -22,7 +22,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public ICommand NavigateRegisterCommand { get; }
         public ICommand NavigateAccountCommand { get; }
         public ICommand NavigateFlowersCommand { get; }
-        
+        public ICommand NavigateAddressCommand { get; }
+
         public ObservableCollection<string> ComboBoxItems { get; set; }
 
         private string selectedComboBoxItem;
@@ -63,7 +64,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             NavigateRegisterCommand = new NavigateCommand<RegisterViewModel>(navigationServiceManager.GetNavigationService<RegisterViewModel>());
             NavigateAccountCommand = new NavigateCommand<AccountViewModel>(navigationServiceManager.GetNavigationService<AccountViewModel>());
             NavigateFlowersCommand = new NavigateCommand<FlowersViewModel>(navigationServiceManager.GetNavigationService<FlowersViewModel>());
-
+            NavigateAddressCommand = new NavigateCommand<AddressViewModel>(navigationServiceManager.GetNavigationService<AddressViewModel>());
             this.accountStore = accountStore;
             ComboBoxItems = new ObservableCollection<string>();
             PopulateComboBox();
@@ -89,6 +90,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             {
                 case ComboBoxTableNamesEnum.Flowers:
                     NavigateFlowersCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.Addresses:
+                    NavigateAddressCommand.Execute(null);
                     break;
             }
         }

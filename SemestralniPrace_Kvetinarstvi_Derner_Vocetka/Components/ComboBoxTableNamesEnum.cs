@@ -10,14 +10,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components
     enum ComboBoxTableNamesEnum
     {
 
-        [Description("Všechno Zboží")]
-        AllGoods,
+        [Description("Adresy")]
+        Addresses,
 
         [Description("Květiny")]
         Flowers,
 
-        [Description("Ostatní Zboží")]
-        OtherGoods
+        [Description("Zákazníci")]
+        Customers
 
     }
 }

@@ -68,6 +68,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             return new LayoutNavigationService<FlowersViewModel>(navigationStore, () => new FlowersViewModel(), CreateNavigationBarViewModel);
         }
 
+        private INavigationService<AddressViewModel> CreateAddressesNavigationService()
+        {
+            return new LayoutNavigationService<AddressViewModel>(navigationStore, () => new AddressViewModel(), CreateNavigationBarViewModel);
+        }
+
         private NavigationBarViewModel CreateNavigationBarViewModel()
         {
             UpdateServiceManager();
@@ -82,6 +87,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             serviceManager.RegisterNavigationService(CreateRegisterNavigationService());
             serviceManager.RegisterNavigationService(CreateAccountNavigationService());
             serviceManager.RegisterNavigationService(CreateFlowersNavigationService());
+            serviceManager.RegisterNavigationService(CreateAddressesNavigationService());
         }
 
     }

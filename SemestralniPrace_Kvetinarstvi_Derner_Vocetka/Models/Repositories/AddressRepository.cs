@@ -120,8 +120,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dataTable.Columns.Add("StreetNumber", typeof(string));
             dataTable.Columns.Add("City", typeof(string));
             dataTable.Columns.Add("Zip", typeof(string));
-            dataTable.Columns.Add("EmployeeId", typeof(int));
-            dataTable.Columns.Add("CustomerId", typeof(int));
             dataTable.Columns.Add("AddressType", typeof(AddressType));
 
             foreach (var address in Addresses)
@@ -132,8 +130,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 row["StreetNumber"] = address.StreetNumber;
                 row["City"] = address.City;
                 row["Zip"] = address.Zip;
-                row["EmployeeId"] = address.EmployeeId ?? 0;
-                row["CustomerId"] = address.CustomerId ?? 0;
                 row["AddressType"] = address.AddressType ?? null; 
 
                 dataTable.Rows.Add(row);
