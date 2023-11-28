@@ -12,5 +12,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
     {
         public int Id { get; set; }
         public AddressTypeEnum addressType { get; set; }
+
+        public AddressType(int id, AddressTypeEnum addressType)
+        {
+            Id = id;
+            this.addressType = addressType;
+        }
     }
 }

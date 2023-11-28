@@ -17,6 +17,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
         public Customer IdCustomer { get; set; }
         public Employee IdEmployee { get; set; }
 
-
+        public Order(int id, double finalPrice, OrderStatus idStatus, Billing? idBilling, Customer idCustomer, Employee idEmployee)
+        {
+            Id = id;
+            FinalPrice = finalPrice;
+            IdStatus = idStatus;
+            IdBilling = idBilling;
+            IdCustomer = idCustomer;
+            IdEmployee = idEmployee;
+        }
     }
 }

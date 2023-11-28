@@ -9,4 +9,13 @@ public class Invoice
     public double Price { get; set; }
     public int OrderId { get; set; }
     public byte[] InvoicePdf { get; set; }
+
+    public Invoice(int id, DateTime date, double price, int orderId, byte[] invoicePdf)
+    {
+        Id = id;
+        Date = date;
+        Price = price;
+        OrderId = orderId;
+        InvoicePdf = invoicePdf;
+    }
 }

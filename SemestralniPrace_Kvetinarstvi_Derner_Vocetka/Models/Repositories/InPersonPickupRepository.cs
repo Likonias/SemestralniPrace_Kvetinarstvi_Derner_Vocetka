@@ -23,7 +23,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dbUtil = new OracleDbUtil();
         }
         
-        public async Task<T> GetById(Int32 id)
+        public async Task<InPersonPickup> GetById(Int32 id)
         {
             string command = $"SELECT * FROM osobni_vyzvednuti WHERE ID_OSOBNE = {id}";
             var dataTable = await dbUtil.ExecuteQueryAsync(command);

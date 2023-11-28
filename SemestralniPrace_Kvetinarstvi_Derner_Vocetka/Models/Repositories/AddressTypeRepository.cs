@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +22,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dbUtil = new OracleDbUtil();
         }
 
-        public async Task<T> GetById(Int32 id)
+        public async Task<AddressType> GetById(Int32 id)
         {
             string command = $"SELECT * FROM druh_adresy WHERE ID_DRUH_ADRESY = {id}";
             var dataTable = await dbUtil.ExecuteQueryAsync(command);
@@ -29,7 +31,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 Convert.ToInt32(row["ID_DRUH_ADRESY"]),
                 (AddressTypeEnum)Enum.Parse(typeof(AddressTypeEnum), row["DRUH_ADRESY"].ToString())
             );
-            return (T)Convert.ChangeType(addressType, typeof(T));
+            return (AddressType)Convert.ChangeType(addressType, typeof(T));
         }
 
         public async Task GetAll()
@@ -51,7 +53,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             var parameters = new Dictionary<string, object>
             {
-                { "DRUH_ADRESY", entity.AddressType.ToString() }
+                { "DRUH_ADRESY", entity.addressType.ToString() }
             };
             await dbUtil.ExecuteStoredProcedureAsync("adddruh_adresy", parameters);
         }
@@ -60,7 +62,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             var parameters = new Dictionary<string, object>
             {
                 { "ID_DRUH_ADRESY", entity.Id },
-                { "DRUH_ADRESY", entity.AddressType.ToString() }
+                { "DRUH_ADRESY", entity.addressType.ToString() }
             };
             await dbUtil.ExecuteStoredProcedureAsync("updatedruh_adresy", parameters);
         }
@@ -84,7 +86,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             foreach (var addressType in AddressType)
             {
                 DataRow row = dataTable.NewRow();
-                row["AddressType"] = addressType.AddressType.toString();
+                row["AddressType"] = addressType.addressType;
                 dataTable.Rows.Add(row);
             }
             

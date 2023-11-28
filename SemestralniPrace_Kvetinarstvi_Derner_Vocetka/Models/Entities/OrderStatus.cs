@@ -11,5 +11,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Entities
         public int Id { get; set; }
         public DateOnly OrderDate { get; set; }
         public DateOnly? PaymentDate { get; set; }
+
+        public OrderStatus(int id, DateOnly orderDate, DateOnly? paymentDate)
+        {
+            Id = id;
+            OrderDate = orderDate;
+            PaymentDate = paymentDate;
+        }
     }
 }

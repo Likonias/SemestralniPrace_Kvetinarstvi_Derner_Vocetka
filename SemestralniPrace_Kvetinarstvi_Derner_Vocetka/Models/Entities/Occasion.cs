@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,15 +10,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Entities
     public class Occasion
     {
         public int Id { get; set; }
-        public enum OccasionType
-        {
-            Wedding,
-            Funeral,
-            MothersDay,
-            FathersDay,
-            Birthday,
-            ThanksGiving
-        }
+        public OccasionTypeEnum OccasionType { get; set; }
         public string? Note { get; set; }
     }
 }
