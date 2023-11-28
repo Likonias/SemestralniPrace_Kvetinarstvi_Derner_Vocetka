@@ -35,6 +35,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             var deliveryMethod = new DeliveryMethod(
                 Convert.ToInt32(row["ID_DORUCENI"]),
                 Convert.ToDateTime(row["DATUM_VYDANI"]),
+                row["OBJEDNAVKY_ID_OBJEDNAVKA"] != DBNull.Value ? Convert.ToInt32(row["OrderId"]) : (int?)null,
                 (DeliveryMethodEnum)Enum.Parse(typeof(DeliveryMethodEnum), row["TYP"].ToString())
             );
             
@@ -51,6 +52,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 var deliveryMethod = new DeliveryMethod(
                     Convert.ToInt32(row["ID_DORUCENI"]),
                     Convert.ToDateTime(row["DATUM_VYDANI"]),
+                    row["OBJEDNAVKY_ID_OBJEDNAVKA"] != DBNull.Value ? Convert.ToInt32(row["OrderId"]) : (int?)null,
                     (DeliveryMethodEnum)Enum.Parse(typeof(DeliveryMethodEnum), row["TYP"].ToString())
                 );
                 DeliveryMethods.Add(deliveryMethod);
