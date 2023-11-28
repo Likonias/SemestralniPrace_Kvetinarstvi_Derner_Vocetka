@@ -22,7 +22,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dbUtil = new OracleDbUtil();
         }
         
-        public async Task<T> GetById(Int32 id)
+        public async Task<Invoice> GetById(Int32 id)
         {
             string command = $"SELECT * FROM faktury WHERE ID_FAKTURA = {id}";
             var dataTable = await dbUtil.ExecuteQueryAsync(command);
@@ -34,10 +34,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             var invoice = new Invoice(
                 Convert.ToInt32(row["ID_FAKTURA"]),
                 Convert.ToDateTime(row["DATUM"]),
-                Convert.ToInt32(row["CENA"])
+                Convert.ToInt32(row["CENA"]),
+                row["OBJEDNAVKY_ID_OBJEDNAVKA"] != DBNull.Value ? Convert.ToInt32(row["OrderId"]) : (int?)null,
+                null
             );
             
-            return (T)Convert.ChangeType(invoice, typeof(T));
+            return (Invoice)Convert.ChangeType(invoice, typeof(Invoice));
         }
 
         public async Task GetAll()
@@ -50,7 +52,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 var invoice = new Invoice(
                     Convert.ToInt32(row["ID_FAKTURA"]),
                     Convert.ToDateTime(row["DATUM"]),
-                    Convert.ToInt32(row["CENA"])
+                    Convert.ToInt32(row["CENA"]),
+                    row["OBJEDNAVKY_ID_OBJEDNAVKA"] != DBNull.Value ? Convert.ToInt32(row["OrderId"]) : (int?)null,
+                    null
                 );
                 Invoices.Add(invoice);
             }

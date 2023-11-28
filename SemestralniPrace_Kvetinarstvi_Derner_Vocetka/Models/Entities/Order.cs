@@ -12,12 +12,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
         
         public int Id { get; set; }
         public double FinalPrice { get; set; }
-        public OrderStatus IdStatus { get; set; }
+        public OrderStatus? IdStatus { get; set; }
         public Billing? IdBilling { get; set; }
         public Customer IdCustomer { get; set; }
-        public Employee IdEmployee { get; set; }
+        public Employee? IdEmployee { get; set; }
 
-        public Order(int id, double finalPrice, OrderStatus idStatus, Billing? idBilling, Customer idCustomer, Employee idEmployee)
+        public Order(int id, double finalPrice, OrderStatus? idStatus, Billing? idBilling, Customer idCustomer, Employee? idEmployee)
         {
             Id = id;
             FinalPrice = finalPrice;

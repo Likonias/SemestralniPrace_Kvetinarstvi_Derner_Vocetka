@@ -22,7 +22,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dbUtil = new OracleDbUtil();
         }
         
-        public async Task<T> GetById(Int32 id)
+        public async Task<Order> GetById(Int32 id)
         {
             string command = $"SELECT * FROM objednavky WHERE ID_OBJEDNAVKA = {id}";
             var dataTable = await dbUtil.ExecuteQueryAsync(command);
@@ -33,10 +33,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             var row = dataTable.Rows[0];
             var order = new Order(
                 Convert.ToInt32(row["ID_OBJEDNAVKA"]),
-                Convert.ToInt32(row["CELKOVA_CENA"])
+                Convert.ToInt32(row["CELKOVA_CENA"]),
+                null,
+                null,
+                null, //new CustomerRepository().GetById(Convert.ToInt32(row["ZAKAZNICI_ID_ZAKAZNIK"])),
+                null
             );
             
-            return (T)Convert.ChangeType(order, typeof(T));
+            return (Order)Convert.ChangeType(order, typeof(Order));
         }
 
         public async Task GetAll()
@@ -48,7 +52,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             {
                 var order = new Order(
                     Convert.ToInt32(row["ID_OBJEDNAVKA"]),
-                    Convert.ToInt32(row["CELKOVA_CENA"])
+                    Convert.ToInt32(row["CELKOVA_CENA"]),
+                    null,
+                    null,
+                    null,
+                    null
                 );
                 Billings.Add(order);
             }

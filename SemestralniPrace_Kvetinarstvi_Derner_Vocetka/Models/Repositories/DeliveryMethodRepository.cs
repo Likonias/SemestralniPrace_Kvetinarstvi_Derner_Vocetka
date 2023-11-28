@@ -35,10 +35,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             var deliveryMethod = new DeliveryMethod(
                 Convert.ToInt32(row["ID_DORUCENI"]),
                 Convert.ToDateTime(row["DATUM_VYDANI"]),
-                (DeliveryMethodTypeEnum)Enum.Parse(typeof(DeliveryMethodTypeEnum), row["TYP"].ToString())
+                (DeliveryMethodEnum)Enum.Parse(typeof(DeliveryMethodEnum), row["TYP"].ToString())
             );
             
-            return (T)Convert.ChangeType(deliveryMethod, typeof(T));
+            return (DeliveryMethod)Convert.ChangeType(deliveryMethod, typeof(DeliveryMethod));
         }
 
         public async Task GetAll()
@@ -51,7 +51,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 var deliveryMethod = new DeliveryMethod(
                     Convert.ToInt32(row["ID_DORUCENI"]),
                     Convert.ToDateTime(row["DATUM_VYDANI"]),
-                    (DeliveryMethodTypeEnum)Enum.Parse(typeof(DeliveryMethodTypeEnum), row["TYP"].ToString())
+                    (DeliveryMethodEnum)Enum.Parse(typeof(DeliveryMethodEnum), row["TYP"].ToString())
                 );
                 DeliveryMethods.Add(deliveryMethod);
             }
@@ -61,8 +61,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             var parameters = new Dictionary<string, object>
             {
-                { "DATUM_VYDANI", entity.WarehouseReleaseDate }
-                { "TYP", entity.MethodType.ToString() }
+                { "DATUM_VYDANI", entity.WarehouseReleaseDate },
+                { "TYP", entity.Method.ToString() }
             };
             await dbUtil.ExecuteStoredProcedureAsync("adddoruceni", parameters);
         }
@@ -71,9 +71,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             var parameters = new Dictionary<string, object>
             {
-                { "ID_DORUCENI", entity.Id },
+                { "ID_DORUCENI", entity.IdDeliveryMethod },
                 { "DATUM_VYDANI", entity.WarehouseReleaseDate },
-                { "TYP", entity.MethodType.ToString() }
+                { "TYP", entity.Method.ToString() }
             };
             await dbUtil.ExecuteStoredProcedureAsync("updatedoruceni", parameters);
         }
@@ -82,7 +82,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             var parameters = new Dictionary<string, object>
             {
-                { "ID_DORUCENI", entity.Id }
+                { "ID_DORUCENI", entity.IdDeliveryMethod }
             };
             await dbUtil.ExecuteStoredProcedureAsync("deletedoruceni", parameters);
         }
@@ -94,14 +94,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             
             dataTable.Columns.Add("ID_DORUCENI", typeof(int));
             dataTable.Columns.Add("DATUM_VYDANI", typeof(DateTime));
-            dataTable.Columns.Add("TYP", typeof(DeliveryMethodTypeEnum));
+            dataTable.Columns.Add("TYP", typeof(DeliveryMethodEnum));
             
             foreach (var deliveryMethod in DeliveryMethods)
             {
                 DataRow row = dataTable.NewRow();
-                row["ID_DORUCENI"] = deliveryMethod.Id;
+                row["ID_DORUCENI"] = deliveryMethod.IdDeliveryMethod;
                 row["DATUM_VYDANI"] = deliveryMethod.WarehouseReleaseDate;
-                row["TYP"] = deliveryMethod.MethodType;
+                row["TYP"] = deliveryMethod.Method;
                 dataTable.Rows.Add(row);
             }
             

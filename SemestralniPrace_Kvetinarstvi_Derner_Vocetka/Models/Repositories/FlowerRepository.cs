@@ -22,10 +22,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dbUtil = new OracleDbUtil();
         }
         
-        public async Task<T> GetById(Int32 id)
+        public async Task<Flower> GetById(Int32 id)
         { 
             string command = $"SELECT * FROM kvetiny WHERE ID_KVETINA = {id}";
-            var dataTable = dbUtil.ExecuteQuery(command);
+            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
             
             if (dataTable.Rows.Count == 0)
                 return null;
@@ -38,13 +38,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 Convert.ToInt32(row["POCET"])
             );
             
-            return (T)Convert.ChangeType(flower, typeof(T));
+            return (Flower)Convert.ChangeType(flower, typeof(Flower));
         }
 
         public async Task GetAll()
         {
             string command = "SELECT * FROM kvetiny";
-            DataTable dataTable = dbUtil.ExecuteQuery(command);
+            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
             
             foreach (DataRow row in dataTable.Rows)
             {
@@ -72,7 +72,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             var parameters = new Dictionary<string, object>
             {
-                {"ID_KVETINA", entity.Id},
+                {"ID_KVETINA", entity.IdFlower},
                 {"STAV", entity.State.ToString()},
                 {"STARI", entity.Age}
             };
@@ -83,7 +83,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             var parameters = new Dictionary<string, object>
             {
-                {"ID_KVETINA", entity.Id}
+                {"ID_KVETINA", entity.IdFlower}
             };
             await dbUtil.ExecuteStoredProcedureAsync("deletekvetina", parameters);
         }

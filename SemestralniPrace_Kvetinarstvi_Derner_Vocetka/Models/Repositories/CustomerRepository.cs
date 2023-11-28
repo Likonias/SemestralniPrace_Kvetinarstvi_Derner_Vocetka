@@ -22,7 +22,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dbUtil = new OracleDbUtil();
         }
         
-        public async Task<T> GetById(Int32 id)
+        public async Task<Customer> GetById(Int32 id)
         {
             string command = $"SELECT * FROM zakaznici WHERE ID_ZAKAZNIK = {id}";
             var dataTable = await dbUtil.ExecuteQueryAsync(command);
@@ -35,7 +35,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 row["TELEFON"].ToString(),
                 row["HESLO"].ToString()
             );
-            return (T)Convert.ChangeType(customer, typeof(T));
+            return customer;
         }
 
         public async Task GetAll()

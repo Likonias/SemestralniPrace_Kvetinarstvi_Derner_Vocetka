@@ -9,10 +9,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Entities
     public class OrderStatus
     {
         public int Id { get; set; }
-        public DateOnly OrderDate { get; set; }
-        public DateOnly? PaymentDate { get; set; }
+        public DateTime OrderDate { get; set; }
+        public DateTime? PaymentDate { get; set; }
 
-        public OrderStatus(int id, DateOnly orderDate, DateOnly? paymentDate)
+        public OrderStatus(int id, DateTime orderDate, DateTime? paymentDate)
         {
             Id = id;
             OrderDate = orderDate;

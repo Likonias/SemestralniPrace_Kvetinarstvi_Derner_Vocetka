@@ -23,7 +23,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dbUtil = new OracleDbUtil();
         }
         
-        public async Task<T> GetById(Int32 id)
+        public async Task<OrderStatus> GetById(Int32 id)
         {
             string command = $"SELECT * FROM stavy WHERE ID_STAV = {id}";
             var dataTable = await dbUtil.ExecuteQueryAsync(command);
@@ -38,7 +38,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 Convert.ToDateTime(row["DATUM_UHRADY"])
             );
             
-            return (T)Convert.ChangeType(orderStatus, typeof(T));
+            return (OrderStatus)Convert.ChangeType(orderStatus, typeof(OrderStatus));
         }
 
         public async Task GetAll()

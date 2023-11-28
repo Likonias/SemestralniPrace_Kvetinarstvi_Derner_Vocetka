@@ -37,7 +37,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 row["CAS"].ToString()
             );
             
-            return (T)Convert.ChangeType(inPersonPickup, typeof(T));
+            return (InPersonPickup)Convert.ChangeType(inPersonPickup, typeof(InPersonPickup));
         }
 
         public async Task GetAll()

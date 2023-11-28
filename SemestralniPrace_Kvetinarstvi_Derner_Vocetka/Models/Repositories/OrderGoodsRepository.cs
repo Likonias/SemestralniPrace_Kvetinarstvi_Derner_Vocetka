@@ -25,7 +25,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dbUtil = new OracleDbUtil();
         }
         
-        public async Task<T> GetById(Int32 id)
+        public async Task<OrderGoods> GetById(Int32 id)
         {
             throw new NotImplementedException();
         }

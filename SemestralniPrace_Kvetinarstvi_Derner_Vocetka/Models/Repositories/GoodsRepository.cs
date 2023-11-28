@@ -22,7 +22,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dbUtil = new OracleDbUtil();
         }
         
-        public async Task<T> GetById(Int32 id)
+        public async Task<Goods> GetById(Int32 id)
         {
             string command = $"SELECT * FROM zbozi WHERE ID_ZBOZI = {id}";
             var dataTable = await dbUtil.ExecuteQueryAsync(command);
@@ -35,11 +35,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 Convert.ToInt32(row["ID_ZBOZI"]),
                 row["NAZEV"].ToString(),
                 Convert.ToInt32(row["CENA"]),
-                row["TYP"].ToString(),
-                Convert.ToInt32(row["SKLAD"])
+                Convert.ToByte(row["TYP"]),
+                Convert.ToInt32(row["SKLAD"]),
+                null
             );
             
-            return (T)Convert.ChangeType(goods, typeof(T));
+            return (Goods)Convert.ChangeType(goods, typeof(Goods));
         }
 
         public async Task GetAll()
@@ -53,8 +54,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                     Convert.ToInt32(row["ID_ZBOZI"]),
                     row["NAZEV"].ToString(),
                     Convert.ToInt32(row["CENA"]),
-                    row["TYP"].ToString(),
-                    Convert.ToInt32(row["SKLAD"])
+                    Convert.ToByte(row["TYP"]),
+                    Convert.ToInt32(row["SKLAD"]),
+                    null
                 );
                 Goods.Add(goods);
             }
@@ -66,7 +68,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             { 
                 { "NAZEV", entity.Name },
                 { "CENA", entity.Price },
-                { "TYP", entity.Type }
+                { "TYP", entity.Type },
                 { "SKLAD", entity.Warehouse }
             };
             await dbUtil.ExecuteStoredProcedureAsync("addzbozi", parameters);
@@ -76,10 +78,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             var parameters = new Dictionary<string, object>
             {
-                { "ID_ZBOZI", entity.Id },
+                { "ID_ZBOZI", entity.IdGoods },
                 { "NAZEV", entity.Name },
                 { "CENA", entity.Price },
-                { "TYP", entity.Type }
+                { "TYP", entity.Type },
                 { "SKLAD", entity.Warehouse }
             };
             await dbUtil.ExecuteStoredProcedureAsync("updatezbozi", parameters);
@@ -89,7 +91,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             var parameters = new Dictionary<string, object>
             {
-                { "ID_ZBOZI", entity.Id }
+                { "ID_ZBOZI", entity.IdGoods }
             };
             await dbUtil.ExecuteStoredProcedureAsync("deletezbozi", parameters);
         }
@@ -102,12 +104,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dataTable.Columns.Add("ID_ZBOZI", typeof(int));
             dataTable.Columns.Add("NAZEV", typeof(string));
             dataTable.Columns.Add("CENA", typeof(int));
-            dataTable.Columns.Add("TYP", typeof(GoodsTypeEnum));
+            dataTable.Columns.Add("TYP", typeof(byte));
             dataTable.Columns.Add("SKLAD", typeof(int));
             
             foreach (var goods in Goods)
             {
-                dataTable.Rows.Add(goods.Id, goods.Name, goods.Price, goods.Type, goods.Warehouse);
+                dataTable.Rows.Add(goods.IdGoods, goods.Name, goods.Price, goods.Type, goods.Warehouse);
             }
             
             return dataTable;

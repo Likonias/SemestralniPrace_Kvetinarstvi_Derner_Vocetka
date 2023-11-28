@@ -22,7 +22,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dbUtil = new OracleDbUtil();
         }
         
-        public async Task<T> GetById(Int32 id)
+        public async Task<Employee> GetById(Int32 id)
         {
             string command = $"SELECT * FROM zamestnanci WHERE ID_ZAMESTNANEC = {id}";
             var dataTable = await dbUtil.ExecuteQueryAsync(command);
@@ -34,10 +34,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 Convert.ToInt32(row["MZDA"]),
                 row["EMAIL"].ToString(),
                 row["TELEFON"].ToString(),
+                row["ZAMESTNANCI_ID_ZAMESTNANEC"] != DBNull.Value ? Convert.ToInt32(row["EmployeeId"]) : (int?)null,
                 row["HESLO"].ToString(),
-                row["POZICE"].ToString()
+                (EmployeePosition)(row["POZICE"] != DBNull.Value ? Enum.Parse(typeof(EmployeePosition), row["EmployeePosition"].ToString()) : null)
+
             );
-            return (T)Convert.ChangeType(employee, typeof(T));
+            return (Employee)Convert.ChangeType(employee, typeof(Employee));
         }
 
         public async Task GetAll()
@@ -54,8 +56,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                     Convert.ToInt32(row["MZDA"]),
                     row["EMAIL"].ToString(),
                     row["TELEFON"].ToString(),
+                    row["ZAMESTNANCI_ID_ZAMESTNANEC"] != DBNull.Value ? Convert.ToInt32(row["EmployeeId"]) : (int?)null,
                     row["HESLO"].ToString(),
-                    row["POZICE"].ToString()
+                    (EmployeePosition)(row["POZICE"] != DBNull.Value ? Enum.Parse(typeof(EmployeePosition), row["EmployeePosition"].ToString()) : null)
+
                 );
                 Employees.Add(employee);
             }
@@ -70,7 +74,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 {"MZDA", entity.Wage},
                 { "EMAIL", entity.Email },
                 { "TELEFON", entity.Tel },
-                { "HESLO", entity.Password }
+                { "HESLO", entity.Password },
                 { "POZICE", entity.Position }
             };
             await dbUtil.ExecuteStoredProcedureAsync("addzamestnanec", parameters);
@@ -86,7 +90,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 {"MZDA", entity.Wage},
                 { "EMAIL", entity.Email },
                 { "TELEFON", entity.Tel },
-                { "HESLO", entity.Password }
+                { "HESLO", entity.Password },
                 { "POZICE", entity.Position }
             };
             await dbUtil.ExecuteStoredProcedureAsync("updatezamestnanec", parameters);

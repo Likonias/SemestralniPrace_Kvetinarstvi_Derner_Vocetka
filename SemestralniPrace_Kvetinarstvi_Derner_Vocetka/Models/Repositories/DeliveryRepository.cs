@@ -23,7 +23,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dbUtil = new OracleDbUtil();
         }
         
-        public async Task<T> GetById(Int32 id)
+        public async Task<Delivery> GetById(Int32 id)
         {
             string command = $"SELECT * FROM doruceni WHERE ID_DORUCENI = {id}";
             var dataTable = await dbUtil.ExecuteQueryAsync(command);
@@ -37,7 +37,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 row["SPOLECNOST"].ToString()
             );
             
-            return (T)Convert.ChangeType(delivery, typeof(T));
+            return (Delivery)Convert.ChangeType(delivery, typeof(Delivery));
         }
 
         public async Task GetAll()
@@ -68,7 +68,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             var parameters = new Dictionary<string, object>
             {
-                {"ID_DORUCENI", entity.Id},
+                {"ID_DORUCENI", entity.IdDelivery},
                 {"SPOLECNOST", entity.TransportCompany},
             };
         }
@@ -77,7 +77,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             var parameters = new Dictionary<string, object>
             {
-                {"ID_DORUCENI", entity.Id}
+                {"ID_DORUCENI", entity.IdDelivery}
             };
             await dbUtil.ExecuteStoredProcedureAsync("deletedoruceni", parameters);
         }

@@ -13,7 +13,10 @@ using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Entities;
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories{
     public class OccasionRepository : IRepository<Occasion>
     {
-        public async Task<T> GetById(Int32 id)
+        public ObservableCollection<Occasion> Occasions { get; set; }
+        private OracleDbUtil dbUtil;
+
+        public async Task<Occasion> GetById(Int32 id)
         {
             string command = $"SELECT * FROM prilezitosti WHERE ID_PRILEZITOST = {id}";
             var dataTable = await dbUtil.ExecuteQueryAsync(command);
@@ -24,10 +27,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories{
             var row = dataTable.Rows[0];
             var occasion = new Occasion(
                 Convert.ToInt32(row["ID_PRILEZITOST"]),
-                (OccasionType)Enum.Parse(typeof(OccasionType), row["DRUH_PRILEZITOSTI"].ToString())
+                (OccasionTypeEnum)(row["DRUH_PRILEZITOSTI"] != DBNull.Value ? Enum.Parse(typeof(OccasionTypeEnum), row["OccasionType"].ToString()) : null),
+                row["POZNAMKA"].ToString()
             );
 
-            return (T)Convert.ChangeType(occasion, typeof(T));
+            return (Occasion)Convert.ChangeType(occasion, typeof(Occasion));
         }
 
         public async Task GetAll()
@@ -39,8 +43,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories{
             {
                 var occasion = new Occasion(
                     Convert.ToInt32(row["ID_PRILEZITOST"]),
-                    (OccasionType)Enum.Parse(typeof(OccasionType), row["DRUH_PRILEZITOSTI"].ToString())
-                );
+                    (OccasionTypeEnum)(row["DRUH_PRILEZITOSTI"] != DBNull.Value ? Enum.Parse(typeof(OccasionTypeEnum), row["OccasionType"].ToString()) : null),
+                    row["POZNAMKA"].ToString()                );
                 Occasions.Add(occasion);
             }
         }

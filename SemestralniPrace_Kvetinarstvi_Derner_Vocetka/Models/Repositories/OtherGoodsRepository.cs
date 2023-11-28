@@ -22,10 +22,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dbUtil = new OracleDbUtil();
         }
 
-        public async Task<T> GetById(Int32 id)
+        public async Task<OtherGoods> GetById(Int32 id)
         {
             string command = $"SELECT * FROM ostatni WHERE ID_OSTATNI = {id}";
-            var dataTable = await dbUtil.ExecuteQueryAsync(command);
+            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
             
             if (dataTable.Rows.Count == 0)
                 return null;
@@ -36,8 +36,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 row["ZEME_PUVODU"].ToString(),
                 Convert.ToDateTime(row["DATUM_TRVANLIVOSTI"])
             );
-            
-            return (T)Convert.ChangeType(otherGoods, typeof(T));
+
+            return otherGoods;
         }
 
         public async Task GetAll()
