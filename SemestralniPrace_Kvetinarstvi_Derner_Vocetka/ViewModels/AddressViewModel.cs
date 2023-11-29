@@ -1,4 +1,5 @@
 ﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using System;
 using System.Collections.Generic;
@@ -28,8 +29,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             }
         }
 
-        public AddressViewModel()
+        private INavigationService createAddressForm;
+
+        public AddressViewModel(INavigationService createAddressForm)
         {
+            this.createAddressForm = createAddressForm;
             BtnAdd = new RelayCommand(BtnAddPresseed);
             this.dbUtil = dbUtil;
             this.tableData = tableData;
@@ -38,7 +42,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private void BtnAddPresseed()
         {
-            
+
+            createAddressForm.Navigate();
             
         }
 
