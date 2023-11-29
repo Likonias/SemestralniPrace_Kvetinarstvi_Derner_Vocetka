@@ -1,6 +1,5 @@
 ﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
-using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views.Forms;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -39,10 +38,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private void BtnAddPresseed()
         {
-            AddressForm addressForm = new AddressForm();
-            AddressFormViewModel addressFormViewModel = new AddressFormViewModel();
-            addressForm.DataContext = addressFormViewModel;
-            addressForm.ShowDialog();
+            
             
         }
 
