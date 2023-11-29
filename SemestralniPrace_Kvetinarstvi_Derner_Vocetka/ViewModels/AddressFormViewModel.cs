@@ -7,7 +7,7 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels.Forms
+namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
     public class AddressFormViewModel
     {
@@ -22,7 +22,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels.Forms
 
         private void Cancel()
         {
-            
+
         }
 
     }

@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views.Forms
+namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views
 {
     /// <summary>
-    /// Interaction logic for AddressForm.xaml
+    /// Interaction logic for AddressFormView.xaml
     /// </summary>
-    public partial class AddressForm : Window
+    public partial class AddressFormView : UserControl
     {
-        public AddressForm()
+        public AddressFormView()
         {
             InitializeComponent();
         }
