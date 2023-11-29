@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <DataGrid DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="True" Margin="10,10,200,10"/>
-        <!--<TextBlock Grid.Column="0" Text="First Column" Visibility="Collapsed" />-->
+        
         <Button Content="Button" HorizontalAlignment="Left" Margin="681,40,0,0" VerticalAlignment="Top"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="681,80,0,0" VerticalAlignment="Top"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="681,120,0,0" VerticalAlignment="Top"/>
