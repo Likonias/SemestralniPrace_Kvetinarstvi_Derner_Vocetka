@@ -41,19 +41,25 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         }
         
         public RelayCommand LoginCommand { get; }
-        public ICommand CancelCommand { get; }
-
+        public RelayCommand CancelCommand { get; }
+        private INavigationService closeNavigationService;
         private OracleDbUtil dbUtil; // Instance OracleDbUtil, díky které jsme schopni komunikovat s databází
-        public LoginViewModel(INavigationService<MainViewModel> createMainNavigationService)
+        public LoginViewModel(AccountStore accountStore, INavigationService closeModalNavigationService)
         {
             dbUtil = new OracleDbUtil();
             LoginCommand = new RelayCommand(Login);
-            CancelCommand = new NavigateCommand<MainViewModel>(createMainNavigationService);
+            CancelCommand = new RelayCommand(Close);
+            this.closeNavigationService = closeModalNavigationService;
         }
 
         private void Login()
         {
             //TODO logika loginu, načtení z databáze, nalezení dle emailu a následné checknutí hesla přes PasswordHash (nejdříve se heslo musí hashnout)
+        }
+
+        private void Close()
+        {
+            closeNavigationService.Navigate();
         }
 
     }

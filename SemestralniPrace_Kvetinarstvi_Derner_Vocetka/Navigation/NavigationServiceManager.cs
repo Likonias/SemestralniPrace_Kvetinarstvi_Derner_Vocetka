@@ -11,16 +11,16 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
     {
         private Dictionary<Type, object> navigationServices = new Dictionary<Type, object>();
 
-        public void RegisterNavigationService<TViewModel>(INavigationService<TViewModel> service) where TViewModel : ViewModelBase
+        public void RegisterNavigationService<TViewModel>(INavigationService service) where TViewModel : ViewModelBase
         {
             navigationServices[typeof(TViewModel)] = service;
         }
 
-        public INavigationService<TViewModel> GetNavigationService<TViewModel>() where TViewModel : ViewModelBase
+        public INavigationService GetNavigationService<TViewModel>() where TViewModel : ViewModelBase
         {
             if (navigationServices.TryGetValue(typeof(TViewModel), out object service))
             {
-                return (INavigationService<TViewModel>)service;
+                return (INavigationService)service;
             }
 
             return null; // or handle if service is not found

@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka"
         xmlns:views = "clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
-        xmlns:viewmodels="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels" xmlns:components="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components"
+        xmlns:viewmodels="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels" xmlns:components="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components" xmlns:modalcontrol="clr-namespace:ModalControl;assembly=ModalControl"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1000">
     <!--Here is a datamanagement of the views and their view models, with every view added you have to add DataTemplate into the mainWindow ContentControl-->
-    <ContentControl Content="{Binding CurrentViewModel}">
-        <ContentControl.Resources>
+    <Grid>
+        <Grid.Resources>
             <DataTemplate DataType="{x:Type viewmodels:MainViewModel}" >
                 <views:MainView/>
             </DataTemplate>
@@ -32,7 +32,11 @@
             <DataTemplate DataType="{x:Type viewmodels:LayoutViewModel}" >
                 <components:Layout/>
             </DataTemplate>
-        </ContentControl.Resources>
-    </ContentControl>
-    
+        </Grid.Resources>
+        <modalcontrol:Modal Panel.ZIndex="1" IsOpen="{Binding IsOpen}">
+            <ContentControl Content="{Binding CurrentModalViewModel}"/>
+        </modalcontrol:Modal>
+        <ContentControl Content="{Binding CurrentViewModel}"/>
+    </Grid>
+
 </Window>

@@ -15,6 +15,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
     public partial class App : Application
     {
         private readonly NavigationStore navigationStore;
+        private readonly ModalNavigationStore modalNavigationStore;
         private readonly AccountStore accountStore;
         
         private readonly NavigationServiceManager serviceManager;
@@ -25,50 +26,51 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             
             // Register other navigation services here
             navigationStore = new NavigationStore();
+            modalNavigationStore = new ModalNavigationStore();
             accountStore = new AccountStore();
             CreateNavigationBarViewModel(); 
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            INavigationService<MainViewModel> mainNavigationService = CreateMainNavigationService();
+            INavigationService mainNavigationService = CreateMainNavigationService();
             mainNavigationService.Navigate();
 
             MainWindow = new MainWindow()
             {
-                DataContext = new MainWindowViewModel(navigationStore)
+                DataContext = new MainWindowViewModel(navigationStore, modalNavigationStore)
             };
             MainWindow.Show();
 
             base.OnStartup(e);
         }
 
-        private INavigationService<MainViewModel> CreateMainNavigationService()
+        private INavigationService CreateMainNavigationService()
         {
             return new LayoutNavigationService<MainViewModel>(navigationStore, () => new MainViewModel(CreateLoginNavigationService()), CreateNavigationBarViewModel);
         }
 
-        private INavigationService<LoginViewModel> CreateLoginNavigationService()
+        private INavigationService CreateLoginNavigationService()
         {
-            return new NavigationService<LoginViewModel>(navigationStore, () => new LoginViewModel(CreateMainNavigationService()));
+            return new ModalNavigationService<LoginViewModel>(modalNavigationStore, () => new LoginViewModel(accountStore, new CloseModalNavigationService(modalNavigationStore)));
         }
 
-        private INavigationService<RegisterViewModel> CreateRegisterNavigationService()
+        private INavigationService CreateRegisterNavigationService()
         {
             return new NavigationService<RegisterViewModel>(navigationStore, () => new RegisterViewModel(CreateMainNavigationService()));
         }
 
-        private INavigationService<AccountViewModel> CreateAccountNavigationService()
+        private INavigationService CreateAccountNavigationService()
         {
             return new LayoutNavigationService<AccountViewModel>(navigationStore, () => new AccountViewModel(accountStore), CreateNavigationBarViewModel);
         }
 
-        private INavigationService<FlowersViewModel> CreateFlowersNavigationService()
+        private INavigationService CreateFlowersNavigationService()
         {
             return new LayoutNavigationService<FlowersViewModel>(navigationStore, () => new FlowersViewModel(), CreateNavigationBarViewModel);
         }
 
-        private INavigationService<AddressViewModel> CreateAddressesNavigationService()
+        private INavigationService CreateAddressesNavigationService()
         {
             return new LayoutNavigationService<AddressViewModel>(navigationStore, () => new AddressViewModel(), CreateNavigationBarViewModel);
         }
@@ -83,11 +85,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
         private void UpdateServiceManager()
         {
             serviceManager.ClearNavigationService();
-            serviceManager.RegisterNavigationService(CreateLoginNavigationService());
-            serviceManager.RegisterNavigationService(CreateRegisterNavigationService());
-            serviceManager.RegisterNavigationService(CreateAccountNavigationService());
-            serviceManager.RegisterNavigationService(CreateFlowersNavigationService());
-            serviceManager.RegisterNavigationService(CreateAddressesNavigationService());
+            serviceManager.RegisterNavigationService<LoginViewModel>(CreateLoginNavigationService());
+            serviceManager.RegisterNavigationService<RegisterViewModel>(CreateRegisterNavigationService());
+            serviceManager.RegisterNavigationService<AccountViewModel>(CreateAccountNavigationService());
+            serviceManager.RegisterNavigationService<FlowersViewModel>(CreateFlowersNavigationService());
+            serviceManager.RegisterNavigationService<AddressViewModel>(CreateAddressesNavigationService());
         }
 
     }

@@ -35,7 +35,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "PSC", entity.Zip },
                 { "ZAMESTNANCI_ID_ZAMESTNANEC", entity.EmployeeId },
                 { "ZAKAZNICI_ID_ZAKAZNIK", entity.CustomerId },
-                { "DRUHY_ADRES_ID_DRUH_ADRESY", entity.AddressType },
+                { "DRUHY_ADRES_ID_DRUH_ADRESY", entity.AddressType.ToString() },
             };
             await dbUtil.ExecuteStoredProcedureAsync("addadresy", parameters);
 

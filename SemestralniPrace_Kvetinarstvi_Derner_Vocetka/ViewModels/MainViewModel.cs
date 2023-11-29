@@ -14,7 +14,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         
         public RelayCommand BtnFun { get; }
-        public MainViewModel(INavigationService<LoginViewModel> createLoginNavigationService)
+        public MainViewModel(INavigationService createLoginNavigationService)
         {
             
             BtnFun = new RelayCommand(BtnFunPressed);
@@ -28,7 +28,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         {
             PopupView loginView = new PopupView();
             
-            loginView.Show();
+            loginView.ShowDialog();
         }
 
     }

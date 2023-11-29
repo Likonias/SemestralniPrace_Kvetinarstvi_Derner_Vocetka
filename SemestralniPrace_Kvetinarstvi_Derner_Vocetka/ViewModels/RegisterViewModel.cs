@@ -13,7 +13,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
     {
         public RelayCommand RegisterCommand { get; }
         public ICommand CancelCommand { get; }
-        public RegisterViewModel(INavigationService<MainViewModel> createMainNavigationService)
+        public RegisterViewModel(INavigationService createMainNavigationService)
         {
             RegisterCommand = new RelayCommand(Register);
             CancelCommand = new NavigateCommand<MainViewModel>(createMainNavigationService);

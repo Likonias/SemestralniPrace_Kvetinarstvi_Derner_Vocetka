@@ -2,8 +2,7 @@
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
 {
-    public interface INavigationService<TViewModel>
-        where TViewModel : ViewModelBase
+    public interface INavigationService
     {
         void Navigate();
     }

@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
 {
-    public class NavigationService<TViewModel> : INavigationService where TViewModel : ViewModelBase
+    public class ModalNavigationService<TViewModel> : INavigationService where TViewModel : ViewModelBase
     {
-        private readonly NavigationStore navigationStore;
+
+        private readonly ModalNavigationStore navigationStore;
         private readonly Func<TViewModel> createViewModel;
 
-        public NavigationService(NavigationStore navigationStore, Func<TViewModel> createViewModel)
+        public ModalNavigationService(ModalNavigationStore navigationStore, Func<TViewModel> createViewModel)
         {
             this.navigationStore = navigationStore;
             this.createViewModel = createViewModel;
@@ -22,6 +23,5 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
         {
             navigationStore.CurrentViewModel = createViewModel();
         }
-
     }
 }
