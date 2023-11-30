@@ -5,29 +5,50 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             d:DesignHeight="250" d:DesignWidth="300">
+    <Grid Width="300" Height="250">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding Street, Mode=TwoWay}"/>
-        <Label Grid.Row="0" Content="Ulice" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
-        <TextBox Grid.Row="1" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" Text="{Binding StreetNumber, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
-        <Label Grid.Row="1" Content="Číslo Popisné" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
-        <TextBox Grid.Row="2" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" Text="{Binding City, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
-        <Label Grid.Row="2" Content="Město" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
-        <TextBox Grid.Row="3" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" Text="{Binding Zip, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
-        <Label Grid.Row="3" Content="PSČ" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
-        <ComboBox Grid.Row="4" Margin="110,10,70,10" ItemsSource="{Binding AddressOwner}" SelectedItem="{Binding SelectedAddressOwner}" />
-        <Label Grid.Row="4" Content="Přiřazení Adresy" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
-        <ComboBox Grid.Row="5" Margin="110,10,70,10" ItemsSource="{Binding AddressTypeOptions}" SelectedItem="{Binding SelectedAddressType}" />
-        <Label Grid.Row="5" Content="Druh Adresy" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+
+        <!-- Street -->
+        <TextBox Grid.Row="0" x:Name="StreetTextBox" Text="{Binding Street, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+        <Label Grid.Row="0" Content="Street" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+        <TextBlock Grid.Row="1" Text="{Binding Path=(Validation.Errors)[0].ErrorContent, ElementName=StreetTextBox}" Foreground="Red"/>
+
+        <!-- StreetNumber -->
+        <TextBox Grid.Row="1" x:Name="StreetNumberTextBox" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" Text="{Binding StreetNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Row="1" Content="Street Number" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+        <TextBlock Grid.Row="2" Text="{Binding Path=(Validation.Errors)[0].ErrorContent, ElementName=StreetNumberTextBox}" Foreground="Red"/>
+
+        <!-- City -->
+        <TextBox Grid.Row="2" x:Name="CityTextBox" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding City, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="2" Content="City" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+        <TextBlock Grid.Row="3" Text="{Binding Path=(Validation.Errors)[0].ErrorContent, ElementName=CityTextBox}" Foreground="Red"/>
+
+        <!-- Zip -->
+        <TextBox Grid.Row="3" x:Name="ZipTextBox" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding Zip, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="3" Content="Zip" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+        <TextBlock Grid.Row="4" Text="{Binding Path=(Validation.Errors)[0].ErrorContent, ElementName=ZipTextBox}" Foreground="Red"/>
+
+        <!-- AddressOwner ComboBox -->
+        <ComboBox Grid.Row="4" x:Name="AddressOwnerComboBox" Margin="110,10,70,10" ItemsSource="{Binding AddressOwnerOptions}" SelectedItem="{Binding AddressOwner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Row="4" Content="Address Owner" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+        <TextBlock Grid.Row="5" Text="{Binding Path=(Validation.Errors)[0].ErrorContent, ElementName=AddressOwnerComboBox}" Foreground="Red"/>
+
+        <!-- AddressType ComboBox -->
+        <ComboBox Grid.Row="5" x:Name="AddressTypeComboBox" Margin="110,10,70,10" ItemsSource="{Binding AddressTypeOptions}" SelectedItem="{Binding AddressType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Row="5" Content="Address Type" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+        <TextBlock Grid.Row="6" Text="{Binding Path=(Validation.Errors)[0].ErrorContent, ElementName=AddressTypeComboBox}" Foreground="Red"/>
+
+
+        <!-- Buttons -->
         <Button Content="Ok" Command="{Binding BtnOk}" HorizontalAlignment="Left" Margin="60,0,0,0" Grid.Row="6" VerticalAlignment="Center" />
         <Button Content="Cancel" Command="{Binding BtnCancel}" HorizontalAlignment="Left" Margin="190,0,0,0" Grid.Row="6"/>
     </Grid>

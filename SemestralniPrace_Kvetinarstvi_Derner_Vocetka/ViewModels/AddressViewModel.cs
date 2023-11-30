@@ -1,4 +1,5 @@
-﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories;
+﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using System;
@@ -18,6 +19,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private DataTable tableData;
 
         public RelayCommand BtnAdd { get; }
+        public RelayCommand BtnEdit { get; }
+        public RelayCommand BtnDelete { get; }
 
         public DataTable TableData
         {
@@ -30,19 +33,35 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         }
 
         private INavigationService createAddressForm;
+        private AddressStore addressStore;
 
-        public AddressViewModel(INavigationService createAddressForm)
+        public AddressViewModel(INavigationService createAddressForm, AddressStore addressStore)
         {
             this.createAddressForm = createAddressForm;
             BtnAdd = new RelayCommand(BtnAddPresseed);
-            this.dbUtil = dbUtil;
-            this.tableData = tableData;
+            BtnEdit = new RelayCommand(BtnEditPressed);
+            BtnDelete = new RelayCommand(BtnDeletePressed);
+            dbUtil = new OracleDbUtil();
+            this.addressStore = addressStore;
+            //TODO delete later
+            this.addressStore.Address = new Models.Address(1, "st", "5", "Pce", "53002", null, null, new AddressType(1, Models.Enums.AddressTypeEnum.Billing));
             InitializeTableData();
+        }
+
+        private void BtnDeletePressed()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void BtnEditPressed()
+        {
+            createAddressForm.Navigate();
         }
 
         private void BtnAddPresseed()
         {
 
+            addressStore.Address = null;
             createAddressForm.Navigate();
             
         }
