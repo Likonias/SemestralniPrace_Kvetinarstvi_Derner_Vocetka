@@ -35,7 +35,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "PSC", entity.Zip },
                 { "ZAMESTNANCI_ID_ZAMESTNANEC", entity.EmployeeId },
                 { "ZAKAZNICI_ID_ZAKAZNIK", entity.CustomerId },
-                { "DRUHY_ADRES_ID_DRUH_ADRESY", entity.AddressType.ToString() },
+                { "DRUHY_ADRES_ID_DRUH_ADRESY", entity.AddressTypeId },
             };
             await dbUtil.ExecuteStoredProcedureAsync("addadresy", parameters);
 
@@ -65,7 +65,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                     row["PSC"].ToString(),
                     row["ZAMESTNANCI_ID_ZAMESTNANEC"] != DBNull.Value ? Convert.ToInt32(row["EmployeeId"]) : (int?)null,
                     row["ZAKAZNICI_ID_ZAKAZNIK"] != DBNull.Value ? Convert.ToInt32(row["CustomerId"]) : (int?)null,
-                    row["DRUHY_ADRES_ID_DRUH_ADRESY"] != DBNull.Value ? (AddressType?)Enum.Parse(typeof(AddressType), row["AddressType"].ToString()) : null
+                    row["DRUHY_ADRES_ID_DRUH_ADRESY"] != DBNull.Value ? Convert.ToInt32(row["AddressTypeId"]) : (int?)null
                 );
                 Addresses.Add(address);
             }
@@ -89,7 +89,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 row["Zip"].ToString(),
                 row["EmployeeId"] != DBNull.Value ? Convert.ToInt32(row["EmployeeId"]) : (int?)null,
                 row["CustomerId"] != DBNull.Value ? Convert.ToInt32(row["CustomerId"]) : (int?)null,
-                row["AddressType"] != DBNull.Value ? (AddressType?)Enum.Parse(typeof(AddressType), row["AddressType"].ToString()) : null
+                row["AddressType"] != DBNull.Value ? Convert.ToInt32(row["AddressTypeId"]) : (int?)null
             );
 
             return address;
@@ -106,7 +106,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "PSC", entity.Zip },
                 { "ZAMESTNANCI_ID_ZAMESTNANEC", entity.EmployeeId },
                 { "ZAKAZNICI_ID_ZAKAZNIK", entity.CustomerId },
-                { "DRUHY_ADRES_ID_DRUH_ADRESY", entity.AddressType },
+                { "DRUHY_ADRES_ID_DRUH_ADRESY", entity.AddressTypeId },
             };
             await dbUtil.ExecuteStoredProcedureAsync("updateAddress", parameters);
         }
@@ -130,7 +130,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 row["StreetNumber"] = address.StreetNumber;
                 row["City"] = address.City;
                 row["Zip"] = address.Zip;
-                row["AddressType"] = address.AddressType ?? null; 
+                row["AddressType"] = address.AddressTypeId ?? null; 
 
                 dataTable.Rows.Add(row);
             }

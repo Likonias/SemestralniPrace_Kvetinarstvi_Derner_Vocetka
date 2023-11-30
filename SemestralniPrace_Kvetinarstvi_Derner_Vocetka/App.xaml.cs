@@ -94,6 +94,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             serviceManager.ClearNavigationService();
             serviceManager.RegisterNavigationService<LoginViewModel>(CreateLoginNavigationService());
             serviceManager.RegisterNavigationService<RegisterViewModel>(CreateRegisterNavigationService());
+            serviceManager.RegisterNavigationService<MainViewModel>(CreateMainNavigationService());
             serviceManager.RegisterNavigationService<AccountViewModel>(CreateAccountNavigationService());
             serviceManager.RegisterNavigationService<FlowersViewModel>(CreateFlowersNavigationService());
             serviceManager.RegisterNavigationService<AddressViewModel>(CreateAddressesNavigationService());

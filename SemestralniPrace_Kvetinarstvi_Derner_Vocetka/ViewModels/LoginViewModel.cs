@@ -44,9 +44,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public RelayCommand CancelCommand { get; }
         private INavigationService closeNavigationService;
         private OracleDbUtil dbUtil; // Instance OracleDbUtil, díky které jsme schopni komunikovat s databází
+        private AccountStore accountStore;
         public LoginViewModel(AccountStore accountStore, INavigationService closeModalNavigationService)
         {
             dbUtil = new OracleDbUtil();
+            this.accountStore = accountStore;
             LoginCommand = new RelayCommand(Login);
             CancelCommand = new RelayCommand(Close);
             this.closeNavigationService = closeModalNavigationService;
@@ -54,6 +56,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private void Login()
         {
+            accountStore.CurrentAccount = new Models.Account();
+            closeNavigationService.Navigate();
             //TODO logika loginu, načtení z databáze, nalezení dle emailu a následné checknutí hesla přes PasswordHash (nejdříve se heslo musí hashnout)
         }
 

@@ -16,9 +16,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
         public string Zip { get; set; }
         public int? EmployeeId {get; set;}
         public int? CustomerId { get; set; }
-        public AddressType? AddressType { get; set; }
+        public int? AddressTypeId { get; set; }
 
-        public Address(int id, string street, string streetNumber, string city, string zip, int? employeeId, int? customerId, AddressType? addressType)
+        public Address(int id, string street, string streetNumber, string city, string zip, int? employeeId, int? customerId, int? addressTypeId)
         {
             Id = id;
             Street = street;
@@ -27,7 +27,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
             Zip = zip;
             EmployeeId = employeeId;
             CustomerId = customerId;
-            AddressType = addressType;
+            AddressTypeId = addressTypeId;
         }
     }
 }

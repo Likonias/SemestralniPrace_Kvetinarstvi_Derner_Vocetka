@@ -44,7 +44,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             dbUtil = new OracleDbUtil();
             this.addressStore = addressStore;
             //TODO delete later
-            this.addressStore.Address = new Models.Address(1, "st", "5", "Pce", "53002", null, null, new AddressType(1, Models.Enums.AddressTypeEnum.Billing));
+            this.addressStore.Address = new Models.Address(1, "st", "5", "Pce", "53002", null, null, null);
             InitializeTableData();
         }
 

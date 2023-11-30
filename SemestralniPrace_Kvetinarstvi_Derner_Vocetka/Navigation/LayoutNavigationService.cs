@@ -25,5 +25,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
         {
             navigationStore.CurrentViewModel = new LayoutViewModel(createNavigationBarViewModel(), createViewModel());
         }
+
+        
     }
 }

@@ -11,15 +11,27 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
     {
 
         private Account currentAccount;
-
+        
         public Account CurrentAccount 
         { 
             get => currentAccount;  
             set 
             { 
-                currentAccount = value; 
+                currentAccount = value;
+                CurrentAccountChanged?.Invoke();
             }
         }
+
+        public event Action CurrentAccountChanged;
+
+        public void Logout()
+        {
+            CurrentAccount = null;
+        }
+
+        public bool IsLoggedIn => CurrentAccount != null;
+
+        public bool IsLoggedOut => CurrentAccount == null;
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,8 +19,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
     public class NavigationBarViewModel : ViewModelBase
     {
 
-        public ICommand NavigateLoginCommand { get; }
-        public ICommand NavigateRegisterCommand { get; }
+        public ICommand LoginCommand { get; }
+        public ICommand RegisterCommand { get; }
+        public ICommand LogoutCommand { get; }
         public ICommand NavigateAccountCommand { get; }
         public ICommand NavigateFlowersCommand { get; }
         public ICommand NavigateAddressCommand { get; }
@@ -58,10 +60,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         //todo finish setting up an account
         private readonly AccountStore accountStore;
 
+        public bool IsLoggedIn => accountStore.IsLoggedIn;
+        public bool IsLoggedOut => accountStore.IsLoggedOut;
+
         public NavigationBarViewModel(AccountStore accountStore, NavigationServiceManager navigationServiceManager)
         {
-            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(navigationServiceManager.GetNavigationService<LoginViewModel>());
-            NavigateRegisterCommand = new NavigateCommand<RegisterViewModel>(navigationServiceManager.GetNavigationService<RegisterViewModel>());
+            LoginCommand = new NavigateCommand<LoginViewModel>(navigationServiceManager.GetNavigationService<LoginViewModel>());
+            RegisterCommand = new NavigateCommand<RegisterViewModel>(navigationServiceManager.GetNavigationService<RegisterViewModel>());
+            LogoutCommand = new RelayCommand(Logout);
             NavigateAccountCommand = new NavigateCommand<AccountViewModel>(navigationServiceManager.GetNavigationService<AccountViewModel>());
             NavigateFlowersCommand = new NavigateCommand<FlowersViewModel>(navigationServiceManager.GetNavigationService<FlowersViewModel>());
             NavigateAddressCommand = new NavigateCommand<AddressViewModel>(navigationServiceManager.GetNavigationService<AddressViewModel>());
@@ -69,6 +75,19 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             ComboBoxItems = new ObservableCollection<string>();
             PopulateComboBox();
 
+            this.accountStore.CurrentAccountChanged += OnCurrentAccountChanged;
+        }
+
+        private void Logout()
+        {
+            accountStore.Logout();
+            //todo navigate home command invoke
+        }
+
+        private void OnCurrentAccountChanged()
+        {
+            OnPropertyChanged(nameof(IsLoggedIn));
+            OnPropertyChanged(nameof(IsLoggedOut));
         }
 
         private void PopulateComboBox()
@@ -95,6 +114,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     NavigateAddressCommand.Execute(null);
                     break;
             }
+        }
+
+        public override void Dispose()
+        {
+            this.accountStore.CurrentAccountChanged -= OnCurrentAccountChanged;
+            base.Dispose();
         }
 
     }

@@ -16,13 +16,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
     public class AddressFormViewModel : ViewModelBase
     {
         public RelayCommand BtnCancel { get; private set; }
-        
+        public RelayCommand BtnOk { get; private set; }
+
         private INavigationService closeNavSer;
         private Address address;
         public AddressFormViewModel(INavigationService closeModalNavigationService, AddressStore addressStore)
         {
             closeNavSer = closeModalNavigationService;
             BtnCancel = new RelayCommand(Cancel);
+            BtnOk = new RelayCommand(Ok);
             address = addressStore.Address;
             if (address != null) { InitializeAddress(); }
         }
@@ -50,7 +52,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             _zip = address.Zip;
             _addressOwner = address.CustomerId.ToString();
             if(_addressOwner == null) { _addressOwner = address.EmployeeId.ToString(); }
-            _addressType = address.AddressType.ToString();
+            _addressType = address.AddressTypeId.ToString();
 
         }
 
