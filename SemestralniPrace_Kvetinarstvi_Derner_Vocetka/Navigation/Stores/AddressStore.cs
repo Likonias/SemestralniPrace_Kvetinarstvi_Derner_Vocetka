@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
+namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores
 {
     public class AddressStore
     {
         private Action addressChanged;
         private Address address;
 
-        public Address Address { get { return address; } set {  address = value; OnCurrentAddressChanged(); } }
+        public Address Address { get { return address; } set { address = value; OnCurrentAddressChanged(); } }
 
         private void OnCurrentAddressChanged()
         {

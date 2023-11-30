@@ -5,21 +5,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
+namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores
 {
     public class NavigationStore
     {
         public event Action CurrentViewModelChanged;
         private ViewModelBase currentViewModel;
-        public ViewModelBase CurrentViewModel { 
-            
-            get => currentViewModel; 
-            set 
-            { 
+        public ViewModelBase CurrentViewModel
+        {
+
+            get => currentViewModel;
+            set
+            {
                 currentViewModel?.Dispose();
-                currentViewModel = value; 
-                OnCurrentViewModelChanged(); 
-            } 
+                currentViewModel = value;
+                OnCurrentViewModelChanged();
+            }
         }
 
         private void OnCurrentViewModelChanged()

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels

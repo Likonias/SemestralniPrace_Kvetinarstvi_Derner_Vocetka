@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
+namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores
 {
     public class ModalNavigationStore
     {

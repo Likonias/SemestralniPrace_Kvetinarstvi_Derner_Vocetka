@@ -5,18 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation
+namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores
 {
     public class AccountStore
     {
 
         private Account currentAccount;
-        
-        public Account CurrentAccount 
-        { 
-            get => currentAccount;  
-            set 
-            { 
+
+        public Account CurrentAccount
+        {
+            get => currentAccount;
+            set
+            {
                 currentAccount = value;
                 CurrentAccountChanged?.Invoke();
             }
