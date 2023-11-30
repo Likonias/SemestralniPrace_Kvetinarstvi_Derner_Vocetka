@@ -14,7 +14,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores
 
         public Address Address { get { return address; } set { address = value; OnCurrentAddressChanged(); } }
 
-        private void OnCurrentAddressChanged()
+        public void OnCurrentAddressChanged()
         {
             addressChanged?.Invoke();
         }

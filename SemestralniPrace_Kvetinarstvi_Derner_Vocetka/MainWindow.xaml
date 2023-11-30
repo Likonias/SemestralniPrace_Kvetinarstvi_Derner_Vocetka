@@ -32,6 +32,9 @@
             <DataTemplate DataType="{x:Type viewmodels:AddressFormViewModel}" >
                 <views:AddressFormView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:CustomerViewModel}" >
+                <views:CustomerView/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:LayoutViewModel}" >
                 <components:Layout/>
             </DataTemplate>

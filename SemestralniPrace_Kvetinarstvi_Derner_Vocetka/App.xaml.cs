@@ -19,6 +19,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
         private readonly ModalNavigationStore modalNavigationStore;
         private readonly AccountStore accountStore;
         private readonly AddressStore addressStore;
+        private readonly CustomerStore customerStore;
         
         private readonly NavigationServiceManager serviceManager;
 
@@ -83,6 +84,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             return new ModalNavigationService<AddressFormViewModel>(modalNavigationStore, () => new AddressFormViewModel(new CloseModalNavigationService(modalNavigationStore), addressStore));
         }
 
+        private INavigationService CreateCustomerNavigationService()
+        {
+            return new LayoutNavigationService<CustomerViewModel>(navigationStore, () => new CustomerViewModel(customerStore), CreateNavigationBarViewModel);
+        }
+
         private NavigationBarViewModel CreateNavigationBarViewModel()
         {
             UpdateServiceManager();
@@ -99,6 +105,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             serviceManager.RegisterNavigationService<AccountViewModel>(CreateAccountNavigationService());
             serviceManager.RegisterNavigationService<FlowersViewModel>(CreateFlowersNavigationService());
             serviceManager.RegisterNavigationService<AddressViewModel>(CreateAddressesNavigationService());
+            serviceManager.RegisterNavigationService<CustomerViewModel>(CreateCustomerNavigationService());
         }
 
     }
