@@ -35,7 +35,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 Convert.ToInt32(row["ID_ZBOZI"]),
                 row["NAZEV"].ToString(),
                 Convert.ToInt32(row["CENA"]),
-                Convert.ToByte(row["TYP"]),
+                Convert.ToChar(row["TYP"]),
                 Convert.ToInt32(row["SKLAD"]),
                 null
             );
@@ -54,7 +54,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                     Convert.ToInt32(row["ID_ZBOZI"]),
                     row["NAZEV"].ToString(),
                     Convert.ToInt32(row["CENA"]),
-                    Convert.ToByte(row["TYP"]),
+                    Convert.ToChar(row["TYP"]),
                     Convert.ToInt32(row["SKLAD"]),
                     null
                 );
