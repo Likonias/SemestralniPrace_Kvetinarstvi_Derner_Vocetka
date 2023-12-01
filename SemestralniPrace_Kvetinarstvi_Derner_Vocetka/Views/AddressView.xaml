@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Width="1000">
         <DataGrid DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="True" Margin="10,10,200,10"/>
 
-        <Button Content="Přidej" Command="{Binding BtnAdd}" HorizontalAlignment="Left" Margin="681,40,0,0" VerticalAlignment="Top"/>
-        <Button Content="Uprav" Command="{Binding BtnEdit}" HorizontalAlignment="Left" Margin="681,80,0,0" VerticalAlignment="Top"/>
-        <Button Content="Vymaž" Command="{Binding BtdDelete}" HorizontalAlignment="Left" Margin="681,120,0,0" VerticalAlignment="Top"/>
+        <Button Content="Přidej" Command="{Binding BtnAdd}" HorizontalAlignment="Left" Margin="890,45,0,0" VerticalAlignment="Top"/>
+        <Button Content="Uprav" Command="{Binding BtnEdit}" HorizontalAlignment="Left" Margin="890,105,0,0" VerticalAlignment="Top"/>
+        <Button Content="Vymaž" Command="{Binding BtdDelete}" HorizontalAlignment="Left" Margin="885,150,0,0" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>
