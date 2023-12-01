@@ -10,8 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Entities;
 
-TODO inPersonPickup
-
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 {
     public class InPersonPickupRepository : IRepository<InPersonPickup>

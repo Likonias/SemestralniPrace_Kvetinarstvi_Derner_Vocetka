@@ -119,4 +119,44 @@ public class OracleDbUtil
             }
         }
     }
+
+    public async Task<object> ExecuteStoredBooleanFunctionAsync(string functionName, Dictionary<string, object> parameters)
+    {
+        using (OracleConnection connection = new OracleConnection(connectionString))
+        {
+            using (OracleCommand command = new OracleCommand(functionName, connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+
+                if (parameters != null)
+                {
+                    foreach (var param in parameters)
+                    {
+                        command.Parameters.Add(param.Key, param.Value);
+                    }
+                }
+
+                OracleParameter returnParam = new OracleParameter();
+                returnParam.ParameterName = "result";
+                returnParam.OracleDbType = OracleDbType.Boolean;
+                returnParam.Direction = ParameterDirection.ReturnValue;
+                command.Parameters.Add(returnParam);
+
+                try
+                {
+                    await connection.OpenAsync();
+                    await command.ExecuteNonQueryAsync(); 
+
+                    object result = returnParam.Value;
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+        }
+    }
 }
