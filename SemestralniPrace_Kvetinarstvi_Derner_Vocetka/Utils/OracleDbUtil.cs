@@ -120,22 +120,15 @@ public class OracleDbUtil
         }
     }
 
-    public async Task<bool> ExecuteStoredBooleanFunctionAsync(string functionName, Dictionary<string, object> parameters)
+    public async Task<bool> ExecuteStoredBooleanFunctionAsync(string functionName, OracleParameter parameter)
     {
         using (OracleConnection connection = new OracleConnection(connectionString))
         {
             using (OracleCommand command = new OracleCommand(functionName, connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
-
-                if (parameters != null)
-                {
-                    foreach (var param in parameters)
-                    {
-                        command.Parameters.Add(param.Key, param.Value);
-                    }
-                }
-
+                command.Parameters.Add(parameter);
+               
                 OracleParameter returnParam = new OracleParameter();
                 returnParam.ParameterName = "result";
                 returnParam.OracleDbType = OracleDbType.Int32;

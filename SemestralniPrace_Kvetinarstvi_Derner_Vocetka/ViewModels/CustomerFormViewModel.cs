@@ -1,4 +1,5 @@
-﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components;
+﻿using Oracle.ManagedDataAccess.Client;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
@@ -54,12 +55,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             customer = new Customer(0, FirstName, LastName, Email, Tel, PasswordHash.PasswordHashing(Password));
             CustomerRepository customerRepository = new CustomerRepository();
             //for validation Regex.IsMatch(email, pattern); string pattern = @"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$";
-            var parameters = new Dictionary<string, object>
-            {
-                { "Email", Email }
-            };
+            OracleParameter mailParam = new OracleParameter();
+            mailParam.ParameterName = "email";
+            mailParam.Value = Email;
+            mailParam.Direction = ParameterDirection.Input;
             //todo check if email belongs to someone already, should return bool
-            DataTable returnTableBool = await dbUtil.ExecuteStoredProcedureAsync("validateEmail", parameters);
+            DataTable returnTableBool = await dbUtil.ExecuteStoredProcedureAsync("validateEmail", mailParam);
             bool isEmailAvailable = false;
             if (returnTableBool != null && returnTableBool.Rows.Count > 0)
             {
