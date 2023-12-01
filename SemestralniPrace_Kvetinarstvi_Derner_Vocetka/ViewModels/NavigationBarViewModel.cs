@@ -34,32 +34,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private string selectedComboBoxItem;
         private ComboBoxTableNamesEnum selectedEnumValue;
 
-        public string SelectedComboBoxItem
-        {
-            get => selectedComboBoxItem;
-            set
-            {
-                selectedComboBoxItem = value;
-                OnPropertyChanged(nameof(SelectedComboBoxItem));
-
-                //This code checks the combobox description and matches its enum value, so the enum can be used in a switch for View selection
-                foreach (ComboBoxTableNamesEnum val in Enum.GetValues(typeof(ComboBoxTableNamesEnum)))
-                {
-                    FieldInfo fieldInfo = val.GetType().GetField(val.ToString());
-                    DescriptionAttribute[] attributes = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
-
-                    string description = (attributes.Length > 0) ? attributes[0].Description : val.ToString();
-
-                    if (value == description)
-                    {
-                        selectedEnumValue = val;
-                        break;
-                    }
-                }
-                SelectedViewCommandComboBox();
-            }
-        }
-
         //todo finish setting up an account
         private readonly AccountStore accountStore;
 
@@ -95,6 +69,32 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         {
             OnPropertyChanged(nameof(IsLoggedIn));
             OnPropertyChanged(nameof(IsLoggedOut));
+        }
+
+        public string SelectedComboBoxItem
+        {
+            get => selectedComboBoxItem;
+            set
+            {
+                selectedComboBoxItem = value;
+                OnPropertyChanged(nameof(SelectedComboBoxItem));
+
+                //This code checks the combobox description and matches its enum value, so the enum can be used in a switch for View selection
+                foreach (ComboBoxTableNamesEnum val in Enum.GetValues(typeof(ComboBoxTableNamesEnum)))
+                {
+                    FieldInfo fieldInfo = val.GetType().GetField(val.ToString());
+                    DescriptionAttribute[] attributes = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+                    string description = (attributes.Length > 0) ? attributes[0].Description : val.ToString();
+
+                    if (value == description)
+                    {
+                        selectedEnumValue = val;
+                        break;
+                    }
+                }
+                SelectedViewCommandComboBox();
+            }
         }
 
         private void PopulateComboBox()

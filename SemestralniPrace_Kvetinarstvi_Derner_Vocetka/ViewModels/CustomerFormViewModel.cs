@@ -1,11 +1,13 @@
 ﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -41,10 +43,26 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             customerStore.Customer = null;
             closeNavSer.Navigate();
         }
+
         private void Ok()
         {
+            OkAsync();
+        }
+        private async Task OkAsync()
+        {
             customer = new Customer(0, FirstName, LastName, Email, Tel, PasswordHash.PasswordHashing(Password));
-
+            CustomerRepository customerRepository = new CustomerRepository();
+            //todo check if email belongs to someone already, should return bool
+            DataTable returnTableBool = await dbUtil.ExecuteStoredProcedureAsync("");
+            bool isEmailAvailable = false;
+            if (returnTableBool != null && returnTableBool.Rows.Count > 0)
+            {
+                isEmailAvailable = Convert.ToBoolean(returnTableBool.Rows[0][0]);
+            }
+            if(isEmailAvailable)
+            {
+                await customerRepository.Add(customer);
+            }
             closeNavSer.Navigate();
         }
 

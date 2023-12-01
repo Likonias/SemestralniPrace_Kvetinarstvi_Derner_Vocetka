@@ -28,7 +28,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public FlowersViewModel()
         {
             
-            
             dbUtil = new OracleDbUtil();
             InitializeTableData();
         }
