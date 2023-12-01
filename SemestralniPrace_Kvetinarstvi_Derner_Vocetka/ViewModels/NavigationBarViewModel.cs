@@ -41,7 +41,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public bool IsLoggedIn => accountStore.IsLoggedIn;
         public bool IsLoggedOut => accountStore.IsLoggedOut;
         
-
         public NavigationBarViewModel(AccountStore accountStore, NavigationServiceManager navigationServiceManager)
         {
             LoginCommand = new NavigateCommand<LoginViewModel>(navigationServiceManager.GetNavigationService<LoginViewModel>());
@@ -58,7 +57,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
             this.accountStore.CurrentAccountChanged += OnCurrentAccountChanged;
         }
-
+        //TODO admin loggs in and can log with another account
         private void Logout()
         {
             accountStore.Logout();
@@ -116,10 +115,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private IEnumerable<ComboBoxTableNamesEnum> GetAllowedComboBoxValues(EmployeePositionEnum? employeePosition)
         {
-            // Define allowed values based on employee position
+            
             List<ComboBoxTableNamesEnum> allowedValues = new List<ComboBoxTableNamesEnum>();
 
-            // Check the employee position and add allowed values accordingly
+            //TODO Finish setting up priviledges
             switch (employeePosition)
             {
                 case EmployeePositionEnum.ADMIN:
