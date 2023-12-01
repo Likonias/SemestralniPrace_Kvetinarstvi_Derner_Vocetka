@@ -25,7 +25,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         
         public async Task<Flower> GetById(Int32 id)
         { 
-            string command = $"SELECT * FROM kvetiny " +
+            string command = $"SELECT zbozi.ID_ZBOZI, zbozi.NAZEV, zbozi.CENA, zbozi.TYP, zbozi.SKLAD, zbozi.OBRAZEK, kvetiny.ID_KVETINA, kvetiny.STAV, kvetiny.STARI FROM kvetiny " +
                              $"LEFT JOIN zbozi ON kvetiny.id_zbozi = zbozi.id_zbozi " +
                              $"WHERE ID_KVETINA = {id}";
             
@@ -52,7 +52,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task GetAll()
         {
-            string command = $"SELECT * FROM kvetiny " +
+            string command = $"SELECT zbozi.ID_ZBOZI, zbozi.NAZEV, zbozi.CENA, zbozi.TYP, zbozi.SKLAD, zbozi.OBRAZEK, kvetiny.ID_KVETINA, kvetiny.STAV, kvetiny.STARI FROM kvetiny " +
                              $"LEFT JOIN zbozi ON kvetiny.id_zbozi = zbozi.id_zbozi ";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
             
