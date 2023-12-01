@@ -134,20 +134,20 @@ public class OracleDbUtil
                 returnParam.OracleDbType = OracleDbType.Int32;
                 returnParam.Direction = ParameterDirection.ReturnValue;
                 command.Parameters.Add(returnParam);
-
+               
                 try
                 {
                     await connection.OpenAsync();
-                    await command.ExecuteNonQueryAsync();
+                    await command.ExecuteScalarAsync();
+                    int number = (int)returnParam.Value;
 
-                    if (returnParam.Equals(1))
-                    {
-                        return true;
+                    if (returnParam.Value != null) {
+                        if(Convert.ToInt32(returnParam.Value) == 1){ 
+                            return true;
+                        }else
+                        { return false; }
                     }
-                    else
-                    {
-                        return false;
-                    }
+                    else { return false; }
                 }
                 catch (Exception ex)
                 {

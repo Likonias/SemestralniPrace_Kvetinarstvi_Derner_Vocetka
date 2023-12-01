@@ -58,14 +58,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             OracleParameter mailParam = new OracleParameter();
             mailParam.ParameterName = "email";
             mailParam.Value = Email;
+            mailParam.DbType = DbType.String;
             mailParam.Direction = ParameterDirection.Input;
             //todo check if email belongs to someone already, should return bool
-            DataTable returnTableBool = await dbUtil.ExecuteStoredProcedureAsync("validateEmail", mailParam);
+            bool returnTableBool = await dbUtil.ExecuteStoredBooleanFunctionAsync("validateEmail", mailParam);
             bool isEmailAvailable = false;
-            if (returnTableBool != null && returnTableBool.Rows.Count > 0)
-            {
-                isEmailAvailable = Convert.ToBoolean(returnTableBool.Rows[0][0]);
-            }
+            
+
             if(isEmailAvailable)
             {
                 await customerRepository.Add(customer);
