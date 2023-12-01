@@ -18,9 +18,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
         public string? Tel { get; set; }
         public int? IdSupervisor { get; set; }
         public string Password { get; set; }
-        public EmployeePosition Position { get; set; }
+        public EmployeePositionEnum Position { get; set; }
 
-        public Employee(int id, string firstName, string lastName, double wage, string email, string? tel, int? idSupervisor, string password, EmployeePosition position)
+        public Employee(int id, string firstName, string lastName, double wage, string email, string? tel, int? idSupervisor, string password, EmployeePositionEnum position)
         {
             Id = id;
             FirstName = firstName;

@@ -1,5 +1,6 @@
 ﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Enums;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
@@ -99,8 +100,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private void PopulateComboBox()
         {
+            ComboBoxItems.Clear();
+            IEnumerable<ComboBoxTableNamesEnum> allowedValues = GetAllowedComboBoxValues(accountStore.CurrentAccount?.EmployeePosition);
+
             //populating ComboBox with the ComboBoxTableNamesEnums descriptions 
-            foreach (ComboBoxTableNamesEnum value in Enum.GetValues(typeof(ComboBoxTableNamesEnum)))
+            foreach (ComboBoxTableNamesEnum value in allowedValues)
             {
                 FieldInfo fieldInfo = value.GetType().GetField(value.ToString());
                 DescriptionAttribute[] attributes = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
@@ -108,6 +112,32 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 string description = (attributes.Length > 0) ? attributes[0].Description : value.ToString();
                 ComboBoxItems.Add(description);
             }
+        }
+
+        private IEnumerable<ComboBoxTableNamesEnum> GetAllowedComboBoxValues(EmployeePositionEnum? employeePosition)
+        {
+            // Define allowed values based on employee position
+            List<ComboBoxTableNamesEnum> allowedValues = new List<ComboBoxTableNamesEnum>();
+
+            // Check the employee position and add allowed values accordingly
+            switch (employeePosition)
+            {
+                case EmployeePositionEnum.ADMIN:
+                    allowedValues.Add(ComboBoxTableNamesEnum.Flowers);
+                    break;
+                case EmployeePositionEnum.MAJITEL:
+                    allowedValues.Add(ComboBoxTableNamesEnum.Addresses);
+                    break;
+                case EmployeePositionEnum.PRODAVAC:
+                    allowedValues.Add(ComboBoxTableNamesEnum.Customers);
+                    break;
+                default:
+                    allowedValues.Add(ComboBoxTableNamesEnum.Flowers);
+                    break;
+                    
+            }
+
+            return allowedValues;
         }
 
         private void SelectedViewCommandComboBox()

@@ -36,7 +36,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 row["TELEFON"].ToString(),
                 row["ZAMESTNANCI_ID_ZAMESTNANEC"] != DBNull.Value ? Convert.ToInt32(row["EmployeeId"]) : (int?)null,
                 row["HESLO"].ToString(),
-                (EmployeePosition)(row["POZICE"] != DBNull.Value ? Enum.Parse(typeof(EmployeePosition), row["EmployeePosition"].ToString()) : null)
+                (EmployeePositionEnum)(row["POZICE"] != DBNull.Value ? Enum.Parse(typeof(EmployeePositionEnum), row["EmployeePosition"].ToString()) : null)
 
             );
             return (Employee)Convert.ChangeType(employee, typeof(Employee));
@@ -58,7 +58,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                     row["TELEFON"].ToString(),
                     row["ZAMESTNANCI_ID_ZAMESTNANEC"] != DBNull.Value ? Convert.ToInt32(row["EmployeeId"]) : (int?)null,
                     row["HESLO"].ToString(),
-                    (EmployeePosition)(row["POZICE"] != DBNull.Value ? Enum.Parse(typeof(EmployeePosition), row["EmployeePosition"].ToString()) : null)
+                    (EmployeePositionEnum)(row["POZICE"] != DBNull.Value ? Enum.Parse(typeof(EmployeePositionEnum), row["EmployeePosition"].ToString()) : null)
 
                 );
                 Employees.Add(employee);

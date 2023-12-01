@@ -10,7 +10,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
     public class Account
     {
         //TODO nějak account aby byl schopnej zastupovat jak zakaznika a zamestnance?
-        public EmployeePosition? EmployeePosition { get; set; }
+        public EmployeePositionEnum? EmployeePosition { get; set; }
 
 
         
