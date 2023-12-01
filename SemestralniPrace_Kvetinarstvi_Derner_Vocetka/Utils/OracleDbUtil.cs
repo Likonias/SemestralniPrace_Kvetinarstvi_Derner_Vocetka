@@ -120,7 +120,7 @@ public class OracleDbUtil
         }
     }
 
-    public async Task<object> ExecuteStoredBooleanFunctionAsync(string functionName, Dictionary<string, object> parameters)
+    public async Task<bool> ExecuteStoredBooleanFunctionAsync(string functionName, Dictionary<string, object> parameters)
     {
         using (OracleConnection connection = new OracleConnection(connectionString))
         {
@@ -138,23 +138,28 @@ public class OracleDbUtil
 
                 OracleParameter returnParam = new OracleParameter();
                 returnParam.ParameterName = "result";
-                returnParam.OracleDbType = OracleDbType.Boolean;
+                returnParam.OracleDbType = OracleDbType.Int32;
                 returnParam.Direction = ParameterDirection.ReturnValue;
                 command.Parameters.Add(returnParam);
 
                 try
                 {
                     await connection.OpenAsync();
-                    await command.ExecuteNonQueryAsync(); 
+                    await command.ExecuteNonQueryAsync();
 
-                    object result = returnParam.Value;
-
-                    return result;
+                    if (returnParam.Equals(1))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    return null;
+                    return false;
                 }
             }
         }
