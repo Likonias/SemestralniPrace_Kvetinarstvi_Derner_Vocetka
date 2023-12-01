@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
 
         <!-- Street -->
-        <TextBox Grid.Row="0" x:Name="StreetTextBox" Text="{Binding Street, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+        <TextBox Grid.Row="0" x:Name="StreetTextBox" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" Text="{Binding Street, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
         <Label Grid.Row="0" Content="Street" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
         <TextBlock Grid.Row="1" Text="{Binding Path=(Validation.Errors)[0].ErrorContent, ElementName=StreetTextBox}" Foreground="Red"/>
 

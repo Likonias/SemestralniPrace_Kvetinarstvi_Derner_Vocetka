@@ -70,7 +70,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public NavigationBarViewModel(AccountStore accountStore, NavigationServiceManager navigationServiceManager)
         {
             LoginCommand = new NavigateCommand<LoginViewModel>(navigationServiceManager.GetNavigationService<LoginViewModel>());
-            RegisterCommand = new NavigateCommand<RegisterViewModel>(navigationServiceManager.GetNavigationService<RegisterViewModel>());
+            RegisterCommand = new NavigateCommand<CustomerFormViewModel>(navigationServiceManager.GetNavigationService<CustomerFormViewModel>());
             LogoutCommand = new RelayCommand(Logout);
             NavigateMainCommand = new NavigateCommand<MainViewModel>(navigationServiceManager.GetNavigationService<MainViewModel>());
             NavigateAccountCommand = new NavigateCommand<AccountViewModel>(navigationServiceManager.GetNavigationService<AccountViewModel>());

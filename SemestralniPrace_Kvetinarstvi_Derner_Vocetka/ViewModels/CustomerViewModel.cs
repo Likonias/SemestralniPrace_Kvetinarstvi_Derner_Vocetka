@@ -1,4 +1,5 @@
-﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
+﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private CustomerStore customerStore;
 
-        public CustomerViewModel(CustomerStore customerStore)
+        public CustomerViewModel(INavigationService createCustomerForm, CustomerStore customerStore)
         {
             this.customerStore = customerStore;
         }

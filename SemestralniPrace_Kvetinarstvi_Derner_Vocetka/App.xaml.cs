@@ -32,6 +32,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             modalNavigationStore = new ModalNavigationStore();
             accountStore = new AccountStore();
             addressStore = new AddressStore();
+            customerStore = new CustomerStore();
             CreateNavigationBarViewModel(); 
         }
 
@@ -59,11 +60,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             return new ModalNavigationService<LoginViewModel>(modalNavigationStore, () => new LoginViewModel(accountStore, new CloseModalNavigationService(modalNavigationStore)));
         }
 
-        private INavigationService CreateRegisterNavigationService()
-        {
-            return new NavigationService<RegisterViewModel>(navigationStore, () => new RegisterViewModel(CreateMainNavigationService()));
-        }
-
         private INavigationService CreateAccountNavigationService()
         {
             return new LayoutNavigationService<AccountViewModel>(navigationStore, () => new AccountViewModel(accountStore), CreateNavigationBarViewModel);
@@ -81,12 +77,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateAddressesFormNavigationService()
         {
-            return new ModalNavigationService<AddressFormViewModel>(modalNavigationStore, () => new AddressFormViewModel(new CloseModalNavigationService(modalNavigationStore), addressStore));
+            return new ModalNavigationService<AddressFormViewModel>(modalNavigationStore, () => new AddressFormViewModel(CreateCloseModalNavigationService(), addressStore));
         }
 
         private INavigationService CreateCustomerNavigationService()
         {
-            return new LayoutNavigationService<CustomerViewModel>(navigationStore, () => new CustomerViewModel(customerStore), CreateNavigationBarViewModel);
+            return new LayoutNavigationService<CustomerViewModel>(navigationStore, () => new CustomerViewModel(CreateCustomerFormNavigationService(), customerStore), CreateNavigationBarViewModel);
+        }
+
+        private INavigationService CreateCustomerFormNavigationService()
+        {
+            return new ModalNavigationService<CustomerFormViewModel>(modalNavigationStore, () => new CustomerFormViewModel(customerStore, CreateCloseModalNavigationService()));
         }
 
         private NavigationBarViewModel CreateNavigationBarViewModel()
@@ -95,17 +96,22 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             return new NavigationBarViewModel(accountStore, serviceManager);
         }
 
+        private INavigationService CreateCloseModalNavigationService()
+        {
+            return new CloseModalNavigationService(modalNavigationStore);
+        }
+
 
         private void UpdateServiceManager()
         {
             serviceManager.ClearNavigationService();
             serviceManager.RegisterNavigationService<LoginViewModel>(CreateLoginNavigationService());
-            serviceManager.RegisterNavigationService<RegisterViewModel>(CreateRegisterNavigationService());
             serviceManager.RegisterNavigationService<MainViewModel>(CreateMainNavigationService());
             serviceManager.RegisterNavigationService<AccountViewModel>(CreateAccountNavigationService());
             serviceManager.RegisterNavigationService<FlowersViewModel>(CreateFlowersNavigationService());
             serviceManager.RegisterNavigationService<AddressViewModel>(CreateAddressesNavigationService());
             serviceManager.RegisterNavigationService<CustomerViewModel>(CreateCustomerNavigationService());
+            serviceManager.RegisterNavigationService<CustomerFormViewModel>(CreateCustomerFormNavigationService());
         }
 
     }

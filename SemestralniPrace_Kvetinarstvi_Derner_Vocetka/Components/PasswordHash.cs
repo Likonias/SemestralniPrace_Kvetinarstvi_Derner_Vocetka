@@ -31,5 +31,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components
 
             return StructuralComparisons.StructuralEqualityComparer.Equals(pass1, pass2);
         }
+
+
     }
 }
