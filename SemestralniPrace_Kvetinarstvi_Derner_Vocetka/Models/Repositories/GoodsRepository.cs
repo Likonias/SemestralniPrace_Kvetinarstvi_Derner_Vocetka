@@ -100,16 +100,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             await GetAll();
             var dataTable = new DataTable();
-            
-            dataTable.Columns.Add("ID_ZBOZI", typeof(int));
+
             dataTable.Columns.Add("NAZEV", typeof(string));
             dataTable.Columns.Add("CENA", typeof(int));
             dataTable.Columns.Add("TYP", typeof(byte));
             dataTable.Columns.Add("SKLAD", typeof(int));
-            
+
             foreach (var goods in Goods)
-            {
-                dataTable.Rows.Add(goods.IdGoods, goods.Name, goods.Price, goods.Type, goods.Warehouse);
+            { 
+                dataTable.Rows.Add(goods.Name, goods.Price, goods.Type, goods.Warehouse);
             }
             
             return dataTable;
