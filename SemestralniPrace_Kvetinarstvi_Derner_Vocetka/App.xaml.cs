@@ -150,6 +150,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             serviceManager.RegisterNavigationService<AddressViewModel>(CreateAddressesNavigationService());
             serviceManager.RegisterNavigationService<CustomerViewModel>(CreateCustomerNavigationService());
             serviceManager.RegisterNavigationService<CustomerFormViewModel>(CreateCustomerFormNavigationService());
+            serviceManager.RegisterNavigationService<EmployeeViewModel>(CreateEmployeeNavigationService());
+            serviceManager.RegisterNavigationService<EmployeeFormViewModel>(CreateEmployeeFormNavigationService());
+            serviceManager.RegisterNavigationService<OrderViewModel>(CreateOrderNavigationService());
+            serviceManager.RegisterNavigationService<OrderFormViewModel>(CreateOrderFormNavigationService());
+            serviceManager.RegisterNavigationService<OtherGoodsViewModel>(CreateOtherGoodsNavigationService());
+            serviceManager.RegisterNavigationService<OtherGoodsFormViewModel>(CreateOtherGoodsFormNavigationService());
         }
 
     }
