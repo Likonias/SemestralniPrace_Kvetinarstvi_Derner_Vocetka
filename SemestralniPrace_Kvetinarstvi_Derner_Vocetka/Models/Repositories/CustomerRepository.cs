@@ -117,6 +117,35 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
             return dataTable;
         }
+
+        public List<Customer> GetCustomers()
+        {
+            Task.Run(async () => await GetAll()).Wait();
+            var customers = Customers.ToList();
+
+            return customers;
+        }
+
+        public List<Customer> GetCustomersForAdmin()
+        {
+            // TODO: Implement logic to get customers for admin
+            // For now, let's return all customers as a placeholder
+            return Customers.ToList();
+        }
+
+        public List<Customer> GetCustomersForMajitel()
+        {
+            // TODO: Implement logic to get customers for majitel
+            // For now, let's return an empty list as a placeholder
+            return new List<Customer>();
+        }
+
+        public List<Customer> GetCustomersForProdavac()
+        {
+            // TODO: Implement logic to get customers for prodavac
+            // For now, let's return an empty list as a placeholder
+            return new List<Customer>();
+        }
     }    
 }
 

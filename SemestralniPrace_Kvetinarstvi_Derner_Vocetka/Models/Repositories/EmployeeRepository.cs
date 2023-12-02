@@ -24,7 +24,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         
         public async Task<Employee> GetById(Int32 id)
         {
-            string command = $"SELECT * FROM zamestnanci WHERE ID_ZAMESTNANEC = {id}";
+            string command = $"SELECT * FROM zamestnaneci WHERE ID_ZAMESTNANEC = {id}";
             var dataTable = await dbUtil.ExecuteQueryAsync(command);
             var row = dataTable.Rows[0];
             var employee = new Employee(
@@ -44,7 +44,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task GetAll()
         {
-            string command = "SELECT * FROM zamestnanci";
+            string command = "SELECT * FROM zamestnaneci";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
 
             foreach (DataRow row in dataTable.Rows)
@@ -133,6 +133,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             
             return dataTable;
         }
-        
+
+        public List<Employee> GetEmployees()
+        {
+            Task.Run(async () => await GetAll()).Wait(); // Wait for the asynchronous GetAll to complete
+            return Employees.ToList();
+        }
+
     }
 }

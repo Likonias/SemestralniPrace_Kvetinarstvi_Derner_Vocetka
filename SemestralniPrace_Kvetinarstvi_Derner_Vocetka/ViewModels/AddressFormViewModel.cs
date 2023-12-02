@@ -1,9 +1,12 @@
 ﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Enums;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -18,19 +21,49 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
     {
         public RelayCommand BtnCancel { get; private set; }
         public RelayCommand BtnOk { get; private set; }
-
+        private readonly AccountStore accountStore;
         public string ErrorMessage { get; set; }
+        public ObservableCollection<string> AddressTypeComboBoxItems { get; set; }
+        public ObservableCollection<string> AddressOwnerComboBoxItems { get; set; }
+
 
         private INavigationService closeNavSer;
         private Address address;
-        public AddressFormViewModel(INavigationService closeModalNavigationService, AddressStore addressStore)
+        public AddressFormViewModel(AccountStore accountStore, INavigationService closeModalNavigationService, AddressStore addressStore)
         {
             closeNavSer = closeModalNavigationService;
             BtnCancel = new RelayCommand(Cancel);
             BtnOk = new RelayCommand(Ok);
             address = addressStore.Address;
+            this.accountStore = accountStore;
             if (address != null) { InitializeAddress(); }
             ErrorMessage = "";
+            AddressOwnerComboBoxItems = new ObservableCollection<string>();
+            AddressTypeComboBoxItems = new ObservableCollection<string>();
+            PopulateAddressTypeComboBox();
+            PopulateAddressOwnerComboBox();
+        }
+
+        private void PopulateAddressTypeComboBox()
+        {
+            AddressTypeComboBoxItems.Clear();
+
+            foreach (AddressTypeEnum value in Enum.GetValues(typeof(AddressTypeEnum)))
+            {
+                AddressTypeComboBoxItems.Add(value.ToString());
+            }
+        }
+
+        private void PopulateAddressOwnerComboBox()
+        {
+            AddressOwnerComboBoxItems.Clear();
+            IEnumerable<string> allowedValues = GetAllowedAddressOwners(accountStore.CurrentAccount?.EmployeePosition);
+
+            // Populating ComboBox with the allowed address owners
+            foreach (string value in allowedValues)
+            {
+                AddressOwnerComboBoxItems.Add(value);
+            }
         }
 
         private void Cancel()
@@ -57,8 +90,37 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             _addressOwner = address.CustomerId.ToString();
             if(_addressOwner == null) { _addressOwner = address.EmployeeId.ToString(); }
             _addressType = address.AddressTypeId.ToString();
-
         }
+
+        private List<string> GetAllowedAddressOwners(EmployeePositionEnum? employeePosition)
+        {
+            List<string> allowedValues = new List<string>();
+
+            CustomerRepository customerRepository = new CustomerRepository();
+            EmployeeRepository employeeRepository = new EmployeeRepository();
+
+            string currentEmail = accountStore.CurrentAccount?.Email;
+
+            switch (employeePosition)
+            {
+                case EmployeePositionEnum.ADMIN:
+                    allowedValues.AddRange(customerRepository.GetCustomers().Select(c => c.Email));
+                    allowedValues.AddRange(employeeRepository.GetEmployees().Select(e => e.Email));
+                    break;
+                case EmployeePositionEnum.MAJITEL:
+                    allowedValues.AddRange(customerRepository.GetCustomers().Select(c => c.Email));
+                    allowedValues.AddRange(employeeRepository.GetEmployees().Select(e => e.Email));
+                    break;
+                case EmployeePositionEnum.PRODAVAC:
+                    allowedValues.Add(currentEmail);
+                    break;
+                default:
+                    break;
+            }
+
+            return allowedValues;
+        }
+
 
         private string _street;
         public string Street

@@ -35,11 +35,11 @@
         <Label Grid.Row="3" Content="Zip" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
 
         <!-- AddressOwner ComboBox -->
-        <ComboBox Grid.Row="4" x:Name="AddressOwnerComboBox" Margin="110,10,70,10" ItemsSource="{Binding AddressOwnerOptions}" SelectedItem="{Binding AddressOwner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <ComboBox Grid.Row="4" x:Name="AddressOwnerComboBox" Margin="110,10,70,10" ItemsSource="{Binding AddressOwnerComboBoxItems}" SelectedItem="{Binding AddressOwner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <Label Grid.Row="4" Content="Address Owner" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
 
         <!-- AddressType ComboBox -->
-        <ComboBox Grid.Row="5" x:Name="AddressTypeComboBox" Margin="110,10,70,10" ItemsSource="{Binding AddressTypeOptions}" SelectedItem="{Binding AddressType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <ComboBox Grid.Row="5" x:Name="AddressTypeComboBox" Margin="110,10,70,10" ItemsSource="{Binding AddressTypeComboBoxItems}" SelectedItem="{Binding AddressType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <Label Grid.Row="5" Content="Address Type" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
 
         <TextBlock Grid.Row="6" Text="{Binding ErrorMessage, Mode=TwoWay}" Foreground="Red"/>
