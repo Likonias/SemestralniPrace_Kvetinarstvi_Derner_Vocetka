@@ -121,7 +121,7 @@ public class OracleDbUtil
         }
     }
 
-    public async Task<bool> ExecuteStoredBooleanFunctionAsync(string functionName, string parameter)
+    public async Task<bool> ExecuteStoredEmailBooleanFunctionAsync(string functionName, string parameter)
     {
         using (OracleConnection connection = new OracleConnection(connectionString))
         {
@@ -148,6 +148,85 @@ public class OracleDbUtil
                 {
                     Console.WriteLine(ex.Message);
                     return false;
+                }
+            }
+            
+        }
+    }
+    
+    public async Task<bool> ExecuteStoredValidateLoginFunctionAsync(string functionName, string emailToValidate, string passwordToValidate)
+    {
+        using (OracleConnection connection = new OracleConnection(connectionString))
+        {
+            using (OracleCommand command = new OracleCommand(null, connection))
+            {
+                //validateLogin
+                command.CommandText = "BEGIN :result := " + functionName + "(:p_email, :p_password); END;";
+
+                command.Parameters.Add("result", OracleDbType.Int32, System.Data.ParameterDirection.ReturnValue);
+                command.Parameters.Add("email", OracleDbType.Varchar2).Value = emailToValidate;
+                command.Parameters.Add("password", OracleDbType.Varchar2).Value = passwordToValidate;
+                try
+                {
+                    await connection.OpenAsync();
+                    await command.ExecuteNonQueryAsync();
+
+                    OracleDecimal oracleResult = (OracleDecimal)command.Parameters["result"].Value;
+                    int validationResult = oracleResult.ToInt32();
+                    
+                    if(validationResult == 1){ 
+                        return true;
+                    }else
+                    { return false; }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return false;
+                }
+            }
+            
+        }
+    }
+    
+    public async Task<DataTable> ExecuteGetFunctionAsync(string functionName, string parameter)
+    {
+        using (OracleConnection connection = new OracleConnection(connectionString))
+        {
+            using (OracleCommand command = new OracleCommand(null, connection))
+            {
+                //getUserByEmail
+                command.CommandText = "BEGIN :result := " + functionName + "(:p_email); END;";
+
+                command.Parameters.Add("result", OracleDbType.Int32, System.Data.ParameterDirection.ReturnValue);
+                command.Parameters.Add("email", OracleDbType.Varchar2).Value = parameter;
+                try
+                {
+                    await connection.OpenAsync();
+                    await command.ExecuteNonQueryAsync();
+
+                    OracleRefCursor refCursor = (OracleRefCursor)command.Parameters["result"].Value;
+
+                    OracleDataAdapter adapter = new OracleDataAdapter(command);
+                    DataTable dataTable = new DataTable();
+                    adapter.Fill(dataTable);
+                    
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        int userId = Convert.ToInt32(row["user_id"]);
+                        string userName = row["jmeno"].ToString();
+                        string userSurname = row["prijmeni"].ToString();
+                        string userEmail = row["email"].ToString();
+                        string userPhone = row["telefon"].ToString();
+                    }
+
+                    return dataTable;
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return null;
                 }
             }
             

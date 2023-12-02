@@ -57,8 +57,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             //for validation Regex.IsMatch(email, pattern); string pattern = @"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$";
             string emailToValidate = "example@email.com";
             //todo check if email belongs to someone already, should return bool
-            bool returnTableBool = await dbUtil.ExecuteStoredBooleanFunctionAsync("validateEmail", emailToValidate);
-            bool isEmailAvailable = await dbUtil.ExecuteStoredBooleanFunctionAsync("emailExists", emailToValidate);
+            bool returnTableBool = await dbUtil.ExecuteStoredEmailBooleanFunctionAsync("validateEmail", emailToValidate);
+            bool isEmailAvailable = await dbUtil.ExecuteStoredEmailBooleanFunctionAsync("emailExists", emailToValidate);
             
 
             if(isEmailAvailable)
