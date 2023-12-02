@@ -29,6 +29,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public RelayCommand BtnCancel { get; private set; }
         public RelayCommand BtnOk { get; private set; }
 
+        public string ErrorMessage { get; set; }
+
         public CustomerFormViewModel(CustomerStore customerStore, INavigationService closeNavSer)
         {
             this.customerStore = customerStore;

@@ -19,6 +19,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public RelayCommand BtnCancel { get; private set; }
         public RelayCommand BtnOk { get; private set; }
 
+        public string ErrorMessage { get; set; }
+
         private INavigationService closeNavSer;
         private Address address;
         public AddressFormViewModel(INavigationService closeModalNavigationService, AddressStore addressStore)
@@ -28,6 +30,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             BtnOk = new RelayCommand(Ok);
             address = addressStore.Address;
             if (address != null) { InitializeAddress(); }
+            ErrorMessage = "";
         }
 
         private void Cancel()
