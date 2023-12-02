@@ -29,7 +29,16 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public RelayCommand BtnCancel { get; private set; }
         public RelayCommand BtnOk { get; private set; }
 
-        public string ErrorMessage { get; set; }
+        private string errorMessage;
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set
+            {
+                errorMessage = value;
+                OnPropertyChanged("ErrorMessage");
+            }
+        }
 
         public CustomerFormViewModel(CustomerStore customerStore, INavigationService closeNavSer)
         {
@@ -39,7 +48,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             BtnCancel = new RelayCommand(Cancel);
             BtnOk = new RelayCommand(Ok);
             dbUtil = new OracleDbUtil();
-            
         }
 
         private void Cancel()
@@ -54,20 +62,41 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         }
         private async Task OkAsync()
         {
-            customer = new Customer(0, FirstName, LastName, Email, Tel, PasswordHash.PasswordHashing(Password));
-            CustomerRepository customerRepository = new CustomerRepository();
-            //for validation Regex.IsMatch(email, pattern); string pattern = @"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$";
-            string emailToValidate = "example@email.com";
-            //todo check if email belongs to someone already, should return bool
-            bool returnTableBool = await dbUtil.ExecuteStoredEmailBooleanFunctionAsync("validateEmail", emailToValidate);
-            bool isEmailAvailable = await dbUtil.ExecuteStoredEmailBooleanFunctionAsync("emailExists", emailToValidate);
+
             
 
-            if(isEmailAvailable)
+            if (Password != null)
             {
-                await customerRepository.Add(customer);
+
+                bool passwordOk = PasswordHash.IsPasswordCorrect(PasswordHash.PasswordHashing(Password), PasswordHash.PasswordHashing(PasswordCheck));
+
+                string emailToValidate = "example@email.com";
+
+                CustomerRepository customerRepository = new CustomerRepository();
+                bool isEmailViable = await dbUtil.ExecuteStoredEmailBooleanFunctionAsync("validateEmail", Email);
+                bool isEmailAvailable = await dbUtil.ExecuteStoredEmailBooleanFunctionAsync("emailExists", Email);
+
+
+                if (isEmailAvailable && isEmailViable && passwordOk)
+                {
+                    await customerRepository.Add(new Customer(0, FirstName, LastName, Email, Tel, PasswordHash.PasswordHashing(Password)));
+                    closeNavSer.Navigate();
+                }
+                else if (isEmailAvailable)
+                {
+                    ErrorMessage = "Incorrect Email!";
+                }
+                else
+                {
+                    ErrorMessage = "Wrong data input!";
+                }
             }
-            closeNavSer.Navigate();
+            else
+            {
+                ErrorMessage = "Passwords dont match!";
+            }
+            
+            
         }
 
         private string _firstName;
@@ -77,7 +106,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             set
             {
                 _firstName = value;
-                OnPropertyChanged();
+                OnPropertyChanged(FirstName) ;
             }
         }
 
@@ -88,7 +117,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             set
             {
                 _lastName = value;
-                OnPropertyChanged();
+                OnPropertyChanged(LastName);
             }
         }
 
@@ -99,7 +128,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             set
             {
                 _email = value;
-                OnPropertyChanged();
+                OnPropertyChanged(Email);
             }
         }
 
@@ -110,7 +139,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             set
             {
                 _tel = value;
-                OnPropertyChanged();
+                OnPropertyChanged(Tel);
             }
         }
 
@@ -121,7 +150,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             set
             {
                 _password = value;
-                OnPropertyChanged();
+                OnPropertyChanged(Password);
             }
         }
 
@@ -132,14 +161,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             set
             {
                 _passwordCheck = value;
-                OnPropertyChanged();
+                OnPropertyChanged(PasswordCheck);
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
     }
