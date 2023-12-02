@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
@@ -10,6 +12,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private string email;
         private string password;
         private string errorMessage;
+        public string ErrorMessage { get { return errorMessage; }
+            set
+            {
+                errorMessage = value;
+                OnPropertyChanged("ErrorMessage");
+            }
+        }
 
         public string Email
         {
@@ -31,16 +40,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             }
         }
 
-        public string ErrorMessage
-        {
-            get { return errorMessage; }
-            set
-            {
-                errorMessage = value;
-                OnPropertyChanged("ErrorMessage");
-            }
-        }
-        
         public RelayCommand LoginCommand { get; }
         public RelayCommand CancelCommand { get; }
         private INavigationService closeNavigationService;
@@ -53,13 +52,27 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             LoginCommand = new RelayCommand(Login);
             CancelCommand = new RelayCommand(Close);
             this.closeNavigationService = closeModalNavigationService;
+            
         }
 
-        private void Login()
+        private async void Login()
         {
-            accountStore.CurrentAccount = new Models.Account();
-            closeNavigationService.Navigate();
-            //TODO logika loginu, načtení z databáze, nalezení dle emailu a následné checknutí hesla přes PasswordHash (nejdříve se heslo musí hashnout)
+            if(await dbUtil.ExecuteStoredValidateLoginFunctionAsync("validateLogin", Email, Password))
+            {
+                accountStore.CurrentAccount = await GetUser(Email);
+                closeNavigationService.Navigate();
+            }
+            else
+            {
+                ErrorMessage = "Login failed!";
+            }
+
+        }
+
+        private async Task<Account> GetUser(string email)
+        {
+            Account acc = await dbUtil.ExecuteGetAccountFunctionAsync("getUserByEmail", email);
+            return acc;
         }
 
         private void Close()

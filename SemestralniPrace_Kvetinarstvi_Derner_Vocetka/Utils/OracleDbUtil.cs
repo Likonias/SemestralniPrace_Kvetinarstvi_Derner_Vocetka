@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Enums;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 
@@ -190,16 +191,26 @@ public class OracleDbUtil
         }
     }
     
-    public async Task<DataTable> ExecuteGetAccountFunctionAsync(string functionName, string parameter)
+    public async Task<Account> ExecuteGetAccountFunctionAsync(string functionName, string parameter)
     {
+
+        EmployeePositionEnum? MapDatabaseValueToEnum(string databaseValue)
+        {
+
+            if (Enum.TryParse<EmployeePositionEnum>(databaseValue, out var returnedEnum))
+            {
+                return returnedEnum;
+            }
+            return null;
+        }
         using (OracleConnection connection = new OracleConnection(connectionString))
         {
             using (OracleCommand command = new OracleCommand(null, connection))
             {
                 //getUserByEmail
-                command.CommandText = "BEGIN :result := " + functionName + "(:p_email); END;";
+                command.CommandText = "BEGIN :result := " + functionName + "(:email); END;";
 
-                command.Parameters.Add("result", OracleDbType.Int32, System.Data.ParameterDirection.ReturnValue);
+                command.Parameters.Add("result", OracleDbType.RefCursor, System.Data.ParameterDirection.ReturnValue);
                 command.Parameters.Add("email", OracleDbType.Varchar2).Value = parameter;
                 try
                 {
@@ -212,17 +223,20 @@ public class OracleDbUtil
                     DataTable dataTable = new DataTable();
                     adapter.Fill(dataTable);
                     
+                    Account account = new Account();
+
                     foreach (DataRow row in dataTable.Rows)
                     {
-                        int userId = Convert.ToInt32(row["user_id"]);
-                        string userName = row["jmeno"].ToString();
-                        string userSurname = row["prijmeni"].ToString();
-                        string userEmail = row["email"].ToString();
-                        string userPhone = row["telefon"].ToString();
-
+                        
+                        account.Id = Convert.ToInt32(row["user_id"]);
+                        account.FirstName = row["user_jmeno"].ToString();
+                        account.LastName = row["user_prijmeni"].ToString();
+                        account.Email = row["user_email"].ToString();
+                        account.Phone = row["user_telefon"].ToString();
+                        account.EmployeePosition = MapDatabaseValueToEnum(row["user_pozice"].ToString());
                     }
 
-                    return dataTable;
+                    return account;
 
                 }
                 catch (Exception ex)

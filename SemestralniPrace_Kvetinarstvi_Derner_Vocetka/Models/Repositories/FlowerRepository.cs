@@ -124,7 +124,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dataTable.Columns.Add("CENA", typeof(int));
             dataTable.Columns.Add("TYP", typeof(byte));
             dataTable.Columns.Add("SKLAD", typeof(int));
-            dataTable.Columns.Add("Stav", typeof(FlowerStateEnum));
+            dataTable.Columns.Add("Stav", typeof(string));
             dataTable.Columns.Add("Vek", typeof(int));
 
             foreach (var flowers in Flowers)
@@ -134,7 +134,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 row["CENA"] = flowers.Price;
                 row["TYP"] = flowers.Type;
                 row["SKLAD"] = flowers.Warehouse;
-                row["Stav"] = flowers.State;
+                row["Stav"] = flowers.State.ToString();
                 row["Vek"] = flowers.Age;
                 
                 dataTable.Rows.Add(row);
