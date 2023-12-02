@@ -4,6 +4,7 @@ using System.Data;
 using System.Threading.Tasks;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 
@@ -163,7 +164,7 @@ public class OracleDbUtil
                 //validateLogin
                 command.CommandText = "BEGIN :result := " + functionName + "(:p_email, :p_password); END;";
 
-                command.Parameters.Add("result", OracleDbType.Int32, System.Data.ParameterDirection.ReturnValue);
+                command.Parameters.Add("result", OracleDbType.Int32, ParameterDirection.ReturnValue);
                 command.Parameters.Add("email", OracleDbType.Varchar2).Value = emailToValidate;
                 command.Parameters.Add("password", OracleDbType.Varchar2).Value = passwordToValidate;
                 try
@@ -189,7 +190,7 @@ public class OracleDbUtil
         }
     }
     
-    public async Task<DataTable> ExecuteGetFunctionAsync(string functionName, string parameter)
+    public async Task<DataTable> ExecuteGetAccountFunctionAsync(string functionName, string parameter)
     {
         using (OracleConnection connection = new OracleConnection(connectionString))
         {
@@ -218,6 +219,7 @@ public class OracleDbUtil
                         string userSurname = row["prijmeni"].ToString();
                         string userEmail = row["email"].ToString();
                         string userPhone = row["telefon"].ToString();
+
                     }
 
                     return dataTable;
