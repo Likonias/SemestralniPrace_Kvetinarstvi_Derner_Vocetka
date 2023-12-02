@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 
@@ -120,34 +121,28 @@ public class OracleDbUtil
         }
     }
 
-    public async Task<bool> ExecuteStoredBooleanFunctionAsync(string functionName, OracleParameter parameter)
+    public async Task<bool> ExecuteStoredBooleanFunctionAsync(string functionName, string parameter)
     {
         using (OracleConnection connection = new OracleConnection(connectionString))
         {
-            using (OracleCommand command = new OracleCommand(functionName, connection))
+            using (OracleCommand command = new OracleCommand(null, connection))
             {
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.Add(parameter);
-               
-                OracleParameter returnParam = new OracleParameter();
-                returnParam.ParameterName = "result";
-                returnParam.OracleDbType = OracleDbType.Int32;
-                returnParam.Direction = ParameterDirection.ReturnValue;
-                command.Parameters.Add(returnParam);
-               
+                command.CommandText = "BEGIN :result := " + functionName + "(:p_email); END;";
+
+                command.Parameters.Add("result", OracleDbType.Int32, System.Data.ParameterDirection.ReturnValue);
+                command.Parameters.Add("email", OracleDbType.Varchar2).Value = parameter;
                 try
                 {
                     await connection.OpenAsync();
-                    await command.ExecuteScalarAsync();
-                    int number = (int)returnParam.Value;
+                    await command.ExecuteNonQueryAsync();
 
-                    if (returnParam.Value != null) {
-                        if(Convert.ToInt32(returnParam.Value) == 1){ 
-                            return true;
-                        }else
-                        { return false; }
-                    }
-                    else { return false; }
+                    OracleDecimal oracleResult = (OracleDecimal)command.Parameters["result"].Value;
+                    int validationResult = oracleResult.ToInt32();
+                    
+                    if(validationResult == 1){ 
+                        return true;
+                    }else
+                    { return false; }
                 }
                 catch (Exception ex)
                 {
@@ -155,6 +150,7 @@ public class OracleDbUtil
                     return false;
                 }
             }
+            
         }
     }
 }
