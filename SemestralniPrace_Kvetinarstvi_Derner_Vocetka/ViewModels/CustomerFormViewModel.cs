@@ -70,8 +70,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
                 bool passwordOk = PasswordHash.IsPasswordCorrect(PasswordHash.PasswordHashing(Password), PasswordHash.PasswordHashing(PasswordCheck));
 
-                string emailToValidate = "example@email.com";
-
                 CustomerRepository customerRepository = new CustomerRepository();
                 bool isEmailViable = await dbUtil.ExecuteStoredEmailBooleanFunctionAsync("validateEmail", Email);
                 bool isEmailAvailable = await dbUtil.ExecuteStoredEmailBooleanFunctionAsync("emailExists", Email);

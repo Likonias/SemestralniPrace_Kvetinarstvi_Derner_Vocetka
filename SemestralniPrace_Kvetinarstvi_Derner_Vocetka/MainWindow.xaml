@@ -35,6 +35,24 @@
             <DataTemplate DataType="{x:Type viewmodels:CustomerFormViewModel}" >
                 <views:CustomerFormView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:EmployeeViewModel}" >
+                <views:EmployeeView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:EmployeeFormViewModel}" >
+                <views:EmployeeFormView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:OrderViewModel}" >
+                <views:OrderView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:OrderFormViewModel}" >
+                <views:OrderFormView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:OtherGoodsViewModel}" >
+                <views:OtherGoodsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:OtherGoodsFormViewModel}" >
+                <views:OtherGoodsFormView/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:LayoutViewModel}" >
                 <components:Layout/>
             </DataTemplate>
