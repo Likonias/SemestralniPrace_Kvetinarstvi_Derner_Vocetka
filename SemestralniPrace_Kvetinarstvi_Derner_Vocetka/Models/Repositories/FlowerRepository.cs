@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 {
-    public class FlowerRepository : IRepository<Flower>
+    public class FlowerRepository
     {
         public ObservableCollection<Flower> Flowers { get; set; }
         private OracleDbUtil dbUtil;
@@ -52,6 +52,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task GetAll()
         {
+            Flowers.Clear();
             string command = $"SELECT zbozi.ID_ZBOZI, zbozi.NAZEV, zbozi.CENA, zbozi.TYP, zbozi.SKLAD, zbozi.OBRAZEK, kvetiny.ID_KVETINA, kvetiny.STAV, kvetiny.STARI FROM kvetiny " +
                              $"LEFT JOIN zbozi ON kvetiny.id_zbozi = zbozi.id_zbozi ";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);

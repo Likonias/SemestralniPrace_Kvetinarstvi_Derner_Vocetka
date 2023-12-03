@@ -7,10 +7,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Width="1000">
-        <DataGrid DataGrid.ItemsSource="{Binding TableData}" IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="True" Margin="10,10,200,10"/>
-
+        <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Street" Binding="{Binding Street}"/>
+                <DataGridTextColumn Header="StreetNumber" Binding="{Binding StreetNumber}"/>
+                <DataGridTextColumn Header="City" Binding="{Binding City}"/>
+                <DataGridTextColumn Header="Zip" Binding="{Binding Zip}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
         <Button Content="Přidej" Command="{Binding BtnAdd}" HorizontalAlignment="Left" Margin="860,45,0,0" Width="80" VerticalAlignment="Top"/>
         <Button Content="Uprav" Command="{Binding BtnEdit}" HorizontalAlignment="Left" Margin="860,105,0,0" Width="80"  VerticalAlignment="Top"/>
-        <Button Content="Vymaž" Command="{Binding BtdDelete}" HorizontalAlignment="Left" Margin="860,150,0,0" Width="80" VerticalAlignment="Top"/>
+        <Button Content="Vymaž" Command="{Binding BtnDelete}" HorizontalAlignment="Left" Margin="860,150,0,0" Width="80" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>

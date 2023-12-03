@@ -9,7 +9,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
 {
     public class Account
     {
-        //TODO nějak account aby byl schopnej zastupovat jak zakaznika a zamestnance?
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

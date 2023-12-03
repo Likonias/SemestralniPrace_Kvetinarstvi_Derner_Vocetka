@@ -36,6 +36,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task GetAll()
         {
+            AddressType.Clear();
             string command = "SELECT * FROM druh_adresy";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
 
@@ -67,11 +68,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await dbUtil.ExecuteStoredProcedureAsync("updatedruh_adresy", parameters);
         }
 
-        public async Task Delete(AddressType entity)
+        public async Task Delete(int id)
         {
             var parameters = new Dictionary<string, object>
             {
-                { "ID_DRUH_ADRESY", entity.Id }
+                { "ID_DRUH_ADRESY", id }
             };
             await dbUtil.ExecuteStoredProcedureAsync("deletedruh_adresy", parameters);
         }

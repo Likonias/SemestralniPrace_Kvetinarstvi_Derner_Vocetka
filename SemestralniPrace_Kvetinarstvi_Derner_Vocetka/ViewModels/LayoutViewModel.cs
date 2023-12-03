@@ -17,5 +17,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             NavigationBarViewModel = navigationBarViewModel;
             ContentViewModel = contentViewModel;
         }
+
+        public override void Dispose()
+        {
+            ContentViewModel.Dispose();
+            NavigationBarViewModel.Dispose();
+            base.Dispose();
+        }
     }
 }

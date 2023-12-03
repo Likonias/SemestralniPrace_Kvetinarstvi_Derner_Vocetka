@@ -41,17 +41,18 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         }
 
-        public async Task Delete(Address entity)
+        public async Task Delete(int id)
         {
             var parameters = new Dictionary<string, object>
             {
-                { "ID_ADRESA", entity.Id }
+                { "ID_ADRESA", id }
             };
             await dbUtil.ExecuteStoredProcedureAsync("deleteadresy", parameters);
         }
 
         public async Task GetAll()
         {
+            Addresses.Clear();
             string command = "SELECT * FROM Adresy";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
 
@@ -74,7 +75,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task<Address> GetById(int id)
         {
-            string command = $"SELECT * FROM Addresses WHERE Id = {id}";
+            string command = $"SELECT * FROM Adresy WHERE Id_adresa = {id}";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
 
             if (dataTable.Rows.Count == 0)
@@ -82,14 +83,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
             var row = dataTable.Rows[0];
             var address = new Address(
-                Convert.ToInt32(row["Id"]),
-                row["Street"].ToString(),
-                row["StreetNumber"].ToString(),
-                row["City"].ToString(),
-                row["Zip"].ToString(),
-                row["EmployeeId"] != DBNull.Value ? Convert.ToInt32(row["EmployeeId"]) : (int?)null,
-                row["CustomerId"] != DBNull.Value ? Convert.ToInt32(row["CustomerId"]) : (int?)null,
-                row["AddressType"] != DBNull.Value ? Convert.ToInt32(row["AddressTypeId"]) : (int?)null
+                Convert.ToInt32(row["ID_ADRESA"]),
+                row["ULICE"].ToString(),
+                row["CISLO_POPISNE"].ToString(),
+                row["MESTO"].ToString(),
+                row["PSC"].ToString(),
+                row["ZAMESTNANCI_ID_ZAMESTNANEC"] != DBNull.Value ? Convert.ToInt32(row["EmployeeId"]) : (int?)null,
+                row["ZAKAZNICI_ID_ZAKAZNIK"] != DBNull.Value ? Convert.ToInt32(row["CustomerId"]) : (int?)null,
+                row["DRUHY_ADRES_ID_DRUH_ADRESY"] != DBNull.Value ? Convert.ToInt32(row["AddressTypeId"]) : (int?)null
             );
 
             return address;
@@ -108,7 +109,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "ZAKAZNICI_ID_ZAKAZNIK", entity.CustomerId },
                 { "DRUHY_ADRES_ID_DRUH_ADRESY", entity.AddressTypeId },
             };
-            await dbUtil.ExecuteStoredProcedureAsync("updateAddress", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("updateadresy", parameters);
         }
 
         public async Task<DataTable> ConvertToDataTable()
@@ -116,6 +117,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await GetAll();
             DataTable dataTable = new DataTable();
 
+            dataTable.Columns.Add("Id", typeof(int));
             dataTable.Columns.Add("Street", typeof(string));
             dataTable.Columns.Add("StreetNumber", typeof(string));
             dataTable.Columns.Add("City", typeof(string));
@@ -126,6 +128,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             {
                 
                 DataRow row = dataTable.NewRow();
+                row["Id"] = address.Id;
                 row["Street"] = address.Street;
                 row["StreetNumber"] = address.StreetNumber;
                 row["City"] = address.City;

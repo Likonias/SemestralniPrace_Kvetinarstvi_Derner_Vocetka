@@ -32,17 +32,18 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await dbUtil.ExecuteStoredProcedureAsync("addplatby", parameters);
         }
 
-        public async Task Delete(Billing entity)
+        public async Task Delete(int id)
         {
             var parameters = new Dictionary<string, object>
             {
-                { "ID_PLATBA", entity.Id }
+                { "ID_PLATBA", id}
             };
             await dbUtil.ExecuteStoredProcedureAsync("deleteplatby", parameters);
         }
 
         public async Task GetAll()
         {
+            Billings.Clear();
             string command = "SELECT * FROM platby";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
 

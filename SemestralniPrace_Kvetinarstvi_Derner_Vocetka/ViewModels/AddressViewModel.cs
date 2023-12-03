@@ -9,6 +9,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
@@ -22,7 +23,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public RelayCommand BtnAdd { get; }
         public RelayCommand BtnEdit { get; }
         public RelayCommand BtnDelete { get; }
-
+        public DataRowView SelectedItem { get; set; }
         public DataTable TableData
         {
             get { return tableData; }
@@ -32,10 +33,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 OnPropertyChanged(nameof(TableData));
             }
         }
-
         private INavigationService createAddressForm;
         private AddressStore addressStore;
-
+        private AddressRepository addressRepository;
         public AddressViewModel(INavigationService createAddressForm, AddressStore addressStore)
         {
             this.createAddressForm = createAddressForm;
@@ -44,21 +44,31 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             BtnDelete = new RelayCommand(BtnDeletePressed);
             dbUtil = new OracleDbUtil();
             this.addressStore = addressStore;
-            //TODO delete later
-            this.addressStore.Address = new Models.Address(1, "st", "5", "Pce", "53002", null, null, null);
+            tableData = new DataTable();
+            addressRepository = new AddressRepository();
             InitializeTableData();
         }
 
-        private void BtnDeletePressed()
+        private async void BtnDeletePressed()
         {
-            throw new NotImplementedException();
+            if (SelectedItem?.Row[0].ToString() != null)
+            {
+                await addressRepository.Delete(int.Parse(SelectedItem.Row[0].ToString()));
+                InitializeTableData();
+            }
         }
 
-        private void BtnEditPressed()
+        private async void BtnEditPressed()
         {
-            createAddressForm.Navigate();
-        }
+            if (SelectedItem?.Row[0].ToString() != null)
+            {
+                addressStore.Address = await addressRepository.GetById(int.Parse(SelectedItem.Row[0].ToString()));
+                createAddressForm.Navigate();
+            }
 
+
+
+        }
         private void BtnAddPresseed()
         {
 
@@ -69,10 +79,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private async Task InitializeTableData()
         {
-            
-            AddressRepository addressRepository = new AddressRepository();
+            TableData = new DataTable();
             TableData = await addressRepository.ConvertToDataTable();
+            
+        }
 
+        public override void Dispose()
+        {
+            base.Dispose();
         }
     }
 }

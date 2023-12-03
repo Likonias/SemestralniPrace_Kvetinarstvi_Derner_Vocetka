@@ -11,7 +11,16 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores
     {
         public event Action CurrentViewModelChanged;
         private ViewModelBase currentViewModel;
-        public ViewModelBase CurrentViewModel { get => currentViewModel; set { currentViewModel = value; OnCurrentViewModelChanged(); } }
+        public ViewModelBase CurrentViewModel 
+        { 
+            get => currentViewModel; 
+            set 
+            { 
+                currentViewModel?.Dispose();
+                currentViewModel = value; 
+                OnCurrentViewModelChanged(); 
+            } 
+        }
         public bool IsOpen => currentViewModel != null;
         public void Close()
         {

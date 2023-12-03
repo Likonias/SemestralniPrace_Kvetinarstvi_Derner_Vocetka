@@ -40,6 +40,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task GetAll()
         {
+            Customers.Clear();
             string command = "SELECT * FROM zakaznici";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
 
@@ -84,11 +85,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await dbUtil.ExecuteStoredProcedureAsync("updatezakaznici", parameters);
         }
 
-        public async Task Delete(Customer entity)
+        public async Task Delete(int id)
         {
             var parameters = new Dictionary<string, object>
             {
-                { "ID_ZAKAZNIK", entity.Id }
+                { "ID_ZAKAZNIK", id }
             };
             await dbUtil.ExecuteStoredProcedureAsync("deletezakaznici", parameters);
         }

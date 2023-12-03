@@ -45,6 +45,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task GetAll()
         {
+            Goods.Clear();
             string command = "SELECT * FROM zbozi";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
 
@@ -87,11 +88,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await dbUtil.ExecuteStoredProcedureAsync("updatezbozi", parameters);
         }
 
-        public async Task Delete(Goods entity)
+        public async Task Delete(int id)
         {
             var parameters = new Dictionary<string, object>
             {
-                { "ID_ZBOZI", entity.IdGoods }
+                { "ID_ZBOZI", id }
             };
             await dbUtil.ExecuteStoredProcedureAsync("deletezbozi", parameters);
         }

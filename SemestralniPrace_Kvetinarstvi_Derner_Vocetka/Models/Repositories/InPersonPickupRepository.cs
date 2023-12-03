@@ -12,7 +12,7 @@ using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Entities;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 {
-    public class InPersonPickupRepository : IRepository<InPersonPickup>
+    public class InPersonPickupRepository
     {
         public ObservableCollection<InPersonPickup> InPersonPickups { get; set; }
         private OracleDbUtil dbUtil;
@@ -48,6 +48,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task GetAll()
         {
+            InPersonPickups.Clear();
             string command = $"SELECT * FROM osobni_vyzvednuti" +
                              $"JOIN ZPUSOBY_PREVZETI on ZPUSOBY_PREVZETI.id_zpusob_prevzeti = osobne.id_zpusob_prevzeti";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);

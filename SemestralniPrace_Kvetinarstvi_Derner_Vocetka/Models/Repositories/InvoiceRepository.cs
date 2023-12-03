@@ -44,6 +44,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task GetAll()
         {
+            Invoices.Clear();
             string command = "SELECT * FROM faktury";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
 
@@ -81,11 +82,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await dbUtil.ExecuteStoredProcedureAsync("updatefaktura", parameters);
         }
 
-        public async Task Delete(Invoice entity)
+        public async Task Delete(int id)
         {
             var parameters = new Dictionary<string, object>
             {
-                { "id", entity.Id }
+                { "id", id }
             };
             await dbUtil.ExecuteStoredProcedureAsync("deletefaktura", parameters);
         }

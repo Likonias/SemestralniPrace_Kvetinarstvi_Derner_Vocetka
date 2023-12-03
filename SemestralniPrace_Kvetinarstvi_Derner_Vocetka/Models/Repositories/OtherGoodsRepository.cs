@@ -51,6 +51,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task GetAll()
         {
+            OtherGoods.Clear();
             string command = $"SELECT * FROM ostatni " +
                              $"LEFT JOIN zbozi ON ostatni.id_zbozi = zbozi.id_zbozi";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
@@ -104,11 +105,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await dbUtil.ExecuteStoredProcedureAsync("updateostatni", parameters);
         }
 
-        public async Task Delete(OtherGoods entity)
+        public async Task Delete(int id)
         {
             var parameters = new Dictionary<string, object>
             {
-                {"ID_OSTATNI", entity.IdOtherGoods}
+                {"ID_OSTATNI", id }
             };
             await dbUtil.ExecuteStoredProcedureAsync("deleteostatni", parameters);
         }

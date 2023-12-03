@@ -12,7 +12,7 @@ using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Entities;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 {
-    public class OrderGoodsRepository : IRepository<OrderGoods>
+    public class OrderGoodsRepository 
     {
         //TODO jak implemetujeme OrderGoods?
         

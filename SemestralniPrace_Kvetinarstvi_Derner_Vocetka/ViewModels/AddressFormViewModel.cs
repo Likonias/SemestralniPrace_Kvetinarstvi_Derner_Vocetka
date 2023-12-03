@@ -29,13 +29,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private INavigationService closeNavSer;
         private Address address;
-        public AddressFormViewModel(AccountStore accountStore, INavigationService closeModalNavigationService, AddressStore addressStore)
+        private AddressStore addressStore;
+        private INavigationService openAddressViewModel;
+        public AddressFormViewModel(AccountStore accountStore, INavigationService closeModalNavigationService, AddressStore addressStore, INavigationService openAddressViewModel)
         {
             closeNavSer = closeModalNavigationService;
             BtnCancel = new RelayCommand(Cancel);
             BtnOk = new RelayCommand(Ok);
             address = addressStore.Address;
+            this.addressStore = addressStore;
             this.accountStore = accountStore;
+            this.openAddressViewModel = openAddressViewModel;
             if (address != null) { InitializeAddress(); }
             AddressOwnerComboBoxItems = new ObservableCollection<string>();
             AddressTypeComboBoxItems = new ObservableCollection<string>();
@@ -70,13 +74,16 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             closeNavSer.Navigate();
         }
 
-        private void Ok()
+        private async void Ok()
         {
             if (CheckAddress())
             {
-                address = new Address(0, Street, StreetNumber, City, Zip, null, null, null);
-
+                //todo finish setting up id if it is a customer or a employee logic a taky address typ id
+                address = new Address(addressStore.Address.Id, Street, StreetNumber, City, Zip, null, null, null);
+                AddressRepository addressRepository = new AddressRepository();
+                await addressRepository.Update(address);
                 closeNavSer.Navigate();
+                openAddressViewModel.Navigate();
             }
             else 
             {

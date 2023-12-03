@@ -44,6 +44,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task GetAll()
         {
+            DeliveryMethods.Clear();
             string command = "SELECT * FROM doruceni";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
 
@@ -80,11 +81,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await dbUtil.ExecuteStoredProcedureAsync("updatedoruceni", parameters);
         }
 
-        public async Task Delete(DeliveryMethod entity)
+        public async Task Delete(int id)
         {
             var parameters = new Dictionary<string, object>
             {
-                { "ID_DORUCENI", entity.IdDeliveryMethod }
+                { "ID_DORUCENI", id }
             };
             await dbUtil.ExecuteStoredProcedureAsync("deletedoruceni", parameters);
         }

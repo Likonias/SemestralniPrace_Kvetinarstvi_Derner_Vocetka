@@ -12,7 +12,7 @@ using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Entities;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 {
-    public class DeliveryRepository : IRepository<Delivery>
+    public class DeliveryRepository
     {
         public ObservableCollection<Delivery> Deliveries { get; set; }
         private OracleDbUtil dbUtil;
@@ -49,6 +49,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task GetAll()
         {
+            Deliveries.Clear();
             string command = $"SELECT * FROM doruceni" +
                              $"JOIN ZPUSOBY_PREVZETI on ZPUSOBY_PREVZETI.id_zpusob_prevzeti = doruceni.id_zpusob_prevzeti";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
