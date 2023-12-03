@@ -16,8 +16,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components
         [Description("Květiny")]
         Flowers,
 
+        [Description("Ostatní Zboží")]
+        OtherGoods,
+
         [Description("Zákazníci")]
-        Customers
+        Customers,
+
+        [Description("Zaměstnanci")]
+        Employees,
+
+        [Description("Objednávky")]
+        Orders
 
     }
 }

@@ -18,7 +18,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         
         public OrderRepository()
         {
-            Billings = new ObservableCollection<Order>();
+            Orders = new ObservableCollection<Order>();
             dbUtil = new OracleDbUtil();
         }
         

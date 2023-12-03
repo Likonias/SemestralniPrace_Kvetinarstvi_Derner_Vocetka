@@ -44,15 +44,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public RelayCommand LoginCommand { get; }
         public RelayCommand CancelCommand { get; }
         private INavigationService closeNavigationService;
+        private INavigationService accountNavigationService;
         private OracleDbUtil dbUtil; // Instance OracleDbUtil, díky které jsme schopni komunikovat s databází
         private AccountStore accountStore;
-        public LoginViewModel(AccountStore accountStore, INavigationService closeModalNavigationService)
+        public LoginViewModel(AccountStore accountStore, INavigationService closeModalNavigationService, INavigationService accountNavigationService)
         {
             dbUtil = new OracleDbUtil();
             this.accountStore = accountStore;
             LoginCommand = new RelayCommand(Login);
             CancelCommand = new RelayCommand(Close);
             this.closeNavigationService = closeModalNavigationService;
+            this.accountNavigationService = accountNavigationService;
             
         }
 
@@ -62,6 +64,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             {
                 accountStore.CurrentAccount = await GetUser(Email);
                 closeNavigationService.Navigate();
+                accountNavigationService.Navigate();
             }
             else
             {

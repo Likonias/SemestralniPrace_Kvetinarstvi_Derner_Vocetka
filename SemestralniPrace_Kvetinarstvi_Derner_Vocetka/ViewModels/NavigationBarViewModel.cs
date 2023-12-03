@@ -28,6 +28,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public ICommand NavigateFlowersCommand { get; }
         public ICommand NavigateAddressCommand { get; }
         public ICommand NavigateCustomerCommand { get; }
+        public ICommand NavigateEmployeeCommand { get; }
+        public ICommand NavigateOtherGoodsCommand { get; }
+        public ICommand NavigateOrderCommand { get; }
         public ICommand NavigateMainCommand { get; }
 
         public ObservableCollection<string> ComboBoxItems { get; set; }
@@ -51,18 +54,20 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             NavigateFlowersCommand = new NavigateCommand<FlowersViewModel>(navigationServiceManager.GetNavigationService<FlowersViewModel>());
             NavigateAddressCommand = new NavigateCommand<AddressViewModel>(navigationServiceManager.GetNavigationService<AddressViewModel>());
             NavigateCustomerCommand = new NavigateCommand<CustomerViewModel>(navigationServiceManager.GetNavigationService<CustomerViewModel>());
+            NavigateEmployeeCommand = new NavigateCommand<EmployeeViewModel>(navigationServiceManager.GetNavigationService<EmployeeViewModel>());
+            NavigateOtherGoodsCommand = new NavigateCommand<OtherGoodsViewModel>(navigationServiceManager.GetNavigationService<OtherGoodsViewModel>());
+            NavigateOrderCommand = new NavigateCommand<OrderViewModel>(navigationServiceManager.GetNavigationService<OrderViewModel>());
             this.accountStore = accountStore;
             ComboBoxItems = new ObservableCollection<string>();
             PopulateComboBox();
 
             this.accountStore.CurrentAccountChanged += OnCurrentAccountChanged;
         }
-        //TODO admin loggs in and can log with another account
+        
         private void Logout()
         {
             accountStore.Logout();
             NavigateMainCommand.Execute(null);
-            //todo navigate home command invoke
         }
 
         private void OnCurrentAccountChanged()
@@ -122,7 +127,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             switch (employeePosition)
             {
                 case EmployeePositionEnum.ADMIN:
-                    allowedValues.Add(ComboBoxTableNamesEnum.Flowers);
+                    foreach (ComboBoxTableNamesEnum value in (ComboBoxTableNamesEnum[])Enum.GetValues(typeof(ComboBoxTableNamesEnum)))
+                    {
+                        allowedValues.Add(value);
+                    }
                     break;
                 case EmployeePositionEnum.MAJITEL:
                     allowedValues.Add(ComboBoxTableNamesEnum.Addresses);
@@ -152,6 +160,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     break;
                 case ComboBoxTableNamesEnum.Customers:
                     NavigateCustomerCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.Employees:
+                    NavigateEmployeeCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.Orders:
+                    NavigateOrderCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.OtherGoods:
+                    NavigateOtherGoodsCommand.Execute(null);
                     break;
             }
         }
