@@ -103,5 +103,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             
             return dataTable;
         }
+
+        public List<OrderStatus> GetOrderStatuses()
+        {
+            Task.Run(async () => await GetAll()).Wait();
+            var orderStatuses = OrderStatuses.ToList();
+
+            return orderStatuses;
+        }
     }
 }

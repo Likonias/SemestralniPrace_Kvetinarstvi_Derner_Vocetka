@@ -13,7 +13,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 {
     public class OrderRepository : IRepository<Order>
     {
-        public ObservableCollection<Order> Billings { get; set; }
+        public ObservableCollection<Order> Orders { get; set; }
         private OracleDbUtil dbUtil;
         
         public OrderRepository()
@@ -58,7 +58,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                     null,
                     null
                 );
-                Billings.Add(order);
+                Orders.Add(order);
             }
         }
 
@@ -98,12 +98,20 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dataTable.Columns.Add("ID_OBJEDNAVKA", typeof(int));
             dataTable.Columns.Add("CELKOVA_CENA", typeof(int));
             
-            foreach (var order in Billings)
+            foreach (var order in Orders)
             {
                 dataTable.Rows.Add(order.Id, order.FinalPrice);
             }
             
             return dataTable;
+        }
+
+        public List<Order> GetOrders()
+        {
+            Task.Run(async () => await GetAll()).Wait();
+            var orders = Orders.ToList();
+
+            return orders;
         }
     }
 }

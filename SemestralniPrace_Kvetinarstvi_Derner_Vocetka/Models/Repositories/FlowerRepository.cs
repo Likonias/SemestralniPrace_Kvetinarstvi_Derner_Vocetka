@@ -151,5 +151,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             }
             throw new ArgumentException($"Invalid FlowerStateEnum value: {databaseValue}");
         }
+
+        public List<Flower> GetFlowers()
+        {
+            Task.Run(async () => await GetAll()).Wait();
+            var flowers = Flowers.ToList();
+
+            return flowers;
+        }
     }
 }

@@ -124,9 +124,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dataTable.Columns.Add("SKLAD", typeof(int));
             dataTable.Columns.Add("ZEME_PUVODU", typeof(string));
             dataTable.Columns.Add("DATUM_TRVANLIVOSTI", typeof(DateTime));
-          
+
             foreach (var otherGoods in OtherGoods)
-            {   
+            {
                 DataRow row = dataTable.NewRow();
                 row["NAZEV"] = otherGoods.Name;
                 row["CENA"] = otherGoods.Price;
@@ -138,8 +138,16 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
                 dataTable.Rows.Add(row);
             }
-          
+
             return dataTable;
+        }
+
+        public List<OtherGoods> GetOtherGoods()
+        {
+            Task.Run(async () => await GetAll()).Wait();
+            var otherGoods = OtherGoods.ToList();
+
+            return otherGoods;
         }
     }
 }

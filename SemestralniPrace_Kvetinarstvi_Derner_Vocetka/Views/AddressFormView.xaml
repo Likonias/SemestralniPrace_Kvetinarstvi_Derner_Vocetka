@@ -42,8 +42,10 @@
         <ComboBox Grid.Row="5" x:Name="AddressTypeComboBox" Margin="110,10,70,10" ItemsSource="{Binding AddressTypeComboBoxItems}" SelectedItem="{Binding AddressType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <Label Grid.Row="5" Content="Address Type" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
 
-        <TextBlock Grid.Row="6" Text="{Binding ErrorMessage, Mode=TwoWay}" Foreground="Red"/>
-
+        <TextBlock Grid.Row="6" 
+           Text="{Binding ErrorMessage, Mode=TwoWay}" 
+           Foreground="Red" 
+           TextAlignment="Center"/>
         <!-- Buttons -->
         <Button Content="Ok" Command="{Binding BtnOk}" HorizontalAlignment="Left" Margin="60,0,0,0" Grid.Row="7" VerticalAlignment="Center" />
         <Button Content="Cancel" Command="{Binding BtnCancel}" HorizontalAlignment="Left" Margin="190,0,0,0" Grid.Row="7"/>

@@ -137,5 +137,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
             return dataTable;
         }
+
+        public List<Address> GetAddresses()
+        {
+            Task.Run(async () => await GetAll()).Wait();
+            var addresses = Addresses.ToList();
+
+            return addresses;
+        }
     }
+
+    
 }

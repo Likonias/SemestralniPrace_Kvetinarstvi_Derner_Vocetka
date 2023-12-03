@@ -92,5 +92,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             
             return dataTable;
         }
+
+        public List<AddressType> GetAddressTypes()
+        {
+            Task.Run(async () => await GetAll()).Wait();
+            var addressTypes = AddressType.ToList();
+
+            return addressTypes;
+        }
     }
 }

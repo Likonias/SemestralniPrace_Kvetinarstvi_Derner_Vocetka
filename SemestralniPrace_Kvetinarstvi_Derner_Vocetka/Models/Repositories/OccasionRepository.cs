@@ -92,5 +92,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories{
             
             return dataTable;
         }
+
+        public List<Occasion> GetOccasions()
+        {
+            Task.Run(async () => await GetAll()).Wait();
+            var ocasions = Occasions.ToList();
+
+            return ocasions;
+        }
     }
 }

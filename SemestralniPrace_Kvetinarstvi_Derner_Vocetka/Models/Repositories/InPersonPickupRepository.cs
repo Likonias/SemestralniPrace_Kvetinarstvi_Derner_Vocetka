@@ -122,5 +122,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
           
             return dataTable;
         }
+
+        public List<InPersonPickup> GetInPersonPickups()
+        {
+            Task.Run(async () => await GetAll()).Wait();
+            var inPersonPickups = InPersonPickups.ToList();
+
+            return inPersonPickups;
+        }
     }
 }

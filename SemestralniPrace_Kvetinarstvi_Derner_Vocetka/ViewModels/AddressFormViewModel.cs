@@ -22,7 +22,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public RelayCommand BtnCancel { get; private set; }
         public RelayCommand BtnOk { get; private set; }
         private readonly AccountStore accountStore;
-        public string ErrorMessage { get; set; }
+        public string errorMessage;
         public ObservableCollection<string> AddressTypeComboBoxItems { get; set; }
         public ObservableCollection<string> AddressOwnerComboBoxItems { get; set; }
 
@@ -37,7 +37,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             address = addressStore.Address;
             this.accountStore = accountStore;
             if (address != null) { InitializeAddress(); }
-            ErrorMessage = "";
             AddressOwnerComboBoxItems = new ObservableCollection<string>();
             AddressTypeComboBoxItems = new ObservableCollection<string>();
             PopulateAddressTypeComboBox();
@@ -73,13 +72,22 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private void Ok()
         {
-            address = new Address(0, Street, StreetNumber, City, Zip, null, null, null);
+            if (CheckAddress())
+            {
+                address = new Address(0, Street, StreetNumber, City, Zip, null, null, null);
 
-            closeNavSer.Navigate();
+                closeNavSer.Navigate();
+            }
+            else 
+            {
+                ErrorMessage = "Adding failed!";
+            }
         }
 
-        //todo to populate comboboxes, the address owner is a list of all employees and all customers
-        //or only all customers depending on the permissions, address type shows all avaiable address types based on addresstypeEnum
+        private bool CheckAddress()
+        {
+            return Street != null || StreetNumber != null || City != null || Zip != null || AddressOwner != null || AddressType != null;
+        }
 
         private void InitializeAddress()
         {
@@ -119,6 +127,16 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             }
 
             return allowedValues;
+        }
+
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set
+            {
+                errorMessage = value;
+                OnPropertyChanged("ErrorMessage");
+            }
         }
 
 

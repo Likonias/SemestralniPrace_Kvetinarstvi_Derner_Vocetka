@@ -18,7 +18,10 @@
 
             <Button Content="Login" Command="{Binding LoginCommand}" Margin="0,21,0,-41"/>
             <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="0,62,0,-82"/>
-            <TextBlock Grid.Row="6" Text="{Binding ErrorMessage, Mode=TwoWay}" Foreground="Red"/>
+            <TextBlock Grid.Row="6" 
+               Text="{Binding ErrorMessage, Mode=TwoWay}" 
+               Foreground="Red" 
+               TextAlignment="Center"/>
         </StackPanel>
     </Grid>
 </UserControl>
