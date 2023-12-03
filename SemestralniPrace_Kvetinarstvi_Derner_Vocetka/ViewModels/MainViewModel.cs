@@ -12,24 +12,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
     {
         private OracleDbUtil dbUtil;
 
-        
-        public RelayCommand BtnFun { get; }
-        public MainViewModel(INavigationService createLoginNavigationService)
+         public MainViewModel(INavigationService createLoginNavigationService)
         {
             
-            BtnFun = new RelayCommand(BtnFunPressed);
-
             dbUtil = new OracleDbUtil(); // Initialize the database utility
 
         }
         
-        
-        private void BtnFunPressed()
-        {
-            PopupView loginView = new PopupView();
-            
-            loginView.ShowDialog();
-        }
 
     }
 
