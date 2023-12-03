@@ -20,7 +20,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
     public class NavigationBarViewModel : ViewModelBase
     {
-
+        //TODO add the rest of the new navigationServices co jsem přidal teď
         public ICommand LoginCommand { get; }
         public ICommand RegisterCommand { get; }
         public ICommand LogoutCommand { get; }

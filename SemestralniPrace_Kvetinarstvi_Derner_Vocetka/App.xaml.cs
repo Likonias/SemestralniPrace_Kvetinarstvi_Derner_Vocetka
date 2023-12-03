@@ -1,4 +1,5 @@
-﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
+﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views;
@@ -20,7 +21,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
         private readonly AccountStore accountStore;
         private readonly AddressStore addressStore;
         private readonly CustomerStore customerStore;
-        
+        private readonly EmployeeStore employeeStore;
+        private readonly OrderStore orderStore;
+        private readonly OtherGoodsStore otherGoodsStore;
+
+
         private readonly NavigationServiceManager serviceManager;
 
         public App()
@@ -33,6 +38,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             accountStore = new AccountStore();
             addressStore = new AddressStore();
             customerStore = new CustomerStore();
+            employeeStore = new EmployeeStore();
+            orderStore = new OrderStore();
+            otherGoodsStore = new OtherGoodsStore();
             CreateNavigationBarViewModel(); 
         }
 
@@ -90,6 +98,36 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             return new ModalNavigationService<CustomerFormViewModel>(modalNavigationStore, () => new CustomerFormViewModel(customerStore, CreateCloseModalNavigationService()));
         }
 
+        private INavigationService CreateEmployeeNavigationService()
+        {
+            return new LayoutNavigationService<EmployeeViewModel>(navigationStore, () => new EmployeeViewModel(CreateEmployeeFormNavigationService(), employeeStore), CreateNavigationBarViewModel);
+        }
+
+        private INavigationService CreateEmployeeFormNavigationService()
+        {
+            return new ModalNavigationService<EmployeeFormViewModel>(modalNavigationStore, () => new EmployeeFormViewModel(employeeStore, CreateCloseModalNavigationService()));
+        }
+
+        private INavigationService CreateOrderNavigationService()
+        {
+            return new LayoutNavigationService<OrderViewModel>(navigationStore, () => new OrderViewModel(CreateOrderFormNavigationService(), orderStore), CreateNavigationBarViewModel);
+        }
+
+        private INavigationService CreateOrderFormNavigationService()
+        {
+            return new ModalNavigationService<OrderFormViewModel>(modalNavigationStore, () => new OrderFormViewModel(orderStore, CreateCloseModalNavigationService()));
+        }
+
+        private INavigationService CreateOtherGoodsNavigationService()
+        {
+            return new LayoutNavigationService<OtherGoodsViewModel>(navigationStore, () => new OtherGoodsViewModel(CreateOtherGoodsFormNavigationService(), otherGoodsStore), CreateNavigationBarViewModel);
+        }
+
+        private INavigationService CreateOtherGoodsFormNavigationService()
+        {
+            return new ModalNavigationService<OtherGoodsFormViewModel>(modalNavigationStore, () => new OtherGoodsFormViewModel(otherGoodsStore, CreateCloseModalNavigationService()));
+        }
+
         private NavigationBarViewModel CreateNavigationBarViewModel()
         {
             UpdateServiceManager();
@@ -112,6 +150,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             serviceManager.RegisterNavigationService<AddressViewModel>(CreateAddressesNavigationService());
             serviceManager.RegisterNavigationService<CustomerViewModel>(CreateCustomerNavigationService());
             serviceManager.RegisterNavigationService<CustomerFormViewModel>(CreateCustomerFormNavigationService());
+            serviceManager.RegisterNavigationService<EmployeeViewModel>(CreateEmployeeNavigationService());
+            serviceManager.RegisterNavigationService<EmployeeFormViewModel>(CreateEmployeeFormNavigationService());
+            serviceManager.RegisterNavigationService<OrderViewModel>(CreateOrderNavigationService());
+            serviceManager.RegisterNavigationService<OrderFormViewModel>(CreateOrderFormNavigationService());
+            serviceManager.RegisterNavigationService<OtherGoodsViewModel>(CreateOtherGoodsNavigationService());
+            serviceManager.RegisterNavigationService<OtherGoodsFormViewModel>(CreateOtherGoodsFormNavigationService());
         }
 
     }

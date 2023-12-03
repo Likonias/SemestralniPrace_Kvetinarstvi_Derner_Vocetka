@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
@@ -57,7 +58,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private async void Login()
         {
-            if(await dbUtil.ExecuteStoredValidateLoginFunctionAsync("validateLogin", Email, Password))
+            if (await dbUtil.ExecuteStoredValidateLoginFunctionAsync("validateLogin", Email, PasswordHash.PasswordHashing(Password)))
             {
                 accountStore.CurrentAccount = await GetUser(Email);
                 closeNavigationService.Navigate();
