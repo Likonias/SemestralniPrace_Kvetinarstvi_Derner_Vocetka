@@ -79,9 +79,18 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             if (CheckAddress())
             {
                 //todo finish setting up id if it is a customer or a employee logic a taky address typ id
-                address = new Address(addressStore.Address.Id, Street, StreetNumber, City, Zip, null, null, null);
                 AddressRepository addressRepository = new AddressRepository();
-                await addressRepository.Update(address);
+                if (addressStore.Address == null)
+                {
+                    address = new Address(0, Street, StreetNumber, City, Zip, null, null, null);
+                    await addressRepository.Add(address);
+                }
+                else 
+                {
+                    address = new Address(addressStore.Address.Id, Street, StreetNumber, City, Zip, null, null, null);
+                    await addressRepository.Update(address);
+                }
+                
                 closeNavSer.Navigate();
                 openAddressViewModel.Navigate();
             }
