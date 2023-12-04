@@ -53,7 +53,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             BtnCancel = new RelayCommand(Cancel);
             BtnOk = new RelayCommand(Ok);
             dbUtil = new OracleDbUtil();
+            PopulateComboBoxes();
         }
+
+        private void PopulateComboBoxes()
+        {
+            
+        }
+
         private void Cancel()
         {
             employeeStore.Employee = null;

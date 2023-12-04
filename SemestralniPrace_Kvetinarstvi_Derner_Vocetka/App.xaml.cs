@@ -76,11 +76,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateFlowersNavigationService()
         {
-            return new LayoutNavigationService<FlowersViewModel>(navigationStore, () => new FlowersViewModel(CreateFlowersNavigationService(), flowerStore), CreateNavigationBarViewModel);
+            return new LayoutNavigationService<FlowersViewModel>(navigationStore, () => new FlowersViewModel(CreateFlowersFormNavigationService(), flowerStore), CreateNavigationBarViewModel);
         }
 
         private INavigationService CreateFlowersFormNavigationService() {
-            return new ModalNavigationService<FlowerFormViewModel>(modalNavigationStore, () => new FlowerFormViewModel(accountStore, CreateCloseModalNavigationService(), flowerStore, CreateFlowersNavigationService()));
+            return new ModalNavigationService<FlowerFormViewModel>(modalNavigationStore, () => new FlowerFormViewModel(CreateCloseModalNavigationService(), flowerStore, CreateFlowersNavigationService()));
         }
 
         private INavigationService CreateAddressesNavigationService()

@@ -82,7 +82,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "CENA", entity.Price },
                 { "TYP", entity.Type },
                 { "SKLAD", entity.Warehouse },
-                { "OBRAZEK", null },
+                { "OBRAZEK", entity.Image },
                 {"STAV", entity.State.ToString()},
                 {"STARI", entity.Age}
             };

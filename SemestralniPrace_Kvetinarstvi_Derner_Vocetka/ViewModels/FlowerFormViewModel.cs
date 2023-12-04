@@ -25,18 +25,18 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private FlowerStore flowerStore;
         private INavigationService openFlowerViewModel;
 
-        public FlowerFormViewModel(AccountStore accountStore, INavigationService closeModalNavigationService, FlowerStore flowerStore, INavigationService? openFlowerViewModel)
+        public FlowerFormViewModel(INavigationService closeModalNavigationService, FlowerStore flowerStore, INavigationService? openFlowerViewModel)
         {
             closeNavSer = closeModalNavigationService;
             BtnCancel = new RelayCommand(Cancel);
             BtnOk = new RelayCommand(Ok);
             flower = flowerStore.Flower;
             this.flowerStore = flowerStore;
-            this.accountStore = accountStore;
             this.openFlowerViewModel = openFlowerViewModel;
             if (flower != null) { InitializeFlower(); }
             FlowerStateComboBoxItems = new ObservableCollection<string>();
             PopulateFlowerStateComboBox();
+            _image = new byte[16];
         }
 
         private void PopulateFlowerStateComboBox()
@@ -62,7 +62,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
                 if (flowerStore.Flower == null)
                 {
-                    flower = new Flower(0, Name, Price, Type, Warehouse, null, 0, FlowerState ?? FlowerStateEnum.A, Age);
+                    flower = new Flower(0, Name, Price, Type, Warehouse, Image, 0, FlowerState ?? FlowerStateEnum.A, Age);
                     await flowerRepository.Add(flower);
                 }
                 else
@@ -93,6 +93,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             _warehouse = flower.Warehouse;
             _age = flower.Age;
             _type = flower.Type;
+            _image = flower.Image;
         }
 
         public string ErrorMessage
@@ -102,6 +103,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             {
                 errorMessage = value;
                 OnPropertyChanged("ErrorMessage");
+            }
+        }
+
+        private byte[] _image;
+        public byte[] Image
+        {
+            get => _image;
+            set
+            {
+                _image = value;
+                OnPropertyChanged(nameof(Image));
             }
         }
 
