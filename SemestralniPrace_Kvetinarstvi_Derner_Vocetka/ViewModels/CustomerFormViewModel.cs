@@ -26,6 +26,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private INavigationService closeNavSer;
         private Customer customer;
         private OracleDbUtil dbUtil;
+        private bool isUpdated;
+        public bool IsUpdated {
+            get { return isUpdated; }
+            set
+            {
+                isUpdated = value;
+                OnPropertyChanged("IsUpdated");
+            }
+        }
         public RelayCommand BtnCancel { get; private set; }
         public RelayCommand BtnOk { get; private set; }
 
@@ -39,15 +48,26 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 OnPropertyChanged("ErrorMessage");
             }
         }
-
-        public CustomerFormViewModel(CustomerStore customerStore, INavigationService closeNavSer)
+        private INavigationService createCustomerView;
+        public CustomerFormViewModel(CustomerStore customerStore, INavigationService closeNavSer, INavigationService createCustomerView)
         {
             this.customerStore = customerStore;
             this.closeNavSer = closeNavSer;
+            this.createCustomerView = createCustomerView;
             customer = customerStore.Customer;
+            if(customer != null) { InitializeCustomer(); IsUpdated = false; } else { IsUpdated = true; }
             BtnCancel = new RelayCommand(Cancel);
             BtnOk = new RelayCommand(Ok);
             dbUtil = new OracleDbUtil();
+        }
+
+        private void InitializeCustomer()
+        {
+            _firstName = customer.FirstName;
+            _lastName = customer.LastName;
+            _email = customer.Email;
+            _tel = customer.Tel;
+
         }
 
         private void Cancel()
@@ -56,45 +76,44 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             closeNavSer.Navigate();
         }
 
-        private void Ok()
+        private async void Ok()
         {
-            OkAsync();
-        }
-        private async Task OkAsync()
-        {
-
-            
-
-            if (Password != null)
+            if (Password != null || !IsUpdated)
             {
-
-                bool passwordOk = PasswordHash.IsPasswordCorrect(PasswordHash.PasswordHashing(Password), PasswordHash.PasswordHashing(PasswordCheck));
-
                 CustomerRepository customerRepository = new CustomerRepository();
-                bool isEmailViable = await dbUtil.ExecuteStoredEmailBooleanFunctionAsync("validateEmail", Email);
-                bool isEmailAvailable = await dbUtil.ExecuteStoredEmailBooleanFunctionAsync("emailExists", Email);
+                if (customerStore.Customer == null)
+                {
+                    bool passwordOk = PasswordHash.IsPasswordCorrect(PasswordHash.PasswordHashing(Password), PasswordHash.PasswordHashing(PasswordCheck));
+
+                    bool isEmailViable = await dbUtil.ExecuteStoredEmailBooleanFunctionAsync("validateEmail", Email);
+                    bool isEmailAvailable = await dbUtil.ExecuteStoredEmailBooleanFunctionAsync("emailExists", Email);
 
 
-                if (isEmailAvailable && isEmailViable && passwordOk)
-                {
-                    await customerRepository.Add(new Customer(0, FirstName, LastName, Email, Tel, PasswordHash.PasswordHashing(Password)));
-                    closeNavSer.Navigate();
-                }
-                else if (isEmailAvailable)
-                {
-                    ErrorMessage = "Incorrect Email!";
+                    if (isEmailAvailable && isEmailViable && passwordOk)
+                    {
+                        await customerRepository.Add(new Customer(0, FirstName, LastName, Email, Tel, PasswordHash.PasswordHashing(Password)));
+                        closeNavSer.Navigate();
+                    }
+                    else if (isEmailAvailable)
+                    {
+                        ErrorMessage = "Incorrect Email!";
+                    }
+                    else
+                    {
+                        ErrorMessage = "Wrong data input!";
+                    }
                 }
                 else
                 {
-                    ErrorMessage = "Wrong data input!";
+                    await customerRepository.Update(customerStore.Customer.Id, FirstName, LastName, Email, Tel);
+                    closeNavSer.Navigate();
                 }
+                createCustomerView.Navigate();
             }
             else
             {
                 ErrorMessage = "Passwords dont match!";
             }
-            
-            
         }
 
         private string _firstName;

@@ -20,8 +20,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
     public class NavigationBarViewModel : ViewModelBase
     {
-        //TODO add the rest of the new navigationServices co jsem přidal teď
-        public ICommand LoginCommand { get; }
+         public ICommand LoginCommand { get; }
         public ICommand RegisterCommand { get; }
         public ICommand LogoutCommand { get; }
         public ICommand NavigateAccountCommand { get; }
@@ -38,7 +37,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private string selectedComboBoxItem;
         private ComboBoxTableNamesEnum selectedEnumValue;
 
-        //todo finish setting up an account
         private readonly AccountStore accountStore;
 
         public bool IsLoggedIn => accountStore.IsLoggedIn;

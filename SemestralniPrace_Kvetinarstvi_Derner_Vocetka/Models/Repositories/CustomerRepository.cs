@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 {
-    public class CustomerRepository : IRepository<Customer>
+    public class CustomerRepository
     {
         public ObservableCollection<Customer> Customers { get; set; }
         private OracleDbUtil dbUtil;
@@ -71,16 +71,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await dbUtil.ExecuteStoredProcedureAsync("addzakaznici", parameters);
         }
 
-        public async Task Update(Customer entity)
+        public async Task Update(int id, string firstName, string lastName, string email, string tel)
         {
             var parameters = new Dictionary<string, object>
             {
-                { "ID_ZAKAZNIK", entity.Id },
-                { "JMENO", entity.FirstName },
-                { "PRIJMENI", entity.LastName },
-                { "EMAIL", entity.Email },
-                { "TELEFON", entity.Tel },
-                { "HESLO", entity.Password }
+                { "ID_ZAKAZNIK", id },
+                { "JMENO", firstName },
+                { "PRIJMENI", lastName },
+                { "EMAIL", email },
+                { "TELEFON", tel },
             };
             await dbUtil.ExecuteStoredProcedureAsync("updatezakaznici", parameters);
         }
@@ -98,7 +97,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             await GetAll();
             DataTable dataTable = new DataTable();
-            
+
+            dataTable.Columns.Add("Id");
             dataTable.Columns.Add("FirstName");
             dataTable.Columns.Add("LastName");
             dataTable.Columns.Add("Email");
@@ -108,6 +108,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             foreach (var customer in Customers)
             {
                 dataTable.Rows.Add(
+                    customer.Id,
                     customer.FirstName,
                     customer.LastName,
                     customer.Email,
