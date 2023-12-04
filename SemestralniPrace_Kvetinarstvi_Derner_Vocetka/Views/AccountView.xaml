@@ -7,6 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <TextBlock Text="Account" FontSize="50" />
+        <TextBlock Margin="0,74,0,-74" FontSize="30">
+            <Run Text="Name: "/>
+            <Run Text="{Binding Name, Mode=TwoWay}" />
+        </TextBlock>
+        <TextBlock Margin="0,133,0,-133" FontSize="30">
+            <Run Text="Email: "/>
+            <Run Text="{Binding Email, Mode=TwoWay}" />
+        </TextBlock>
     </Grid>
 </UserControl>
