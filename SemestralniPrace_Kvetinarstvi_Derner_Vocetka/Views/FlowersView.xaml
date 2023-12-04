@@ -6,7 +6,20 @@
              xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <DataGrid DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="True" Margin="10,10,200,10"/>
+    <Grid Width="1000">
+        <DataGrid SelectedItem="{Binding SelectedItem}"  DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding ID}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="NAZEV" Binding="{Binding NAZEV}"/>
+                <DataGridTextColumn Header="CENA" Binding="{Binding CENA}"/>
+                <DataGridTextColumn Header="TYP" Binding="{Binding TYP}"/>
+                <DataGridTextColumn Header="SKLAD" Binding="{Binding SKLAD}"/>
+                <DataGridTextColumn Header="Stav" Binding="{Binding Stav}"/>
+                <DataGridTextColumn Header="Vek" Binding="{Binding Vek}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Přidej" Command="{Binding BtnAdd}" HorizontalAlignment="Left" Margin="860,45,0,0" Width="80" VerticalAlignment="Top"/>
+        <Button Content="Uprav" Command="{Binding BtnEdit}" HorizontalAlignment="Left" Margin="860,105,0,0" Width="80"  VerticalAlignment="Top"/>
+        <Button Content="Vymaž" Command="{Binding BtnDelete}" HorizontalAlignment="Left" Margin="860,150,0,0" Width="80" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>

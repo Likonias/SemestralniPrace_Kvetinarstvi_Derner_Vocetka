@@ -24,6 +24,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
         private readonly EmployeeStore employeeStore;
         private readonly OrderStore orderStore;
         private readonly OtherGoodsStore otherGoodsStore;
+        private readonly FlowerStore flowerStore;
 
 
         private readonly NavigationServiceManager serviceManager;
@@ -31,7 +32,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
         public App()
         {
             serviceManager = new NavigationServiceManager();
-            
+            flowerStore = new FlowerStore();
             // Register other navigation services here
             navigationStore = new NavigationStore();
             modalNavigationStore = new ModalNavigationStore();
@@ -75,7 +76,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateFlowersNavigationService()
         {
-            return new LayoutNavigationService<FlowersViewModel>(navigationStore, () => new FlowersViewModel(), CreateNavigationBarViewModel);
+            return new LayoutNavigationService<FlowersViewModel>(navigationStore, () => new FlowersViewModel(CreateFlowersNavigationService(), flowerStore), CreateNavigationBarViewModel);
+        }
+
+        private INavigationService CreateFlowersFormNavigationService() {
+            return new ModalNavigationService<FlowerFormViewModel>(modalNavigationStore, () => new FlowerFormViewModel(accountStore, CreateCloseModalNavigationService(), flowerStore, CreateFlowersNavigationService()));
         }
 
         private INavigationService CreateAddressesNavigationService()
@@ -147,6 +152,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             serviceManager.RegisterNavigationService<MainViewModel>(CreateMainNavigationService());
             serviceManager.RegisterNavigationService<AccountViewModel>(CreateAccountNavigationService());
             serviceManager.RegisterNavigationService<FlowersViewModel>(CreateFlowersNavigationService());
+            serviceManager.RegisterNavigationService<FlowerFormViewModel>(CreateFlowersFormNavigationService());
             serviceManager.RegisterNavigationService<AddressViewModel>(CreateAddressesNavigationService());
             serviceManager.RegisterNavigationService<CustomerViewModel>(CreateCustomerNavigationService());
             serviceManager.RegisterNavigationService<CustomerFormViewModel>(CreateCustomerFormNavigationService());

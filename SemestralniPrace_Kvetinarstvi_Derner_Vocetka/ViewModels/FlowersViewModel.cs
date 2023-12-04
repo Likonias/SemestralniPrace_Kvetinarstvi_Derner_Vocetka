@@ -1,5 +1,7 @@
 ﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using System;
 using System.Collections.Generic;
@@ -15,6 +17,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private OracleDbUtil dbUtil;
         private DataTable tableData;
+        private FlowerRepository flowerRepository;
+        private FlowerStore flowerStore;
+        private INavigationService createFlowersForm;
+
+        public RelayCommand BtnAdd { get; }
+        public RelayCommand BtnEdit { get; }
+        public RelayCommand BtnDelete { get; }
+        public DataRowView SelectedItem { get; set; }
 
         public DataTable TableData
         {
@@ -25,28 +35,52 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 OnPropertyChanged(nameof(TableData));
             }
         }
-        public FlowersViewModel()
+        public FlowersViewModel(INavigationService createFlowersForm, FlowerStore flowerStore)
         {
-            
+            this.createFlowersForm = createFlowersForm;
+            this.flowerStore = flowerStore;
+            BtnAdd = new RelayCommand(BtnAddPressed);
+            BtnEdit = new RelayCommand(BtnEditPressed);
+            BtnDelete = new RelayCommand(BtnDeletePressed);
             dbUtil = new OracleDbUtil();
+            tableData = new DataTable();
+            flowerRepository = new FlowerRepository();
             InitializeTableData();
         }
-        private async void InitializeTableData()
+        private async Task InitializeTableData()
         {
-            TableData = await GetTable();
+            TableData = new DataTable();
+            TableData = await flowerRepository.ConvertToDataTable();
+        }
+        public override void Dispose()
+        {
+            base.Dispose();
         }
 
-        private async Task<DataTable> GetTable()
+        private async void BtnDeletePressed()
         {
-            FlowerRepository addressRepository = new FlowerRepository();
-            ////await addressRepository.Add(new Address(1, "ab", "1144", "PRAGA", "55555", null, null, null));
-            ////addressRepository.Delete(new Address(1, "ULICI", "1144", "PRAGA", "55555", null, null, null));
-            //await addressRepository.GetAll();
-            //return await addressRepository.ConvertToDataTable();
-            //BillingRepository billingRepository = new BillingRepository();
-            //await billingRepository.Delete(new Billing(1, Models.Enums.BillingTypeEnum.Card, "Lovely Note"));
+            if (SelectedItem?.Row[0].ToString() != null)
+            {
+                int flowerIdToDelete = int.Parse(SelectedItem.Row[0].ToString());
+                Flower flowerToDelete = await flowerRepository.GetById(flowerIdToDelete);
+                await flowerRepository.Delete(flowerToDelete);
+                InitializeTableData();
+            }
+        }
 
-            return await addressRepository.ConvertToDataTable();
+        private async void BtnEditPressed()
+        {
+            if (SelectedItem?.Row[0].ToString() != null)
+            {
+                flowerStore.Flower = await flowerRepository.GetById(int.Parse(SelectedItem.Row[0].ToString()));
+                createFlowersForm.Navigate();
+            }
+        }
+
+        private void BtnAddPressed()
+        {
+            flowerStore.Flower = null;
+            createFlowersForm.Navigate();
         }
     }
 }

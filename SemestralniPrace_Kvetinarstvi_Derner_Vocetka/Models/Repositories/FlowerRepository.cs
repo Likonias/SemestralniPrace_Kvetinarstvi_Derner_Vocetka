@@ -121,6 +121,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await GetAll();
             DataTable dataTable = new DataTable();
 
+            dataTable.Columns.Add("ID", typeof(int));
             dataTable.Columns.Add("NAZEV", typeof(string));
             dataTable.Columns.Add("CENA", typeof(int));
             dataTable.Columns.Add("TYP", typeof(byte));
@@ -131,6 +132,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             foreach (var flowers in Flowers)
             {
                 DataRow row = dataTable.NewRow();
+                row["ID"] = flowers.IdFlower;
                 row["NAZEV"] = flowers.Name;
                 row["CENA"] = flowers.Price;
                 row["TYP"] = flowers.Type;

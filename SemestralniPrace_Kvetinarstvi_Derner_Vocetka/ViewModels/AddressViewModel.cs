@@ -65,9 +65,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 addressStore.Address = await addressRepository.GetById(int.Parse(SelectedItem.Row[0].ToString()));
                 createAddressForm.Navigate();
             }
-
-
-
         }
         private void BtnAddPresseed()
         {

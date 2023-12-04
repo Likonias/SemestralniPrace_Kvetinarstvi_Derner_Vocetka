@@ -50,6 +50,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await dbUtil.ExecuteStoredProcedureAsync("deleteadresy", parameters);
         }
 
+        
+
         public async Task GetAll()
         {
             Addresses.Clear();
@@ -147,6 +149,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             var addresses = Addresses.ToList();
 
             return addresses;
+        }
+
+        public Task Delete(Address entity)
+        {
+            throw new NotImplementedException();
         }
     }
 
