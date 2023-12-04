@@ -7,6 +7,7 @@ using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         }
         private Employee employee;
         private INavigationService createEmployeeView;
+
+        public ObservableCollection<string> SupervisorComboBoxItems { get; set; }
+        public ObservableCollection<string> PositionComboBoxItems { get; set; }
+        private EmployeeRepository employeeRepository;
         public EmployeeFormViewModel(EmployeeStore employeeStore, INavigationService closeNavSer, INavigationService createEmployeeView)
         {
             this.employeeStore = employeeStore;
@@ -53,12 +58,22 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             BtnCancel = new RelayCommand(Cancel);
             BtnOk = new RelayCommand(Ok);
             dbUtil = new OracleDbUtil();
+            SupervisorComboBoxItems = new ObservableCollection<string>();
+            PositionComboBoxItems = new ObservableCollection<string>();
+            employeeRepository = new EmployeeRepository();
             PopulateComboBoxes();
         }
 
         private void PopulateComboBoxes()
         {
-            
+            foreach (EmployeePositionEnum value in Enum.GetValues(typeof(EmployeePositionEnum)))
+            {
+                PositionComboBoxItems.Add(value.ToString());
+            }
+            foreach(Employee value in employeeRepository.GetEmployees())
+            {
+                SupervisorComboBoxItems.Add(value.Email);
+            }
         }
 
         private void Cancel()
@@ -71,7 +86,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         {
             if (Password != null || !IsUpdated)
             {
-                EmployeeRepository employeeRepository = new EmployeeRepository();
+                
                 if (employeeStore.Employee == null)
                 {
                     bool passwordOk = PasswordHash.IsPasswordCorrect(PasswordHash.PasswordHashing(Password), PasswordHash.PasswordHashing(PasswordCheck));
@@ -97,6 +112,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 }
                 else
                 {
+                    Account acc = await dbUtil.ExecuteGetAccountFunctionAsync("getuserbyemail", Supervisor);
+                    IdSupervisor = acc.Id;
                     await employeeRepository.Update(employeeStore.Employee.Id, FirstName, LastName, Wage, Email, Tel, IdSupervisor, Position);
                     closeNavSer.Navigate();
                 }
@@ -191,7 +208,19 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 }
             }
         }
-
+        private string _supervisor;
+        public string Supervisor
+        {
+            get => _supervisor;
+            set
+            {
+                if (_supervisor != value)
+                {
+                    _supervisor = value;
+                    OnPropertyChanged(nameof(Supervisor));
+                }
+            }
+        }
         public int? IdSupervisor
         {
             get => _idSupervisor;

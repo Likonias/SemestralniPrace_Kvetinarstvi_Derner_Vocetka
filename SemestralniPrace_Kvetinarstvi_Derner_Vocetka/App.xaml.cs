@@ -25,7 +25,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
         private readonly OrderStore orderStore;
         private readonly OtherGoodsStore otherGoodsStore;
         private readonly FlowerStore flowerStore;
-
+        private readonly AddressTypeStore addressTypeStore;
+        private readonly BillingStore billingStore;
+        private readonly DeliveryMethodStore deliveryMethodStore;
+        private readonly DeliveryStore deliveryStore;
+        private readonly InPersonPickupStore inPersonPickupStore;
+        private readonly InvoiceStore invoiceStore;
+        private readonly OccasionStore occasionStore;
+        private readonly OrderStatusStore orderStatusStore;
 
         private readonly NavigationServiceManager serviceManager;
 
@@ -133,6 +140,56 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             return new ModalNavigationService<OtherGoodsFormViewModel>(modalNavigationStore, () => new OtherGoodsFormViewModel(otherGoodsStore, CreateCloseModalNavigationService()));
         }
 
+        private INavigationService CreateAddressTypeNavigationService()
+        {
+            return new LayoutNavigationService<AddressTypeViewModel>(navigationStore, () => new AddressTypeViewModel(CreateAddressTypeFormNavigationService(), addressTypeStore), CreateNavigationBarViewModel);
+        }
+
+        private INavigationService CreateAddressTypeFormNavigationService()
+        {
+            return new ModalNavigationService<AddressTypeFormViewModel>(modalNavigationStore, () => new AddressTypeFormViewModel(addressTypeStore, CreateCloseModalNavigationService()));
+        }
+
+        private INavigationService CreateBillingNavigationService()
+        {
+            return new LayoutNavigationService<BillingViewModel>(navigationStore, () => new BillingViewModel(CreateBillingFormNavigationService(), billingStore), CreateNavigationBarViewModel);
+        }
+
+        private INavigationService CreateBillingFormNavigationService()
+        {
+            return new ModalNavigationService<BillingFormViewModel>(modalNavigationStore, () => new BillingFormViewModel(billingStore, CreateCloseModalNavigationService()));
+        }
+
+        private INavigationService CreateDeliveryMethodNavigationService()
+        {
+            return new LayoutNavigationService<DeliveryMethodViewModel>(navigationStore, () => new DeliveryMethodViewModel(CreateDeliveryMethodFormNavigationService(), deliveryStore), CreateNavigationBarViewModel);
+        }
+
+        private INavigationService CreateDeliveryMethodFormNavigationService()
+        {
+            return new ModalNavigationService<DeliveryMethodFormViewModel>(modalNavigationStore, () => new DeliveryMethodFormViewModel(deliveryStore, CreateCloseModalNavigationService()));
+        }
+
+        private INavigationService CreateDeliveryNavigationService()
+        {
+            return new LayoutNavigationService<DeliveryViewModel>(navigationStore, () => new DeliveryViewModel(CreateDeliveryFormNavigationService(), deliveryStore), CreateNavigationBarViewModel);
+        }
+
+        private INavigationService CreateDeliveryFormNavigationService()
+        {
+            return new ModalNavigationService<DeliveryFormViewModel>(modalNavigationStore, () => new DeliveryFormViewModel(deliveryStore, CreateCloseModalNavigationService()));
+        }
+
+        private INavigationService CreateInPersonPickupNavigationService()
+        {
+            return new LayoutNavigationService<InPersonPickupViewModel>(navigationStore, () => new InPersonPickupViewModel(CreateInPersonPicupFormNavigationService(), inPersonPickupStore), CreateNavigationBarViewModel);
+        }
+
+        private INavigationService CreateInPersonPicupFormNavigationService()
+        {
+            return new ModalNavigationService<InPersonPickupFormViewModel>(modalNavigationStore, () => new InPersonPickupFormViewModel(inPersonPickupStore, CreateCloseModalNavigationService()));
+        }
+        //TODO finish the rest
         private NavigationBarViewModel CreateNavigationBarViewModel()
         {
             UpdateServiceManager();

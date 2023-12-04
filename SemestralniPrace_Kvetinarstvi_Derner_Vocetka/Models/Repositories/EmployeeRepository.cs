@@ -36,7 +36,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 Convert.ToInt32(row["MZDA"]),
                 row["EMAIL"].ToString(),
                 row["TELEFON"].ToString(),
-                row["ZAMESTNANCI_ID_ZAMESTNANEC"] != DBNull.Value ? Convert.ToInt32(row["EmployeeId"]) : (int?)null,
+                row["ZAMESTNANCI_ID_ZAMESTNANEC"] != DBNull.Value ? Convert.ToInt32(row["ZAMESTNANCI_ID_ZAMESTNANEC"]) : (int?)null,
                 row["HESLO"].ToString(),
                 (EmployeePositionEnum)Enum.Parse(typeof(EmployeePositionEnum), row["POZICE"].ToString())
 
@@ -59,7 +59,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                     Convert.ToDouble(row["MZDA"]),
                     row["EMAIL"].ToString(),
                     row["TELEFON"].ToString(),
-                    row["ZAMESTNANCI_ID_ZAMESTNANEC"] != DBNull.Value ? Convert.ToInt32(row["EmployeeId"]) : (int?)null,
+                    row["ZAMESTNANCI_ID_ZAMESTNANEC"] != DBNull.Value ? Convert.ToInt32(row["ZAMESTNANCI_ID_ZAMESTNANEC"]) : (int?)null,
                     row["HESLO"].ToString(),
                     (EmployeePositionEnum)Enum.Parse(typeof(EmployeePositionEnum), row["POZICE"].ToString())
                 );
@@ -118,12 +118,21 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dataTable.Columns.Add("LastName");
             dataTable.Columns.Add("Wage");
             dataTable.Columns.Add("Email");
-            dataTable.Columns.Add("Telephone");
+            dataTable.Columns.Add("Tel");
             dataTable.Columns.Add("Supervisor");
             dataTable.Columns.Add("Position");
             
             foreach (var employee in Employees)
             {
+
+                string supervisorEmail = string.Empty;
+
+                if (employee.IdSupervisor != null)
+                {
+                    var supervisor = Employees.FirstOrDefault(e => e.Id == employee.IdSupervisor);
+                    supervisorEmail = supervisor?.Email ?? "Supervisor Not Found";
+                }
+
                 dataTable.Rows.Add(
                     employee.Id,
                     employee.FirstName,
@@ -131,7 +140,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                     employee.Wage,
                     employee.Email,
                     employee.Tel,
-                    employee.IdSupervisor,
+                    supervisorEmail,
                     employee.Position
                 );
             }
