@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 {
-    public class EmployeeRepository : IRepository<Employee>
+    public class EmployeeRepository
     {
         public ObservableCollection<Employee> Employees { get; set; }
         private OracleDbUtil dbUtil;
@@ -22,10 +22,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dbUtil = new OracleDbUtil();
         }
         
-        public async Task<Employee> GetById(Int32 id)
+        public async Task<Employee> GetById(int id)
         {
             string command = $"SELECT * FROM zamestnaneci WHERE ID_ZAMESTNANEC = {id}";
-            var dataTable = await dbUtil.ExecuteQueryAsync(command);
+            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
+            if (dataTable.Rows.Count == 0)
+                return null;
             var row = dataTable.Rows[0];
             var employee = new Employee(
                 Convert.ToInt32(row["ID_ZAMESTNANEC"]),
@@ -36,10 +38,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 row["TELEFON"].ToString(),
                 row["ZAMESTNANCI_ID_ZAMESTNANEC"] != DBNull.Value ? Convert.ToInt32(row["EmployeeId"]) : (int?)null,
                 row["HESLO"].ToString(),
-                (EmployeePositionEnum)(row["POZICE"] != DBNull.Value ? Enum.Parse(typeof(EmployeePositionEnum), row["EmployeePosition"].ToString()) : null)
+                (EmployeePositionEnum)Enum.Parse(typeof(EmployeePositionEnum), row["POZICE"].ToString())
 
             );
-            return (Employee)Convert.ChangeType(employee, typeof(Employee));
+            return employee;
         }
 
         public async Task GetAll()
@@ -54,13 +56,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                     Convert.ToInt32(row["ID_ZAMESTNANEC"]),
                     row["JMENO"].ToString(),
                     row["PRIJMENI"].ToString(),
-                    Convert.ToInt32(row["MZDA"]),
+                    Convert.ToDouble(row["MZDA"]),
                     row["EMAIL"].ToString(),
                     row["TELEFON"].ToString(),
                     row["ZAMESTNANCI_ID_ZAMESTNANEC"] != DBNull.Value ? Convert.ToInt32(row["EmployeeId"]) : (int?)null,
                     row["HESLO"].ToString(),
-                    (EmployeePositionEnum)(row["POZICE"] != DBNull.Value ? Enum.Parse(typeof(EmployeePositionEnum), row["EmployeePosition"].ToString()) : null)
-
+                    (EmployeePositionEnum)Enum.Parse(typeof(EmployeePositionEnum), row["POZICE"].ToString())
                 );
                 Employees.Add(employee);
             }
@@ -75,24 +76,25 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 {"MZDA", entity.Wage},
                 { "EMAIL", entity.Email },
                 { "TELEFON", entity.Tel },
+                { "ZAMESTNANCI_ID_ZAMESTNANEC", entity.IdSupervisor},
                 { "HESLO", entity.Password },
-                { "POZICE", entity.Position }
+                { "POZICE", entity.Position.ToString() }
             };
             await dbUtil.ExecuteStoredProcedureAsync("addzamestnanec", parameters);
         }
 
-        public async Task Update(Employee entity)
+        public async Task Update(int id, string firstName, string lastName, double wage, string email, string tel, int? idSupervisor, EmployeePositionEnum position)
         {
             var parameters = new Dictionary<string, object>
             {
-                { "ID_ZAMESTNANEC", entity.Id },
-                { "JMENO", entity.FirstName },
-                { "PRIJMENI", entity.LastName },
-                {"MZDA", entity.Wage},
-                { "EMAIL", entity.Email },
-                { "TELEFON", entity.Tel },
-                { "HESLO", entity.Password },
-                { "POZICE", entity.Position }
+                { "ID_ZAMESTNANEC", id },
+                { "JMENO", firstName },
+                { "PRIJMENI", lastName },
+                {"MZDA", wage},
+                { "EMAIL", email },
+                { "TELEFON", tel },
+                { "ZAMESTNANCI_ID_ZAMESTNANEC", idSupervisor},
+                { "POZICE", position.ToString() }
             };
             await dbUtil.ExecuteStoredProcedureAsync("updatezamestnanec", parameters);
         }
@@ -110,24 +112,26 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             await GetAll();
             DataTable dataTable = new DataTable();
-            
+
+            dataTable.Columns.Add("Id");
             dataTable.Columns.Add("FirstName");
             dataTable.Columns.Add("LastName");
             dataTable.Columns.Add("Wage");
             dataTable.Columns.Add("Email");
-            dataTable.Columns.Add("Tel");
-            dataTable.Columns.Add("Password");
+            dataTable.Columns.Add("Telephone");
+            dataTable.Columns.Add("Supervisor");
             dataTable.Columns.Add("Position");
             
             foreach (var employee in Employees)
             {
                 dataTable.Rows.Add(
+                    employee.Id,
                     employee.FirstName,
                     employee.LastName,
                     employee.Wage,
                     employee.Email,
                     employee.Tel,
-                    employee.Password,
+                    employee.IdSupervisor,
                     employee.Position
                 );
             }

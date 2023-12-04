@@ -110,7 +110,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateEmployeeFormNavigationService()
         {
-            return new ModalNavigationService<EmployeeFormViewModel>(modalNavigationStore, () => new EmployeeFormViewModel(employeeStore, CreateCloseModalNavigationService()));
+            return new ModalNavigationService<EmployeeFormViewModel>(modalNavigationStore, () => new EmployeeFormViewModel(employeeStore, CreateCloseModalNavigationService(), CreateEmployeeNavigationService()));
         }
 
         private INavigationService CreateOrderNavigationService()

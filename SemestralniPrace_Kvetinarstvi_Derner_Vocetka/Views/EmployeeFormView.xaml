@@ -3,10 +3,57 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
+             xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views" xmlns:components="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid Width="300" Height="320">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBox Grid.Row="1" x:Name="FirstNameTextBox" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="1" Content="First Name" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+
+        <TextBox Grid.Row="2" x:Name="LastNameTextBox" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="2" Content="Last Name" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+
+        <TextBox Grid.Row="3" x:Name="EmailTextBox" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="3" Content="Email" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+
+        <TextBox Grid.Row="4" x:Name="TelTextBox" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding Tel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="4" Content="Telephone" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+
+        <TextBox Grid.Row="5" x:Name="WageBox" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding Wage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="5" Content="Wage" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+
+        <ComboBox Grid.Row="6" x:Name="SupervisorComboBox" Margin="110,10,70,10" ItemsSource="{Binding SupervisorComboBoxItems}" SelectedItem="{Binding Supervisor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Row="6" Content="Supervisor" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+
+
+        <components:BindablePasswordBox Visibility="{Binding IsUpdated, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Row="7" x:Name="PasswordBox" Margin="110,10,0,0" Width="120" HorizontalAlignment="left" Password="{Binding Password, Mode=TwoWay}"/>
+        <Label Visibility="{Binding IsUpdated, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Row="7" Content="Password" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+
+        <components:BindablePasswordBox Visibility="{Binding IsUpdated, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Row="8" x:Name="PasswordBoxCheck" HorizontalAlignment="Left" Margin="110,10,0,0" Width="120" Password="{Binding PasswordCheck, Mode=TwoWay}"/>
+        <Label Visibility="{Binding IsUpdated, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Row="8" Content="Password again:" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+
+        <TextBlock Grid.Row="9" Text="{Binding ErrorMessage, Mode=TwoWay}" Foreground="Red"/>
+        <!-- Buttons -->
+        <Button Content="Ok" Command="{Binding BtnOk}" HorizontalAlignment="Left" Margin="60,0,0,0" Grid.Row="10" VerticalAlignment="Center" />
+        <Button Content="Cancel" Command="{Binding BtnCancel}" HorizontalAlignment="Left" Margin="190,0,0,0" Grid.Row="10"/>
+
     </Grid>
 </UserControl>
