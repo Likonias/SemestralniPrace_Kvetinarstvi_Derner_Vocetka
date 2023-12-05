@@ -31,6 +31,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public ICommand NavigateOtherGoodsCommand { get; }
         public ICommand NavigateOrderCommand { get; }
         public ICommand NavigateMainCommand { get; }
+        public ICommand NavigateAddressTypeCommand { get; }
+        public ICommand NavigateBillingCommand { get; }
+        public ICommand NavigateDeliveryMethodCommand { get; }
+        public ICommand NavigateDeliveryCommand { get; }
+        public ICommand NavigateInPersonPickupCommand { get; }
+        public ICommand NavigateInvoiceCommand { get; }
+        public ICommand NavigateOccasionCommand { get; }
+        public ICommand NavigateOrderStatusCommand { get; }
 
         public ObservableCollection<string> ComboBoxItems { get; set; }
 
@@ -55,6 +63,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             NavigateEmployeeCommand = new NavigateCommand<EmployeeViewModel>(navigationServiceManager.GetNavigationService<EmployeeViewModel>());
             NavigateOtherGoodsCommand = new NavigateCommand<OtherGoodsViewModel>(navigationServiceManager.GetNavigationService<OtherGoodsViewModel>());
             NavigateOrderCommand = new NavigateCommand<OrderViewModel>(navigationServiceManager.GetNavigationService<OrderViewModel>());
+            NavigateAddressTypeCommand = new NavigateCommand<AddressTypeViewModel>(navigationServiceManager.GetNavigationService<AddressTypeViewModel>());
+            NavigateBillingCommand = new NavigateCommand<BillingViewModel>(navigationServiceManager.GetNavigationService<BillingViewModel>());
+            NavigateDeliveryMethodCommand = new NavigateCommand<DeliveryMethodViewModel>(navigationServiceManager.GetNavigationService<DeliveryMethodViewModel>());
+            NavigateDeliveryCommand = new NavigateCommand<DeliveryViewModel>(navigationServiceManager.GetNavigationService<DeliveryViewModel>());
+            NavigateInPersonPickupCommand = new NavigateCommand<InPersonPickupViewModel>(navigationServiceManager.GetNavigationService<InPersonPickupViewModel>());
+            NavigateInvoiceCommand = new NavigateCommand<InvoiceViewModel>(navigationServiceManager.GetNavigationService<InvoiceViewModel>());
+            NavigateOccasionCommand = new NavigateCommand<OccasionViewModel>(navigationServiceManager.GetNavigationService<OccasionViewModel>());
+            NavigateOrderStatusCommand = new NavigateCommand<OrderStatusViewModel>(navigationServiceManager.GetNavigationService<OrderStatusViewModel>());
+
             this.accountStore = accountStore;
             ComboBoxItems = new ObservableCollection<string>();
             PopulateComboBox();
@@ -168,6 +185,30 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     break;
                 case ComboBoxTableNamesEnum.OtherGoods:
                     NavigateOtherGoodsCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.AddressTypes:
+                    NavigateAddressTypeCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.Billings:
+                    NavigateBillingCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.DeliveryMethods:
+                    NavigateDeliveryMethodCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.Deliveries:
+                    NavigateDeliveryCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.InPersonPickups:
+                    NavigateInPersonPickupCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.Invoices:
+                    NavigateInvoiceCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.Occasions:
+                    NavigateOccasionCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.OrderStatus:
+                    NavigateOrderStatusCommand.Execute(null);
                     break;
             }
         }
