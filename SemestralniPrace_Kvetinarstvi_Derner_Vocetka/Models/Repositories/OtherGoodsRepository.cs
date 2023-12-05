@@ -75,6 +75,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
             foreach (DataRow row in dataTable.Rows)
             {
+                //TODO fix otherGoods add
                 byte[] imageBytes = row["BLOB_COLUMN_NAME"] as byte[];
                 string dateString = row["DATUM_TRVANLIVOSTI"].ToString(); // Assuming this is a string representation of the date
                 DateOnly dateOnly;
