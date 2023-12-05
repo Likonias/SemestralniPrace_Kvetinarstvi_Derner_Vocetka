@@ -1,22 +1,119 @@
-﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
+﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Entities;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
     public class InPersonPickupViewModel : ViewModelBase
     {
-        public InPersonPickupViewModel(INavigationService navigationService, InPersonPickupStore inPersonPickupStore)
+        private OracleDbUtil dbUtil;
+        private DataTable tableData;
+        private InPersonPickupRepository inPersonPickupRepository;
+        private InPersonPickupStore inPersonPickupStore;
+        private INavigationService createInPersonPickupForm;
+
+        public RelayCommand BtnAdd { get; }
+        public RelayCommand BtnEdit { get; }
+        public RelayCommand BtnDelete { get; }
+        public DataRowView SelectedItem { get; set; }
+
+        public DataTable TableData
         {
-            NavigationService = navigationService;
-            InPersonPickupStore = inPersonPickupStore;
+            get { return tableData; }
+            set
+            {
+                tableData = value;
+                OnPropertyChanged(nameof(TableData));
+            }
         }
 
-        public INavigationService NavigationService { get; }
-        public InPersonPickupStore InPersonPickupStore { get; }
+        public InPersonPickupViewModel(INavigationService createInPersonPickupForm, InPersonPickupStore inPersonPickupStore)
+        {
+            this.createInPersonPickupForm = createInPersonPickupForm;
+            this.inPersonPickupStore = inPersonPickupStore;
+            BtnAdd = new RelayCommand(BtnAddPressed);
+            BtnEdit = new RelayCommand(BtnEditPressed);
+            BtnDelete = new RelayCommand(BtnDeletePressed);
+            dbUtil = new OracleDbUtil();
+            tableData = new DataTable();
+            inPersonPickupRepository = new InPersonPickupRepository();
+            InitializeTableData();
+        }
+
+        private async Task InitializeTableData()
+        {
+            TableData = new DataTable();
+            TableData = await inPersonPickupRepository.ConvertToDataTable();
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+        }
+
+        private async void BtnDeletePressed()
+        {
+            if (SelectedItem?.Row[0].ToString() != null)
+            {
+                int pickupIdToDelete = int.Parse(SelectedItem.Row[0].ToString());
+                InPersonPickup pickupToDelete = await inPersonPickupRepository.GetById(pickupIdToDelete);
+                await inPersonPickupRepository.Delete(pickupToDelete);
+                InitializeTableData();
+            }
+        }
+
+        private async void BtnEditPressed()
+        {
+            if (SelectedItem?.Row[0].ToString() != null)
+            {
+                inPersonPickupStore.InPersonPickup = await inPersonPickupRepository.GetById(int.Parse(SelectedItem.Row[0].ToString()));
+                createInPersonPickupForm.Navigate();
+            }
+        }
+
+        private void BtnAddPressed()
+        {
+            inPersonPickupStore.InPersonPickup = null;
+            createInPersonPickupForm.Navigate();
+        }
+
+        private string searchQuery;
+        public string SearchQuery
+        {
+            get { return searchQuery; }
+            set
+            {
+                searchQuery = value;
+                FilterTableData();
+                OnPropertyChanged(nameof(SearchQuery));
+            }
+        }
+
+        private void FilterTableData()
+        {
+            if (string.IsNullOrEmpty(SearchQuery))
+            {
+                InitializeTableData(); // Reset to the original data if the search query is empty
+                return;
+            }
+
+            DataView dv = tableData.DefaultView;
+            dv.RowFilter = $"CONVERT(IdDeliveryMethod, 'System.String') LIKE '%{SearchQuery}%' OR " +
+                   $"CONVERT(WarehouseReleaseDate, 'System.String') LIKE '%{SearchQuery}%' OR " +
+                   $"CONVERT(IdOrder, 'System.String') LIKE '%{SearchQuery}%' OR " +
+                   $"CONVERT(Method, 'System.String') LIKE '%{SearchQuery}%' OR " +
+                   $"CONVERT(IdPickup, 'System.String') LIKE '%{SearchQuery}%' OR " +
+                   $"CONVERT(Time, 'System.String') LIKE '%{SearchQuery}%'";
+
+            TableData = dv.ToTable();
+        }
     }
 }

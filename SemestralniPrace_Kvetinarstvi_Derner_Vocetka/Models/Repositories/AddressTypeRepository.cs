@@ -31,7 +31,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 Convert.ToInt32(row["ID_DRUH_ADRESY"]),
                 (AddressTypeEnum)Enum.Parse(typeof(AddressTypeEnum), row["DRUH_ADRESY"].ToString())
             );
-            return (AddressType)Convert.ChangeType(addressType, typeof(AddressType));
+            return addressType;
         }
 
         public async Task GetAll()

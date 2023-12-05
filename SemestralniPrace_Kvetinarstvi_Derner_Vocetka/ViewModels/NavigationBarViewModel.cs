@@ -85,7 +85,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             NavigateDeliveryCommand = new NavigateCommand<DeliveryViewModel>(navigationServiceManager.GetNavigationService<DeliveryViewModel>());
             NavigateInPersonPickupCommand = new NavigateCommand<InPersonPickupViewModel>(navigationServiceManager.GetNavigationService<InPersonPickupViewModel>());
             NavigateInvoiceCommand = new NavigateCommand<InvoiceViewModel>(navigationServiceManager.GetNavigationService<InvoiceViewModel>());
-            NavigateOccasionCommand = new NavigateCommand<OccasionViewModel>(navigationServiceManager.GetNavigationService<OccasionViewModel>());
+            NavigateOccasionCommand = new NavigateCommand<OccasionsViewModel>(navigationServiceManager.GetNavigationService<OccasionsViewModel>());
             NavigateOrderStatusCommand = new NavigateCommand<OrderStatusViewModel>(navigationServiceManager.GetNavigationService<OrderStatusViewModel>());
 
             this.accountStore = accountStore;
@@ -197,6 +197,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     allowedValues.Add(ComboBoxTableNamesEnum.Addresses);
                     allowedValues.Add(ComboBoxTableNamesEnum.Employees);
                     allowedValues.Add(ComboBoxTableNamesEnum.OtherGoods);
+                    allowedValues.Add(ComboBoxTableNamesEnum.DeliveryMethods);
                     break;
                     
             }

@@ -47,6 +47,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             addressStore = new AddressStore();
             customerStore = new CustomerStore();
             employeeStore = new EmployeeStore();
+            deliveryStore = new DeliveryStore();
+            deliveryMethodStore = new DeliveryMethodStore();
             orderStore = new OrderStore();
             otherGoodsStore = new OtherGoodsStore();
             CreateNavigationBarViewModel(); 
@@ -142,12 +144,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateAddressTypeNavigationService()
         {
-            return new LayoutNavigationService<AddressTypeViewModel>(navigationStore, () => new AddressTypeViewModel(CreateAddressTypeFormNavigationService(), addressTypeStore), CreateNavigationBarViewModel);
-        }
-
-        private INavigationService CreateAddressTypeFormNavigationService()
-        {
-            return new ModalNavigationService<AddressTypeFormViewModel>(modalNavigationStore, () => new AddressTypeFormViewModel(addressTypeStore, CreateCloseModalNavigationService()));
+            return new LayoutNavigationService<AddressTypeViewModel>(navigationStore, () => new AddressTypeViewModel(addressTypeStore), CreateNavigationBarViewModel);
         }
 
         private INavigationService CreateBillingNavigationService()
@@ -157,27 +154,27 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateBillingFormNavigationService()
         {
-            return new ModalNavigationService<BillingFormViewModel>(modalNavigationStore, () => new BillingFormViewModel(billingStore, CreateCloseModalNavigationService()));
+            return new ModalNavigationService<BillingFormViewModel>(modalNavigationStore, () => new BillingFormViewModel(CreateCloseModalNavigationService(), billingStore, CreateCloseModalNavigationService()));
         }
 
         private INavigationService CreateDeliveryMethodNavigationService()
         {
-            return new LayoutNavigationService<DeliveryMethodViewModel>(navigationStore, () => new DeliveryMethodViewModel(CreateDeliveryMethodFormNavigationService(), deliveryStore), CreateNavigationBarViewModel);
+            return new LayoutNavigationService<DeliveryMethodViewModel>(navigationStore, () => new DeliveryMethodViewModel(CreateDeliveryMethodFormNavigationService(), deliveryMethodStore), CreateNavigationBarViewModel);
         }
 
         private INavigationService CreateDeliveryMethodFormNavigationService()
         {
-            return new ModalNavigationService<DeliveryMethodFormViewModel>(modalNavigationStore, () => new DeliveryMethodFormViewModel(deliveryStore, CreateCloseModalNavigationService()));
+            return new ModalNavigationService<DeliveryMethodFormViewModel>(modalNavigationStore, () => new DeliveryMethodFormViewModel(CreateCloseModalNavigationService(), deliveryMethodStore, CreateDeliveryMethodNavigationService()));
         }
 
         private INavigationService CreateDeliveryNavigationService()
         {
-            return new LayoutNavigationService<DeliveryViewModel>(navigationStore, () => new DeliveryViewModel(CreateDeliveryFormNavigationService(), deliveryStore), CreateNavigationBarViewModel);
+            return new LayoutNavigationService<DeliveryViewModel>(navigationStore, () => new DeliveryViewModel(CreateDeliveryFormNavigationService(),deliveryStore), CreateNavigationBarViewModel);
         }
 
         private INavigationService CreateDeliveryFormNavigationService()
         {
-            return new ModalNavigationService<DeliveryFormViewModel>(modalNavigationStore, () => new DeliveryFormViewModel(deliveryStore, CreateCloseModalNavigationService()));
+            return new ModalNavigationService<DeliveryFormViewModel>(modalNavigationStore, () => new DeliveryFormViewModel(CreateDeliveryFormNavigationService(), deliveryStore, CreateFlowersNavigationService()));
         }
 
         private INavigationService CreateInPersonPickupNavigationService()
@@ -250,7 +247,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             serviceManager.RegisterNavigationService<OtherGoodsViewModel>(CreateOtherGoodsNavigationService());
             serviceManager.RegisterNavigationService<OtherGoodsFormViewModel>(CreateOtherGoodsFormNavigationService());
             serviceManager.RegisterNavigationService<AddressTypeViewModel>(CreateAddressTypeNavigationService());
-            serviceManager.RegisterNavigationService<AddressTypeFormViewModel>(CreateAddressTypeFormNavigationService());
             serviceManager.RegisterNavigationService<BillingViewModel>(CreateBillingNavigationService());
             serviceManager.RegisterNavigationService<BillingFormViewModel>(CreateBillingFormNavigationService());
             serviceManager.RegisterNavigationService<DeliveryMethodViewModel>(CreateDeliveryMethodNavigationService());

@@ -5,8 +5,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             d:DesignHeight="250" d:DesignWidth="300">
+    <Grid Width="300" Height="250">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- WarehouseReleaseDate -->
+        <DatePicker Grid.Row="0" x:Name="WarehouseReleaseDatePicker" HorizontalAlignment="Left" Margin="110,10,0,0" VerticalAlignment="Top" SelectedDate="{Binding WarehouseReleaseDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
+        <Label Grid.Row="0" Content="Warehouse Release Date" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+
+        <!-- Method ComboBox -->
+        <ComboBox Grid.Row="2" x:Name="MethodComboBox" Margin="110,10,70,10" ItemsSource="{Binding MethodComboBoxItems}" SelectedItem="{Binding Method, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Row="2" Content="Method" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+
+        <!-- TextBlock for ErrorMessage -->
+        <TextBlock Grid.Row="3" Text="{Binding ErrorMessage, Mode=TwoWay}" Foreground="Red" TextAlignment="Center"/>
+
+        <!-- Buttons -->
+        <Button Content="Ok" Command="{Binding BtnOk}" HorizontalAlignment="Left" Margin="60,0,0,0" Grid.Row="4" VerticalAlignment="Center" />
+        <Button Content="Cancel" Command="{Binding BtnCancel}" HorizontalAlignment="Left" Margin="190,0,0,0" Grid.Row="4"/>
     </Grid>
 </UserControl>
