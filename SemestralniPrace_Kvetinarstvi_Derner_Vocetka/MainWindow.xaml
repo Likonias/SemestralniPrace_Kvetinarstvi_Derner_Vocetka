@@ -56,6 +56,30 @@
             <DataTemplate DataType="{x:Type viewmodels:OtherGoodsFormViewModel}" >
                 <views:OtherGoodsFormView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:AddressTypeViewModel}">
+                <views:AddressTypeView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:BillingViewModel}">
+                <views:BillingView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:DeliveryMethodViewModel}">
+                <views:DeliveryMethodView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:DeliveryViewModel}">
+                <views:DeliveryView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:InPersonPickupViewModel}">
+                <views:InPersonPickupView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:InvoiceViewModel}">
+                <views:InvoiceView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:OccasionViewModel}">
+                <views:OccasionView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:OrderStatusViewModel}">
+                <views:OrderStatusView/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:LayoutViewModel}" >
                 <components:Layout/>
             </DataTemplate>

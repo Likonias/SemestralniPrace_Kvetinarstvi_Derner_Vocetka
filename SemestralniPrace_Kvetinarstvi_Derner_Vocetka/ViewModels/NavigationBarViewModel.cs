@@ -1,6 +1,7 @@
 ﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Enums;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
@@ -20,7 +21,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
     public class NavigationBarViewModel : ViewModelBase
     {
-         public ICommand LoginCommand { get; }
+        public ICommand LoginCommand { get; }
         public ICommand RegisterCommand { get; }
         public ICommand LogoutCommand { get; }
         public ICommand NavigateAccountCommand { get; }
@@ -31,6 +32,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public ICommand NavigateOtherGoodsCommand { get; }
         public ICommand NavigateOrderCommand { get; }
         public ICommand NavigateMainCommand { get; }
+        public ICommand NavigateAddressTypeCommand { get; }
+        public ICommand NavigateBillingCommand { get; }
+        public ICommand NavigateDeliveryMethodCommand { get; }
+        public ICommand NavigateDeliveryCommand { get; }
+        public ICommand NavigateInPersonPickupCommand { get; }
+        public ICommand NavigateInvoiceCommand { get; }
+        public ICommand NavigateOccasionCommand { get; }
+        public ICommand NavigateOrderStatusCommand { get; }
 
         public ObservableCollection<string> ComboBoxItems { get; set; }
 
@@ -38,10 +47,25 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private ComboBoxTableNamesEnum selectedEnumValue;
 
         private readonly AccountStore accountStore;
+        private OracleDbUtil dbUtil;
 
         public bool IsLoggedIn => accountStore.IsLoggedIn;
         public bool IsLoggedOut => accountStore.IsLoggedOut;
-        
+
+        public bool IsCurrentAdmin => accountStore.IsCurrentAdmin;
+        public ICommand EmulateCommand { get; }
+        public ObservableCollection<string> EmulateComboBoxItems { get; set; }
+        private string selectedEmulateComboBoxItem;
+        public string SelectedEmulateComboBoxItem
+        {
+            get => selectedEmulateComboBoxItem;
+            set
+            {
+                selectedEmulateComboBoxItem = value;
+                OnPropertyChanged(nameof(SelectedEmulateComboBoxItem));
+            }
+        }
+
         public NavigationBarViewModel(AccountStore accountStore, NavigationServiceManager navigationServiceManager)
         {
             LoginCommand = new NavigateCommand<LoginViewModel>(navigationServiceManager.GetNavigationService<LoginViewModel>());
@@ -55,13 +79,44 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             NavigateEmployeeCommand = new NavigateCommand<EmployeeViewModel>(navigationServiceManager.GetNavigationService<EmployeeViewModel>());
             NavigateOtherGoodsCommand = new NavigateCommand<OtherGoodsViewModel>(navigationServiceManager.GetNavigationService<OtherGoodsViewModel>());
             NavigateOrderCommand = new NavigateCommand<OrderViewModel>(navigationServiceManager.GetNavigationService<OrderViewModel>());
+            NavigateAddressTypeCommand = new NavigateCommand<AddressTypeViewModel>(navigationServiceManager.GetNavigationService<AddressTypeViewModel>());
+            NavigateBillingCommand = new NavigateCommand<BillingViewModel>(navigationServiceManager.GetNavigationService<BillingViewModel>());
+            NavigateDeliveryMethodCommand = new NavigateCommand<DeliveryMethodViewModel>(navigationServiceManager.GetNavigationService<DeliveryMethodViewModel>());
+            NavigateDeliveryCommand = new NavigateCommand<DeliveryViewModel>(navigationServiceManager.GetNavigationService<DeliveryViewModel>());
+            NavigateInPersonPickupCommand = new NavigateCommand<InPersonPickupViewModel>(navigationServiceManager.GetNavigationService<InPersonPickupViewModel>());
+            NavigateInvoiceCommand = new NavigateCommand<InvoiceViewModel>(navigationServiceManager.GetNavigationService<InvoiceViewModel>());
+            NavigateOccasionCommand = new NavigateCommand<OccasionViewModel>(navigationServiceManager.GetNavigationService<OccasionViewModel>());
+            NavigateOrderStatusCommand = new NavigateCommand<OrderStatusViewModel>(navigationServiceManager.GetNavigationService<OrderStatusViewModel>());
+
             this.accountStore = accountStore;
             ComboBoxItems = new ObservableCollection<string>();
             PopulateComboBox();
 
+            EmulateCommand = new RelayCommand(Emulate);
+            EmulateComboBoxItems = new ObservableCollection<string>();
+            PopulateEmulateComboBox();
+
             this.accountStore.CurrentAccountChanged += OnCurrentAccountChanged;
+            dbUtil = new OracleDbUtil();
         }
-        
+
+        private async void PopulateEmulateComboBox()
+        {
+            CustomerRepository customerRepository = new CustomerRepository();
+            EmployeeRepository employeeRepository = new EmployeeRepository();
+            await customerRepository.GetAll();
+            await employeeRepository.GetAll();
+            foreach (Customer customer in customerRepository.Customers) { EmulateComboBoxItems.Add(customer.Email); }
+            foreach(Employee employee in employeeRepository.Employees) { EmulateComboBoxItems.Add(employee.Email); }
+        }
+
+        private async void Emulate()
+        {
+            Account acc = await dbUtil.ExecuteGetAccountFunctionAsync("getuserbyemail", SelectedEmulateComboBoxItem);
+            accountStore.CurrentAccount = acc;
+            NavigateAccountCommand.Execute(null);
+        }
+
         private void Logout()
         {
             accountStore.Logout();
@@ -72,6 +127,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         {
             OnPropertyChanged(nameof(IsLoggedIn));
             OnPropertyChanged(nameof(IsLoggedOut));
+            OnPropertyChanged(nameof(IsCurrentAdmin));
         }
 
         public string SelectedComboBoxItem
@@ -169,6 +225,30 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     break;
                 case ComboBoxTableNamesEnum.OtherGoods:
                     NavigateOtherGoodsCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.AddressTypes:
+                    NavigateAddressTypeCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.Billings:
+                    NavigateBillingCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.DeliveryMethods:
+                    NavigateDeliveryMethodCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.Deliveries:
+                    NavigateDeliveryCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.InPersonPickups:
+                    NavigateInPersonPickupCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.Invoices:
+                    NavigateInvoiceCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.Occasions:
+                    NavigateOccasionCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.OrderStatus:
+                    NavigateOrderStatusCommand.Execute(null);
                     break;
             }
         }

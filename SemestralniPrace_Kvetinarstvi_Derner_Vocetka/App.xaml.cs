@@ -189,7 +189,37 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
         {
             return new ModalNavigationService<InPersonPickupFormViewModel>(modalNavigationStore, () => new InPersonPickupFormViewModel(inPersonPickupStore, CreateCloseModalNavigationService()));
         }
-        //TODO finish the rest
+
+        private INavigationService CreateInvoiceNavigationService()
+        {
+            return new LayoutNavigationService<InvoiceViewModel>(navigationStore, () => new InvoiceViewModel(CreateInvoiceFormNavigationService(), invoiceStore), CreateNavigationBarViewModel);
+        }
+
+        private INavigationService CreateInvoiceFormNavigationService()
+        {
+            return new ModalNavigationService<InvoiceFormViewModel>(modalNavigationStore, () => new InvoiceFormViewModel(invoiceStore, CreateCloseModalNavigationService()));
+        }
+
+        private INavigationService CreateOccasionNavigationService()
+        {
+            return new LayoutNavigationService<OccasionViewModel>(navigationStore, () => new OccasionViewModel(CreateOccasionFormNavigationService(), occasionStore), CreateNavigationBarViewModel);
+        }
+
+        private INavigationService CreateOccasionFormNavigationService()
+        {
+            return new ModalNavigationService<OccasionFormViewModel>(modalNavigationStore, () => new OccasionFormViewModel(occasionStore, CreateCloseModalNavigationService()));
+        }
+
+        private INavigationService CreateOrderStatusNavigationService()
+        {
+            return new LayoutNavigationService<OrderStatusViewModel>(navigationStore, () => new OrderStatusViewModel(CreateOrderStatusFormNavigationService(), orderStatusStore), CreateNavigationBarViewModel);
+        }
+
+        private INavigationService CreateOrderStatusFormNavigationService()
+        {
+            return new ModalNavigationService<OrderStatusFormViewModel>(modalNavigationStore, () => new OrderStatusFormViewModel(orderStatusStore, CreateCloseModalNavigationService()));
+        }
+        
         private NavigationBarViewModel CreateNavigationBarViewModel()
         {
             UpdateServiceManager();
@@ -219,6 +249,23 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             serviceManager.RegisterNavigationService<OrderFormViewModel>(CreateOrderFormNavigationService());
             serviceManager.RegisterNavigationService<OtherGoodsViewModel>(CreateOtherGoodsNavigationService());
             serviceManager.RegisterNavigationService<OtherGoodsFormViewModel>(CreateOtherGoodsFormNavigationService());
+            serviceManager.RegisterNavigationService<AddressTypeViewModel>(CreateAddressTypeNavigationService());
+            serviceManager.RegisterNavigationService<AddressTypeFormViewModel>(CreateAddressTypeFormNavigationService());
+            serviceManager.RegisterNavigationService<BillingViewModel>(CreateBillingNavigationService());
+            serviceManager.RegisterNavigationService<BillingFormViewModel>(CreateBillingFormNavigationService());
+            serviceManager.RegisterNavigationService<DeliveryMethodViewModel>(CreateDeliveryMethodNavigationService());
+            serviceManager.RegisterNavigationService<DeliveryMethodFormViewModel>(CreateDeliveryMethodFormNavigationService());
+            serviceManager.RegisterNavigationService<DeliveryViewModel>(CreateDeliveryNavigationService());
+            serviceManager.RegisterNavigationService<DeliveryFormViewModel>(CreateDeliveryFormNavigationService());
+            serviceManager.RegisterNavigationService<InPersonPickupViewModel>(CreateInPersonPickupNavigationService());
+            serviceManager.RegisterNavigationService<InPersonPickupFormViewModel>(CreateInPersonPicupFormNavigationService());
+            serviceManager.RegisterNavigationService<InvoiceViewModel>(CreateInvoiceNavigationService());
+            serviceManager.RegisterNavigationService<InvoiceFormViewModel>(CreateInvoiceFormNavigationService());
+            serviceManager.RegisterNavigationService<OccasionViewModel>(CreateOccasionNavigationService());
+            serviceManager.RegisterNavigationService<OccasionFormViewModel>(CreateOccasionFormNavigationService());
+            serviceManager.RegisterNavigationService<OrderStatusViewModel>(CreateOrderStatusNavigationService());
+            serviceManager.RegisterNavigationService<OrderStatusFormViewModel>(CreateOrderStatusFormNavigationService());
+
         }
 
     }
