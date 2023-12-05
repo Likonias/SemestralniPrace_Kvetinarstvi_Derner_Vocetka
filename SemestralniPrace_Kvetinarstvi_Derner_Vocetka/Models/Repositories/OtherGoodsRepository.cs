@@ -24,7 +24,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task<OtherGoods> GetById(Int32 id)
         {
-            string command = $"SELECT * FROM ostatni " +
+            string command = $"SELECT zbozi.ID_ZBOZI, zbozi.NAZEV, zbozi.CENA, zbozi.TYP, zbozi.SKLAD, zbozi.OBRAZEK, ostatni.id_ostatni, ostatni.zeme_puvodu, ostatni.datum_trvanlivosti FROM ostatni " +
                              $"LEFT JOIN zbozi ON ostatni.id_zbozi = zbozi.id_zbozi" +
                              $"WHERE ID_OSTATNI = {id}";
 
@@ -34,16 +34,33 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 return null;
           
             var row = dataTable.Rows[0];
+
+            byte[] imageBytes = row["BLOB_COLUMN_NAME"] as byte[];
+
+            string dateString = row["DATUM_TRVANLIVOSTI"].ToString(); // Assuming this is a string representation of the date
+            DateOnly dateOnly;
+
+            if (DateOnly.TryParse(dateString, out dateOnly))
+            {
+                // Use the parsed DateOnly value here
+                Console.WriteLine(dateOnly);
+            }
+            else
+            {
+                // Handle the case where the conversion fails
+                Console.WriteLine("Invalid date format");
+            }
+
             var otherGoods = new OtherGoods(
                 Convert.ToInt32(row["ID_ZBOZI"]),
                 row["NAZEV"].ToString(),
                 Convert.ToDouble(row["CENA"]),
                 Convert.ToChar(row["TYP"]),
                 Convert.ToInt32(row["SKLAD"]),
-                null,
+                imageBytes,
                 Convert.ToInt32(row["ID_OSTATNI"]),
                 row["ZEME_PUVODU"].ToString(),
-                Convert.ToDateTime(row["DATUM_TRVANLIVOSTI"])
+                dateOnly
             );
 
             return otherGoods;
@@ -52,22 +69,37 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         public async Task GetAll()
         {
             OtherGoods.Clear();
-            string command = $"SELECT * FROM ostatni " +
+            string command = $"SELECT zbozi.ID_ZBOZI, zbozi.NAZEV, zbozi.CENA, zbozi.TYP, zbozi.SKLAD, zbozi.OBRAZEK, ostatni.id_ostatni, ostatni.zeme_puvodu, ostatni.datum_trvanlivosti FROM ostatni " +
                              $"LEFT JOIN zbozi ON ostatni.id_zbozi = zbozi.id_zbozi";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
 
             foreach (DataRow row in dataTable.Rows)
             {
+                byte[] imageBytes = row["BLOB_COLUMN_NAME"] as byte[];
+                string dateString = row["DATUM_TRVANLIVOSTI"].ToString(); // Assuming this is a string representation of the date
+                DateOnly dateOnly;
+
+                if (DateOnly.TryParse(dateString, out dateOnly))
+                {
+                    // Use the parsed DateOnly value here
+                    Console.WriteLine(dateOnly);
+                }
+                else
+                {
+                    // Handle the case where the conversion fails
+                    Console.WriteLine("Invalid date format");
+                }
+
                 var otherGoods = new OtherGoods(
                     Convert.ToInt32(row["ID_ZBOZI"]),
                     row["NAZEV"].ToString(),
                     Convert.ToDouble(row["CENA"]),
                     Convert.ToChar(row["TYP"]),
                     Convert.ToInt32(row["SKLAD"]),
-                    null,
+                    imageBytes,
                     Convert.ToInt32(row["ID_OSTATNI"]),
                     row["ZEME_PUVODU"].ToString(),
-                    Convert.ToDateTime(row["DATUM_TRVANLIVOSTI"])
+                    dateOnly
                 );
                 OtherGoods.Add(otherGoods);
             }
@@ -81,7 +113,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "CENA", entity.Price },
                 { "TYP", entity.Type },
                 { "SKLAD", entity.Warehouse },
-                { "OBRAZEK", null },
+                { "OBRAZEK", entity.Image },
                 { "ZEME_PUVODU", entity.CountryOfOrigin },
                 { "DATUM_TRVANLIVOSTI", entity.ExpirationDate }
             };
@@ -97,7 +129,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "CENA", entity.Price },
                 { "TYP", entity.Type },
                 { "SKLAD", entity.Warehouse },
-                { "OBRAZEK", null },
+                { "OBRAZEK", entity.Image },
                 {"ID_OSTATNI", entity.IdOtherGoods},
                 { "ZEME_PUVODU", entity.CountryOfOrigin },
                 { "DATUM_TRVANLIVOSTI", entity.ExpirationDate }
@@ -105,11 +137,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await dbUtil.ExecuteStoredProcedureAsync("updateostatni", parameters);
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(OtherGoods otherGoods)
         {
+
             var parameters = new Dictionary<string, object>
             {
-                {"ID_OSTATNI", id }
+                {"ID_ZBOZI", otherGoods.IdGoods},
+                {"ID_OSTATNI", otherGoods.IdOtherGoods }
             };
             await dbUtil.ExecuteStoredProcedureAsync("deleteostatni", parameters);
         }
@@ -149,6 +183,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             var otherGoods = OtherGoods.ToList();
 
             return otherGoods;
+        }
+
+        public Task Delete(int id)
+        {
+            //TODO kazis to ludku
+            throw new NotImplementedException();
         }
     }
 }

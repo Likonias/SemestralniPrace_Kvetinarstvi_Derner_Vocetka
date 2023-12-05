@@ -140,6 +140,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     allowedValues.Add(ComboBoxTableNamesEnum.Flowers);
                     allowedValues.Add(ComboBoxTableNamesEnum.Addresses);
                     allowedValues.Add(ComboBoxTableNamesEnum.Employees);
+                    allowedValues.Add(ComboBoxTableNamesEnum.OtherGoods);
                     break;
                     
             }

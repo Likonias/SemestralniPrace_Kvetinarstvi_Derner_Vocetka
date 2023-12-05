@@ -111,7 +111,7 @@ public class OracleDbUtil
                     using (OracleDataAdapter adapter = new OracleDataAdapter(command))
                     {
                         DataTable dataTable = new DataTable();
-                        await Task.Run(() => adapter.Fill(dataTable)); // Asynchronous fill operation
+                        await Task.Run(() => adapter.Fill(dataTable));
                         return dataTable;
                     }
                 }

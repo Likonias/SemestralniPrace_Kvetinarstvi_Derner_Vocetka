@@ -80,7 +80,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             {
                 { "NAZEV", entity.Name },
                 { "CENA", entity.Price },
-                { "TYP", entity.Type },
                 { "SKLAD", entity.Warehouse },
                 { "OBRAZEK", entity.Image },
                 {"STAV", entity.State.ToString()},
@@ -96,7 +95,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "ID_ZBOZI", entity.IdGoods },
                 { "NAZEV", entity.Name },
                 { "CENA", entity.Price },
-                { "TYP", entity.Type },
                 { "SKLAD", entity.Warehouse },
                 { "OBRAZEK", null },
                 {"ID_KVETINA", entity.IdFlower},

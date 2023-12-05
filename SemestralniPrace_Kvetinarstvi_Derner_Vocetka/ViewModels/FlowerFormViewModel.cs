@@ -62,12 +62,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
                 if (flowerStore.Flower == null)
                 {
-                    flower = new Flower(0, Name, Price, Type, Warehouse, Image, 0, FlowerState ?? FlowerStateEnum.A, Age);
+                    flower = new Flower(0, Name, Price, 'K', Warehouse, Image, 0, FlowerState ?? FlowerStateEnum.A, Age);
                     await flowerRepository.Add(flower);
                 }
                 else
                 {
-                    flower = new Flower(flowerStore.Flower.IdGoods, Name, Price, Type, Warehouse, null, flowerStore.Flower.IdFlower, FlowerState ?? FlowerStateEnum.A, Age);
+                    flower = new Flower(flowerStore.Flower.IdGoods, Name, Price, 'K', Warehouse, Image, flowerStore.Flower.IdFlower, FlowerState ?? FlowerStateEnum.A, Age);
                     await flowerRepository.Update(flower);
                 }
 
@@ -82,17 +82,16 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private bool CheckFlower()
         {
-            return Name != null || Price != 0 || Type != '\0' || Warehouse != 0 || Type != null || _age < 0;
+            return Name != null || Price != 0 || Warehouse != 0 || _age < 0;
         }
 
         private void InitializeFlower()
         {
             _name = flower.Name;
             _price = flower.Price;
-            _type = flower.Type;
             _warehouse = flower.Warehouse;
             _age = flower.Age;
-            _type = flower.Type;
+            _flowerState = flower.State;
             _image = flower.Image;
         }
 
@@ -136,17 +135,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             {
                 _price = value;
                 OnPropertyChanged(nameof(Price));
-            }
-        }
-
-        private char _type;
-        public char Type
-        {
-            get => _type;
-            set
-            {
-                _type = value;
-                OnPropertyChanged(nameof(Type));
             }
         }
 

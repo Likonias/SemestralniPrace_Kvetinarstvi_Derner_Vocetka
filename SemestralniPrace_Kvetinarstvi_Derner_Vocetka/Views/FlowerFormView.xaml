@@ -26,10 +26,6 @@
         <TextBox Grid.Row="1" x:Name="PriceTextBox" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" Text="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
         <Label Grid.Row="1" Content="Price" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
 
-        <!-- Type -->
-        <TextBox Grid.Row="2" x:Name="TypeTextBox" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <Label Grid.Row="2" Content="Type" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
-
         <!-- Warehouse -->
         <TextBox Grid.Row="3" x:Name="WarehouseTextBox" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding Warehouse, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Row="3" Content="Warehouse" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>

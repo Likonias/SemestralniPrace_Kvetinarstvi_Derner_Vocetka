@@ -8,7 +8,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
 {
     public class OtherGoods : Goods
     {
-        public OtherGoods(int idGoods, string name, double price, char type, int warehouse, byte[]? image, int idOtherGoods, string countryOfOrigin, DateTime expirationDate) : base(idGoods, name, price, type, warehouse, image)
+        public OtherGoods(int idGoods, string name, double price, char type, int warehouse, byte[]? image, int idOtherGoods, string countryOfOrigin, DateOnly expirationDate) : base(idGoods, name, price, type, warehouse, image)
         {
             IdOtherGoods = idOtherGoods;
             CountryOfOrigin = countryOfOrigin;
@@ -16,7 +16,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models
         }
         public int IdOtherGoods { get; set; }
         public string? CountryOfOrigin { get; set; }
-        public DateTime? ExpirationDate { get; set; }
+        public DateOnly? ExpirationDate { get; set; }
 
     }
 }
