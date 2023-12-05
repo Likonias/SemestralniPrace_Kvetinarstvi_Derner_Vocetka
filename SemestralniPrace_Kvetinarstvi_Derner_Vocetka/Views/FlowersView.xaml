@@ -9,12 +9,12 @@
     <Grid Width="1000">
         <DataGrid SelectedItem="{Binding SelectedItem}"  DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding ID}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="Name" Binding="{Binding NAZEV}"/>
-                <DataGridTextColumn Header="Price" Binding="{Binding CENA}"/>
-                <DataGridTextColumn Header="Stock" Binding="{Binding SKLAD}"/>
-                <DataGridTextColumn Header="State" Binding="{Binding Stav}"/>
-                <DataGridTextColumn Header="Age" Binding="{Binding Vek}"/>
+                <DataGridTextColumn Header="Id" Binding="{Binding IdFlower}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
+                <DataGridTextColumn Header="Stock" Binding="{Binding Warehouse}"/>
+                <DataGridTextColumn Header="State" Binding="{Binding FlowerState}"/>
+                <DataGridTextColumn Header="Age" Binding="{Binding Age}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Přidej" Command="{Binding BtnAdd}" HorizontalAlignment="Left" Margin="860,45,0,0" Width="80" VerticalAlignment="Top"/>

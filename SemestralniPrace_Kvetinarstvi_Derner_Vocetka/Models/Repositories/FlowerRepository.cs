@@ -119,26 +119,25 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await GetAll();
             DataTable dataTable = new DataTable();
 
-            dataTable.Columns.Add("ID", typeof(int));
-            dataTable.Columns.Add("NAZEV", typeof(string));
-            dataTable.Columns.Add("CENA", typeof(int));
-            dataTable.Columns.Add("TYP", typeof(byte));
-            dataTable.Columns.Add("SKLAD", typeof(int));
-            dataTable.Columns.Add("Stav", typeof(string));
-            dataTable.Columns.Add("Vek", typeof(int));
+            dataTable.Columns.Add("Id", typeof(int));
+            dataTable.Columns.Add("Name", typeof(string));
+            dataTable.Columns.Add("Price", typeof(int));
+            dataTable.Columns.Add("Type", typeof(byte));
+            dataTable.Columns.Add("Warehouse", typeof(int));
+            dataTable.Columns.Add("FlowerState", typeof(string));
+            dataTable.Columns.Add("Age", typeof(int));
 
-            foreach (var flowers in Flowers)
+            foreach (var flower in Flowers)
             {
-                DataRow row = dataTable.NewRow();
-                row["ID"] = flowers.IdFlower;
-                row["NAZEV"] = flowers.Name;
-                row["CENA"] = flowers.Price;
-                row["TYP"] = flowers.Type;
-                row["SKLAD"] = flowers.Warehouse;
-                row["Stav"] = flowers.State.ToString();
-                row["Vek"] = flowers.Age;
-                
-                dataTable.Rows.Add(row);
+                dataTable.Rows.Add(
+                    flower.IdFlower,
+                    flower.Name,
+                    flower.Price,
+                    flower.Type,
+                    flower.Warehouse,
+                    flower.State.ToString(),
+                    flower.Age
+                    );
             }
 
             return dataTable;

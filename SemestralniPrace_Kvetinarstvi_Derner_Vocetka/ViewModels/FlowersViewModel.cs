@@ -104,11 +104,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             }
 
             DataView dv = tableData.DefaultView;
-            dv.RowFilter = $"NAZEV LIKE '%{SearchQuery}%' OR " +
-                   $"CENA LIKE '%{SearchQuery}%' OR " +
-                   $"SKLAD LIKE '%{SearchQuery}%' OR " +
-                   $"Stav LIKE '%{SearchQuery}%' OR " +
-                   $"Vek LIKE '%{SearchQuery}%'";
+            dv.RowFilter = $"CONVERT(Name, 'System.String') LIKE '%{SearchQuery}%' OR " +
+                   $"CONVERT(Price, 'System.String') LIKE '%{SearchQuery}%' OR " +
+                   $"CONVERT(Warehouse, 'System.String') LIKE '%{SearchQuery}%' OR " +
+                   $"CONVERT(FlowerState, 'System.String') LIKE '%{SearchQuery}%' OR " +
+                   $"CONVERT(Age, 'System.String') LIKE '%{SearchQuery}%'";
+
             TableData = dv.ToTable();
         }
     }
