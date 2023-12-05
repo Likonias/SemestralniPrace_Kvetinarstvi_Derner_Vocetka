@@ -84,5 +84,35 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             otherGoodsStore.OtherGoods = null;
             createOtherGoodsForm.Navigate();
         }
+
+        private string searchQuery;
+        public string SearchQuery
+        {
+            get { return searchQuery; }
+            set
+            {
+                searchQuery = value;
+                FilterTableData();
+                OnPropertyChanged(nameof(SearchQuery));
+            }
+        }
+
+        private void FilterTableData()
+        {
+            if (string.IsNullOrEmpty(SearchQuery))
+            {
+                InitializeTableData();
+                return;
+            }
+
+            DataView dv = tableData.DefaultView;
+            dv.RowFilter =
+                   $"Name LIKE '%{SearchQuery}%' OR " +
+                   $"Price LIKE '%{SearchQuery}%' OR " +
+                   $"Warehouse LIKE '%{SearchQuery}%' OR " +
+                   $"CountryOfOrigin LIKE '%{SearchQuery}%' OR " +
+                   $"ExpirationDate LIKE '%{SearchQuery}%'"; 
+            TableData = dv.ToTable();
+        }
     }
 }

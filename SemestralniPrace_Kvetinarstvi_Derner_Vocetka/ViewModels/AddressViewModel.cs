@@ -85,5 +85,33 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         {
             base.Dispose();
         }
+
+        private string searchQuery;
+        public string SearchQuery
+        {
+            get { return searchQuery; }
+            set
+            {
+                searchQuery = value;
+                FilterTableData();
+                OnPropertyChanged(nameof(SearchQuery));
+            }
+        }
+
+        private void FilterTableData()
+        {
+            if (string.IsNullOrEmpty(SearchQuery))
+            {
+                InitializeTableData(); // Reset to the original data if search query is empty
+                return;
+            }
+
+            DataView dv = tableData.DefaultView;
+            dv.RowFilter = $"Street LIKE '%{SearchQuery}%' OR " +
+                   $"StreetNumber LIKE '%{SearchQuery}%' OR " +
+                   $"City LIKE '%{SearchQuery}%' OR " +
+                   $"Zip LIKE '%{SearchQuery}%'";
+            TableData = dv.ToTable();
+        }
     }
 }

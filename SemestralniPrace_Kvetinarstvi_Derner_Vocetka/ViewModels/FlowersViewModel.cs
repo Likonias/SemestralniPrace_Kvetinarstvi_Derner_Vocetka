@@ -82,5 +82,34 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             flowerStore.Flower = null;
             createFlowersForm.Navigate();
         }
+
+        private string searchQuery;
+        public string SearchQuery
+        {
+            get { return searchQuery; }
+            set
+            {
+                searchQuery = value;
+                FilterTableData();
+                OnPropertyChanged(nameof(SearchQuery));
+            }
+        }
+
+        private void FilterTableData()
+        {
+            if (string.IsNullOrEmpty(SearchQuery))
+            {
+                InitializeTableData(); // Reset to the original data if search query is empty
+                return;
+            }
+
+            DataView dv = tableData.DefaultView;
+            dv.RowFilter = $"NAZEV LIKE '%{SearchQuery}%' OR " +
+                   $"CENA LIKE '%{SearchQuery}%' OR " +
+                   $"SKLAD LIKE '%{SearchQuery}%' OR " +
+                   $"Stav LIKE '%{SearchQuery}%' OR " +
+                   $"Vek LIKE '%{SearchQuery}%'";
+            TableData = dv.ToTable();
+        }
     }
 }
