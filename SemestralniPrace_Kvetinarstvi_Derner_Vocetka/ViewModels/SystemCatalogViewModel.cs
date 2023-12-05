@@ -1,4 +1,5 @@
-﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
+﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,36 +25,79 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 OnPropertyChanged(nameof(TableData));
             }
         }
+        private string commandText;
+        public ObservableCollection<string> SystemCatalogComboBoxItems { get; set; }
+        private string selectedSystemCatalogComboBoxItem;
+        public string SelectedSystemCatalogComboBoxItem
+        {
+            get => selectedSystemCatalogComboBoxItem;
+            set
+            {
+                selectedSystemCatalogComboBoxItem = value;
+                OnPropertyChanged(nameof(SelectedSystemCatalogComboBoxItem));
+                InitializeTableData();
+            }
+        }
         public SystemCatalogViewModel()
         {
             dbUtil = new OracleDbUtil();
+            SystemCatalogComboBoxItems = new ObservableCollection<string>();
             InitializeTableData();
+            InitializeComboBox();
+        }
+
+        private void InitializeComboBox()
+        {
+            foreach(SystemCatalogEnum val in Enum.GetValues(typeof(SystemCatalogEnum)))
+            {
+                SystemCatalogComboBoxItems.Add(val.ToString());
+            }
         }
 
         private async void InitializeTableData()
         {
-            TableData = await GetSystemCatalogAsync();
+            switch (SelectedSystemCatalogComboBoxItem)
+            {
+                case "Tables":
+                    commandText = "SELECT object_name, object_type FROM user_objects WHERE object_type = 'TABLE'";
+                    break;
+                case "Views":
+                    commandText = "SELECT object_name, object_type FROM user_objects WHERE object_type = 'VIEW'";
+                    break;
+                case "Tables_Views":
+                    commandText = "SELECT object_name, object_type FROM user_objects WHERE object_type IN ('TABLE', 'VIEW')";
+                    break;
+                case "Procedures":
+                    commandText = "SELECT object_name, procedure_name, object_type FROM user_procedures";
+                    break;
+                case "All_Objects":
+                    commandText = "SELECT object_name, object_type FROM user_objects";
+                    break;
+                case "All_Tab_Columns":
+                    commandText = "SELECT table_name, column_name, data_type, data_length FROM all_tab_columns";
+                    break;
+                case "All_Ind_Columns":
+                    commandText = "SELECT index_name, table_name, column_name FROM all_ind_columns";
+                    break;
+                default:
+                    commandText = "SELECT object_name, object_type FROM user_objects WHERE object_type IN ('TABLE', 'VIEW')";
+                    break;
+            }
+
+            TableData = await dbUtil.ExecuteQueryAsync(commandText, null);
+
         }
 
-        public async Task<DataTable> GetSystemCatalogAsync()
+        private enum SystemCatalogEnum
         {
-            //string commandText = "SELECT object_name, object_type FROM user_objects WHERE object_type IN ('TABLE', 'VIEW')";
-            string commandText = "SELECT table_name, column_name, data_type, data_length\r\nFROM all_tab_columns";
-            DataTable result = await dbUtil.ExecuteQueryAsync(commandText, null);
-
-            //if (result.Rows.Count > 0)
-            //{
-            //    foreach (DataRow row in result.Rows)
-            //    {
-            //        DataClass data = new DataClass
-            //        {
-            //            ObjectName = row["OBJECT_NAME"].ToString(),
-            //            ObjectType = row["OBJECT_TYPE"].ToString(),
-            //        };
-            //        Data.Add(data);
-            //    }
-            //}
-            return result;
+            Tables,
+            Views,
+            Tables_Views,
+            Procedures,
+            All_Objects,
+            All_Tab_Columns,
+            All_Ind_Columns
         }
+
     }
 }

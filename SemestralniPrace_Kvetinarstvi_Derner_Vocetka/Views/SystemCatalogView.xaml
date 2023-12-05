@@ -6,7 +6,12 @@
              xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid Width="1000">
         <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="true" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10"/>
+        <Label Content="Select System Catalogue" HorizontalAlignment="Left" Width="150" Height="30" Margin="820,10,0,410"/>
+        <ComboBox HorizontalAlignment="Left" ItemsSource="{Binding SystemCatalogComboBoxItems}" SelectedItem="{Binding SelectedSystemCatalogComboBoxItem, Mode=TwoWay}" Grid.Column="0" Margin="820,71,0,0" VerticalAlignment="Top" Width="138" Height="22"/>
     </Grid>
 </UserControl>
