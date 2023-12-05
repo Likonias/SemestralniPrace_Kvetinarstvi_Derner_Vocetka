@@ -94,8 +94,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     bool isEmailViable = await dbUtil.ExecuteStoredEmailBooleanFunctionAsync("validateEmail", Email);
                     bool isEmailAvailable = await dbUtil.ExecuteStoredEmailBooleanFunctionAsync("emailExists", Email);
 
-                    //todo position not working populate combobox
-
                     if (isEmailAvailable && isEmailViable && passwordOk)
                     {
                         await employeeRepository.Add(new Employee(0, FirstName, LastName, Wage, Email, Tel, IdSupervisor, PasswordHash.PasswordHashing(Password), Position));

@@ -40,6 +40,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public ICommand NavigateInvoiceCommand { get; }
         public ICommand NavigateOccasionCommand { get; }
         public ICommand NavigateOrderStatusCommand { get; }
+        public ICommand NavigateSystemCatalogCommand { get; }
 
         public ObservableCollection<string> ComboBoxItems { get; set; }
 
@@ -87,6 +88,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             NavigateInvoiceCommand = new NavigateCommand<InvoiceViewModel>(navigationServiceManager.GetNavigationService<InvoiceViewModel>());
             NavigateOccasionCommand = new NavigateCommand<OccasionsViewModel>(navigationServiceManager.GetNavigationService<OccasionsViewModel>());
             NavigateOrderStatusCommand = new NavigateCommand<OrderStatusViewModel>(navigationServiceManager.GetNavigationService<OrderStatusViewModel>());
+            NavigateSystemCatalogCommand = new NavigateCommand<SystemCatalogViewModel>(navigationServiceManager.GetNavigationService<SystemCatalogViewModel>());
 
             this.accountStore = accountStore;
             ComboBoxItems = new ObservableCollection<string>();
@@ -250,6 +252,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     break;
                 case ComboBoxTableNamesEnum.OrderStatus:
                     NavigateOrderStatusCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.SystemCatalog:
+                    NavigateSystemCatalogCommand.Execute(null);
                     break;
             }
         }

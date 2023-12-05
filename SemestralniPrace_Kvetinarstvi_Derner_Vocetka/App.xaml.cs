@@ -216,7 +216,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
         {
             return new ModalNavigationService<OrderStatusFormViewModel>(modalNavigationStore, () => new OrderStatusFormViewModel(orderStatusStore, CreateCloseModalNavigationService()));
         }
-        
+
+        private INavigationService CreateSystemCatalogNavigationService()
+        {
+            return new LayoutNavigationService<SystemCatalogViewModel>(navigationStore, () => new SystemCatalogViewModel(), CreateNavigationBarViewModel);
+        }
+
         private NavigationBarViewModel CreateNavigationBarViewModel()
         {
             UpdateServiceManager();
@@ -261,7 +266,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             serviceManager.RegisterNavigationService<OccasionFormViewModel>(CreateOccasionFormNavigationService());
             serviceManager.RegisterNavigationService<OrderStatusViewModel>(CreateOrderStatusNavigationService());
             serviceManager.RegisterNavigationService<OrderStatusFormViewModel>(CreateOrderStatusFormNavigationService());
-
+            serviceManager.RegisterNavigationService<SystemCatalogViewModel>(CreateSystemCatalogNavigationService());
         }
 
     }

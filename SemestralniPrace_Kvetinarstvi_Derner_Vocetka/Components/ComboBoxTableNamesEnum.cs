@@ -30,20 +30,30 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components
 
         [Description("Address Types")]
         AddressTypes,
+
         [Description("Billings")]
         Billings,
+
         [Description("Delivery Methods")]
         DeliveryMethods,
+
         [Description("Deliveries")]
         Deliveries,
+
         [Description("In Person Pickups")]
         InPersonPickups,
+
         [Description("Invoices")]
         Invoices,
+
         [Description("Occasions")]
         Occasions,
+
         [Description("Order Status")]
-        OrderStatus
+        OrderStatus,
+
+        [Description("System Catalog")]
+        SystemCatalog
 
     }
 }
