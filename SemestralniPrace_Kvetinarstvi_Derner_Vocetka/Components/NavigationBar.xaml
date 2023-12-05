@@ -20,6 +20,8 @@
         <Button Content="Logout" HorizontalAlignment="Left" Margin="190,15,0,0" VerticalAlignment="Top" Width="60" Command="{Binding LogoutCommand}" Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="1" Height="20"/>
         <Label Content="Selected View: " HorizontalAlignment="Left" Margin="5,12,0,0" VerticalAlignment="Top" Height="26" Width="89"/>
         <ComboBox HorizontalAlignment="Left" ItemsSource="{Binding ComboBoxItems}" SelectedItem="{Binding SelectedComboBoxItem, Mode=TwoWay}" Grid.Column="0" Margin="94,14,0,0" VerticalAlignment="Top" Width="120" Height="22"/>
+        <ComboBox HorizontalAlignment="Left" ItemsSource="{Binding EmulateComboBoxItems}" SelectedItem="{Binding SelectedEmulateComboBoxItem, Mode=TwoWay}" Visibility="{Binding IsCurrentAdmin, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="0" Margin="297,14,0,0" VerticalAlignment="Top" Width="138" Height="22"/>
+        <Button Content="Emulate User" HorizontalAlignment="Left" Margin="453,16,0,0" VerticalAlignment="Top" Width="80" Command="{Binding EmulateCommand}" Visibility="{Binding IsCurrentAdmin, Converter={StaticResource BooleanToVisibilityConverter}}" Height="20"/>
 
     </Grid>
 </UserControl>

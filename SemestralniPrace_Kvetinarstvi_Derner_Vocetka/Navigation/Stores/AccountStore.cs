@@ -10,6 +10,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores
     public class AccountStore
     {
 
+        private Account admin;
+
         private Account currentAccount;
 
         public Account CurrentAccount
@@ -18,6 +20,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores
             set
             {
                 currentAccount = value;
+                if(currentAccount?.EmployeePosition == Models.Enums.EmployeePositionEnum.ADMIN) { admin = value; }
                 CurrentAccountChanged?.Invoke();
             }
         }
@@ -26,12 +29,26 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores
 
         public void Logout()
         {
-            CurrentAccount = null;
+            if (CurrentAccount.EmployeePosition == Models.Enums.EmployeePositionEnum.ADMIN) 
+            { 
+                isAdmin = false;
+                admin = null;
+            }
+            if(admin != null)
+            {
+                CurrentAccount = admin;
+            }
+            else
+            {
+                CurrentAccount = null;
+            }
         }
 
         public bool IsLoggedIn => CurrentAccount != null;
 
         public bool IsLoggedOut => CurrentAccount == null;
+        private bool isAdmin;
+        public bool IsCurrentAdmin { get => CurrentAccount?.EmployeePosition == Models.Enums.EmployeePositionEnum.ADMIN; }
 
     }
 }
