@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories;
@@ -48,12 +49,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
                 if (otherGoodsStore.OtherGoods == null)
                 {
-                    otherGoods = new OtherGoods(0, Name, Price, 'O', Warehouse, Image, 0, CountryOfOrigin, ExpirationDate ?? DateOnly.MinValue);
+                    otherGoods = new OtherGoods(0, Name, Price, 'O', Warehouse, Image, 0, CountryOfOrigin, (DateOnly)ExpirationDate);
                     await otherGoodsRepository.Add(otherGoods);
                 }
                 else
                 {
-                    otherGoods = new OtherGoods(otherGoodsStore.OtherGoods.IdGoods, Name, Price, 'O', Warehouse, Image, otherGoodsStore.OtherGoods.IdOtherGoods, CountryOfOrigin, ExpirationDate ?? DateOnly.MinValue);
+                    otherGoods = new OtherGoods(otherGoodsStore.OtherGoods.IdGoods, Name, Price, 'O', Warehouse, Image, otherGoodsStore.OtherGoods.IdOtherGoods, CountryOfOrigin, (DateOnly)ExpirationDate);
                     await otherGoodsRepository.Update(otherGoods);
                 }
 
@@ -145,7 +146,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 OnPropertyChanged(nameof(CountryOfOrigin));
             }
         }
-
+        
         private DateOnly? _expirationDate;
         public DateOnly? ExpirationDate
         {
@@ -156,5 +157,18 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 OnPropertyChanged(nameof(ExpirationDate));
             }
         }
+        
+        private DateTime selectedDate;
+        public DateTime SelectedDate
+        {
+            get => selectedDate;
+            set
+            {
+                selectedDate = value;
+                ExpirationDate = DateOnly.FromDateTime(selectedDate);
+                OnPropertyChanged(nameof(SelectedDate));
+            }
+        }
+
     }
 }

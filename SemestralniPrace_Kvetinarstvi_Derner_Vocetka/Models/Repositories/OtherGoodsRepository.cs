@@ -22,10 +22,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dbUtil = new OracleDbUtil();
         }
 
-        public async Task<OtherGoods> GetById(Int32 id)
+        public async Task<OtherGoods> GetById(int id)
         {
             string command = $"SELECT zbozi.ID_ZBOZI, zbozi.NAZEV, zbozi.CENA, zbozi.TYP, zbozi.SKLAD, zbozi.OBRAZEK, ostatni.id_ostatni, ostatni.zeme_puvodu, ostatni.datum_trvanlivosti FROM ostatni " +
-                             $"LEFT JOIN zbozi ON ostatni.id_zbozi = zbozi.id_zbozi" +
+                             $"LEFT JOIN zbozi ON ostatni.id_zbozi = zbozi.id_zbozi " +
                              $"WHERE ID_OSTATNI = {id}";
 
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
@@ -35,21 +35,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
           
             var row = dataTable.Rows[0];
 
-            byte[] imageBytes = row["BLOB_COLUMN_NAME"] as byte[];
-
-            string dateString = row["DATUM_TRVANLIVOSTI"].ToString(); // Assuming this is a string representation of the date
-            DateOnly dateOnly;
-
-            if (DateOnly.TryParse(dateString, out dateOnly))
-            {
-                // Use the parsed DateOnly value here
-                Console.WriteLine(dateOnly);
-            }
-            else
-            {
-                // Handle the case where the conversion fails
-                Console.WriteLine("Invalid date format");
-            }
+            //TODO fix otherGoods add
+            byte[] imageBytes = row["OBRAZEK"] as byte[];
+            DateTime dateString = (DateTime)row["DATUM_TRVANLIVOSTI"]; // Assuming this is a string representation of the date
+            DateOnly dateOnly = DateOnly.FromDateTime(dateString);
 
             var otherGoods = new OtherGoods(
                 Convert.ToInt32(row["ID_ZBOZI"]),
@@ -76,21 +65,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             foreach (DataRow row in dataTable.Rows)
             {
                 //TODO fix otherGoods add
-                byte[] imageBytes = row["BLOB_COLUMN_NAME"] as byte[];
-                string dateString = row["DATUM_TRVANLIVOSTI"].ToString(); // Assuming this is a string representation of the date
-                DateOnly dateOnly;
-
-                if (DateOnly.TryParse(dateString, out dateOnly))
-                {
-                    // Use the parsed DateOnly value here
-                    Console.WriteLine(dateOnly);
-                }
-                else
-                {
-                    // Handle the case where the conversion fails
-                    Console.WriteLine("Invalid date format");
-                }
-
+                byte[] imageBytes = row["OBRAZEK"] as byte[];
+                DateTime dateString = (DateTime)row["DATUM_TRVANLIVOSTI"]; // Assuming this is a string representation of the date
+                DateOnly dateOnly = DateOnly.FromDateTime(dateString);
+                
                 var otherGoods = new OtherGoods(
                     Convert.ToInt32(row["ID_ZBOZI"]),
                     row["NAZEV"].ToString(),
@@ -108,15 +86,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task Add(OtherGoods entity)
         {
+            
             var parameters = new Dictionary<string, object>
             {
                 { "NAZEV", entity.Name },
                 { "CENA", entity.Price },
-                { "TYP", entity.Type },
                 { "SKLAD", entity.Warehouse },
                 { "OBRAZEK", entity.Image },
                 { "ZEME_PUVODU", entity.CountryOfOrigin },
-                { "DATUM_TRVANLIVOSTI", entity.ExpirationDate }
+                { "DATUM_TRVANLIVOSTI", entity.ExpirationDate.Value.Day + "." + entity.ExpirationDate.Value.Month + "." + entity.ExpirationDate.Value.Year}
             };
             await dbUtil.ExecuteStoredProcedureAsync("addostatni", parameters);
         }
@@ -133,7 +111,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "OBRAZEK", entity.Image },
                 {"ID_OSTATNI", entity.IdOtherGoods},
                 { "ZEME_PUVODU", entity.CountryOfOrigin },
-                { "DATUM_TRVANLIVOSTI", entity.ExpirationDate }
+                { "DATUM_TRVANLIVOSTI", entity.ExpirationDate.Value.Day + "." + entity.ExpirationDate.Value.Month + "." + entity.ExpirationDate.Value.Year}
             };
             await dbUtil.ExecuteStoredProcedureAsync("updateostatni", parameters);
         }
@@ -154,25 +132,23 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await GetAll();
             DataTable dataTable = new DataTable();
 
-            dataTable.Columns.Add("NAZEV", typeof(string));
-            dataTable.Columns.Add("CENA", typeof(int));
-            dataTable.Columns.Add("TYP", typeof(byte));
-            dataTable.Columns.Add("SKLAD", typeof(int));
-            dataTable.Columns.Add("ZEME_PUVODU", typeof(string));
-            dataTable.Columns.Add("DATUM_TRVANLIVOSTI", typeof(DateTime));
+            dataTable.Columns.Add("IdOtherGoods");
+            dataTable.Columns.Add("Name");
+            dataTable.Columns.Add("Price");
+            dataTable.Columns.Add("Warehouse");
+            dataTable.Columns.Add("CountryOfOrigin");
+            dataTable.Columns.Add("ExpirationDate");
 
             foreach (var otherGoods in OtherGoods)
             {
-                DataRow row = dataTable.NewRow();
-                row["NAZEV"] = otherGoods.Name;
-                row["CENA"] = otherGoods.Price;
-                row["TYP"] = otherGoods.Type;
-                row["SKLAD"] = otherGoods.Warehouse;
-                row["ZEME_PUVODU"] = otherGoods.CountryOfOrigin;
-                row["ZEME_PUVODU"] = otherGoods.CountryOfOrigin;
-                row["DATUM_TRVANLIVOSTI"] = otherGoods.ExpirationDate;
-
-                dataTable.Rows.Add(row);
+                dataTable.Rows.Add(
+                    otherGoods.IdOtherGoods,
+                    otherGoods.Name,
+                    otherGoods.Price,
+                    otherGoods.Warehouse,
+                    otherGoods.CountryOfOrigin,
+                    otherGoods.ExpirationDate.Value.Day + "." + otherGoods.ExpirationDate.Value.Month + "." + otherGoods.ExpirationDate.Value.Year
+                );
             }
 
             return dataTable;
