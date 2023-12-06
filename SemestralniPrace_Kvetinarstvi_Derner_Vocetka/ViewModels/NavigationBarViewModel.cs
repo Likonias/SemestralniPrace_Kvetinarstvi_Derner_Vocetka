@@ -41,7 +41,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public ICommand NavigateOccasionCommand { get; }
         public ICommand NavigateOrderStatusCommand { get; }
         public ICommand NavigateSystemCatalogCommand { get; }
-
+        public ICommand NavigateHistoryCommand { get; }
         public ObservableCollection<string> ComboBoxItems { get; set; }
 
         private string selectedComboBoxItem;
@@ -89,6 +89,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             NavigateOccasionCommand = new NavigateCommand<OccasionViewModel>(navigationServiceManager.GetNavigationService<OccasionViewModel>());
             NavigateOrderStatusCommand = new NavigateCommand<OrderStatusViewModel>(navigationServiceManager.GetNavigationService<OrderStatusViewModel>());
             NavigateSystemCatalogCommand = new NavigateCommand<SystemCatalogViewModel>(navigationServiceManager.GetNavigationService<SystemCatalogViewModel>());
+            NavigateHistoryCommand = new NavigateCommand<HistoryViewModel>(navigationServiceManager.GetNavigationService<HistoryViewModel>());
 
             this.accountStore = accountStore;
             ComboBoxItems = new ObservableCollection<string>();
@@ -200,6 +201,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     allowedValues.Add(ComboBoxTableNamesEnum.Employees);
                     allowedValues.Add(ComboBoxTableNamesEnum.OtherGoods);
                     allowedValues.Add(ComboBoxTableNamesEnum.DeliveryMethods);
+                    allowedValues.Add(ComboBoxTableNamesEnum.InPersonPickups);
                     break;
                     
             }
@@ -255,6 +257,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     break;
                 case ComboBoxTableNamesEnum.SystemCatalog:
                     NavigateSystemCatalogCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.History:
+                    NavigateHistoryCommand.Execute(null);
                     break;
             }
         }

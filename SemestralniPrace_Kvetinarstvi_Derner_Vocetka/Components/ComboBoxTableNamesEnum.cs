@@ -53,7 +53,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components
         OrderStatus,
 
         [Description("System Catalog")]
-        SystemCatalog
+        SystemCatalog,
+
+        [Description("Database History")]
+        History
 
     }
 }

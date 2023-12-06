@@ -59,8 +59,14 @@
             <DataTemplate DataType="{x:Type viewmodels:AddressTypeViewModel}">
                 <views:AddressTypeView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:AddressTypeFormViewModel}">
+                <views:AddressTypeFormView/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:BillingViewModel}">
                 <views:BillingView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:BillingFormViewModel}">
+                <views:BillingFormView/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:DeliveryMethodViewModel}">
                 <views:DeliveryMethodView/>
@@ -71,20 +77,38 @@
             <DataTemplate DataType="{x:Type viewmodels:DeliveryViewModel}">
                 <views:DeliveryView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:DeliveryFormViewModel}">
+                <views:DeliveryFormView/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:InPersonPickupViewModel}">
                 <views:InPersonPickupView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:InPersonPickupFormViewModel}">
+                <views:InPersonPickupFormView/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:InvoiceViewModel}">
                 <views:InvoiceView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:InvoiceFormViewModel}">
+                <views:InvoiceFormView/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:OccasionViewModel}">
                 <views:OccasionView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:OccasionFormViewModel}">
+                <views:OccasionFormView/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:OrderStatusViewModel}">
                 <views:OrderStatusView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:OrderStatusFormViewModel}">
+                <views:OrderStatusFormView/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:SystemCatalogViewModel}">
                 <views:SystemCatalogView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:HistoryViewModel}">
+                <views:HistoryView/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:LayoutViewModel}" >
                 <components:Layout/>

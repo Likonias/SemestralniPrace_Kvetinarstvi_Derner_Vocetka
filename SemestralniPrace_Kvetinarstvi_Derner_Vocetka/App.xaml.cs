@@ -51,6 +51,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             deliveryMethodStore = new DeliveryMethodStore();
             orderStore = new OrderStore();
             otherGoodsStore = new OtherGoodsStore();
+            addressStore = new AddressStore();
+            billingStore = new BillingStore();
+            deliveryMethodStore = new DeliveryMethodStore();
+            deliveryStore = new DeliveryStore();
+            inPersonPickupStore = new InPersonPickupStore();
+            invoiceStore = new InvoiceStore();
+            occasionStore = new OccasionStore();
+            orderStatusStore = new OrderStatusStore();
+
             CreateNavigationBarViewModel(); 
         }
 
@@ -227,6 +236,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             UpdateServiceManager();
             return new NavigationBarViewModel(accountStore, serviceManager);
         }
+        private INavigationService CreateHistoryNavigationService()
+        {
+            return new LayoutNavigationService<HistoryViewModel>(navigationStore, () => new HistoryViewModel(), CreateNavigationBarViewModel);
+        }
 
         private INavigationService CreateCloseModalNavigationService()
         {
@@ -267,6 +280,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             serviceManager.RegisterNavigationService<OrderStatusViewModel>(CreateOrderStatusNavigationService());
             serviceManager.RegisterNavigationService<OrderStatusFormViewModel>(CreateOrderStatusFormNavigationService());
             serviceManager.RegisterNavigationService<SystemCatalogViewModel>(CreateSystemCatalogNavigationService());
+            serviceManager.RegisterNavigationService<HistoryViewModel>(CreateHistoryNavigationService());
         }
 
     }

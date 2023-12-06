@@ -49,7 +49,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         public async Task GetAll()
         {
             InPersonPickups.Clear();
-            string command = $"SELECT * FROM osobni_vyzvednuti" +
+            string command = $"SELECT * FROM osobne" +
                              $"JOIN ZPUSOBY_PREVZETI on ZPUSOBY_PREVZETI.id_zpusob_prevzeti = osobne.id_zpusob_prevzeti";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
 
@@ -78,7 +78,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "cas", entity.Time }
             };
           
-            await dbUtil.ExecuteStoredProcedureAsync("addosobni_vyzvednuti", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("addosobne", parameters);
         }
 
         public async Task Update(InPersonPickup entity)
@@ -93,7 +93,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "cas", entity.Time }
             };
           
-            await dbUtil.ExecuteStoredProcedureAsync("updateosobni_vyzvednuti", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("updateosobne", parameters);
           
         }
 
@@ -105,7 +105,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "id_osobne", entity.IdPickup }
             };
           
-            await dbUtil.ExecuteStoredProcedureAsync("deleteosobni_vyzvednuti", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("deleteosobne", parameters);
         }
 
         public async Task<DataTable> ConvertToDataTable()
