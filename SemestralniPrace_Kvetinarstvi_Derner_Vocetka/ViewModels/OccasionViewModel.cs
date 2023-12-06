@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
-    public class OccasionsViewModel : ViewModelBase
+    public class OccasionViewModel : ViewModelBase
     {
         private OracleDbUtil dbUtil;
         private DataTable tableData;
@@ -33,7 +33,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             }
         }
 
-        public OccasionsViewModel(INavigationService createOccasionForm, OccasionStore occasionStore)
+        public OccasionViewModel(INavigationService createOccasionForm, OccasionStore occasionStore)
         {
             this.createOccasionForm = createOccasionForm;
             this.occasionStore = occasionStore;

@@ -184,7 +184,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateInPersonPicupFormNavigationService()
         {
-            return new ModalNavigationService<InPersonPickupFormViewModel>(modalNavigationStore, () => new InPersonPickupFormViewModel(inPersonPickupStore, CreateCloseModalNavigationService()));
+            return new ModalNavigationService<InPersonPickupFormViewModel>(modalNavigationStore, () => new InPersonPickupFormViewModel( CreateCloseModalNavigationService(), inPersonPickupStore, CreateInPersonPickupNavigationService()));
         }
 
         private INavigationService CreateInvoiceNavigationService()
@@ -194,7 +194,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateInvoiceFormNavigationService()
         {
-            return new ModalNavigationService<InvoiceFormViewModel>(modalNavigationStore, () => new InvoiceFormViewModel(invoiceStore, CreateCloseModalNavigationService()));
+            return new ModalNavigationService<InvoiceFormViewModel>(modalNavigationStore, () => new InvoiceFormViewModel(CreateCloseModalNavigationService(), invoiceStore, CreateInvoiceNavigationService()));
         }
 
         private INavigationService CreateOccasionNavigationService()
@@ -204,7 +204,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateOccasionFormNavigationService()
         {
-            return new ModalNavigationService<OccasionFormViewModel>(modalNavigationStore, () => new OccasionFormViewModel(occasionStore, CreateCloseModalNavigationService()));
+            return new ModalNavigationService<OccasionFormViewModel>(modalNavigationStore, () => new OccasionFormViewModel( CreateCloseModalNavigationService(), occasionStore, CreateOccasionNavigationService()));
         }
 
         private INavigationService CreateOrderStatusNavigationService()
@@ -214,7 +214,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateOrderStatusFormNavigationService()
         {
-            return new ModalNavigationService<OrderStatusFormViewModel>(modalNavigationStore, () => new OrderStatusFormViewModel(orderStatusStore, CreateCloseModalNavigationService()));
+            return new ModalNavigationService<OrderStatusFormViewModel>(modalNavigationStore, () => new OrderStatusFormViewModel(CreateCloseModalNavigationService(), orderStatusStore, CreateOrderStatusNavigationService()));
         }
 
         private INavigationService CreateSystemCatalogNavigationService()
