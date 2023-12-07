@@ -8,5 +8,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores
 {
     public class OrderStore
     {
+
+        public int Id { get; set; }
+
+        public OrderStore()
+        {
+           
+
+        }
     }
 }
