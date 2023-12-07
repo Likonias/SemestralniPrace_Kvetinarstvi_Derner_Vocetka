@@ -5,19 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Width="1000">
-        <DataGrid SelectedItem="{Binding SelectedItem}"  DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="OccasionType" Binding="{Binding OccasionType}"/>
-                <DataGridTextColumn Header="Note" Binding="{Binding Note}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button Content="Add" Command="{Binding BtnAdd}" HorizontalAlignment="Left" Margin="860,45,0,0" Width="80" VerticalAlignment="Top"/>
-        <Button Content="Edit" Command="{Binding BtnEdit}" HorizontalAlignment="Left" Margin="860,105,0,0" Width="80"  VerticalAlignment="Top"/>
-        <Button Content="Delete" Command="{Binding BtnDelete}" HorizontalAlignment="Left" Margin="860,150,0,0" Width="80" VerticalAlignment="Top"/>
-        <Label Content="Search bar:" Margin="800,240,130,0" Height="30" VerticalAlignment="Top"/>
-        <TextBox Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="875,246,0,0" Width="103" VerticalAlignment="Top"/>
+             d:DesignHeight="450" d:DesignWidth="1000">
+    <Grid Width="980">
+        <DataGrid SelectedItem="{Binding SelectedItem}"  DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single" Margin="10,10,10,10"/>
     </Grid>
 </UserControl>

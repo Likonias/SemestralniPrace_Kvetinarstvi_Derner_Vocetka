@@ -13,12 +13,37 @@ using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Entities;
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories{
     public class OccasionRepository : IRepository<Occasion>
     {
+        //TODO Occasion is going to be initialized inside of the order, it can be null or something chosen from the enum
         public ObservableCollection<Occasion> Occasions { get; set; }
         private OracleDbUtil dbUtil;
+
+        public OccasionRepository()
+        {
+            Occasions = new ObservableCollection<Occasion>();
+            dbUtil = new OracleDbUtil();
+        }
 
         public async Task<Occasion> GetById(Int32 id)
         {
             string command = $"SELECT * FROM prilezitosti WHERE ID_PRILEZITOST = {id}";
+            var dataTable = await dbUtil.ExecuteQueryAsync(command);
+            
+            if (dataTable.Rows.Count == 0)
+                return null;
+
+            var row = dataTable.Rows[0];
+            var occasion = new Occasion(
+                Convert.ToInt32(row["ID_PRILEZITOST"]),
+                (OccasionTypeEnum)(row["DRUH_PRILEZITOSTI"] != DBNull.Value ? Enum.Parse(typeof(OccasionTypeEnum), row["OccasionType"].ToString()) : null),
+                Convert.ToInt32(row["OBJEDNAVKY_ID_OBJEDNAVKY"])
+            );
+
+            return (Occasion)Convert.ChangeType(occasion, typeof(Occasion));
+        }
+
+        public async Task<Occasion> GetByIdObjednavky(Int32 id)
+        {
+            string command = $"SELECT * FROM prilezitosti WHERE OBJEDNAVKY_ID_OBJEDNAVKY = {id}";
             var dataTable = await dbUtil.ExecuteQueryAsync(command);
 
             if (dataTable.Rows.Count == 0)
@@ -28,7 +53,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories{
             var occasion = new Occasion(
                 Convert.ToInt32(row["ID_PRILEZITOST"]),
                 (OccasionTypeEnum)(row["DRUH_PRILEZITOSTI"] != DBNull.Value ? Enum.Parse(typeof(OccasionTypeEnum), row["OccasionType"].ToString()) : null),
-                row["POZNAMKA"].ToString()
+                Convert.ToInt32(row["OBJEDNAVKY_ID_OBJEDNAVKY"])
             );
 
             return (Occasion)Convert.ChangeType(occasion, typeof(Occasion));
@@ -45,7 +70,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories{
                 var occasion = new Occasion(
                     Convert.ToInt32(row["ID_PRILEZITOST"]),
                     (OccasionTypeEnum)(row["DRUH_PRILEZITOSTI"] != DBNull.Value ? Enum.Parse(typeof(OccasionTypeEnum), row["OccasionType"].ToString()) : null),
-                    row["POZNAMKA"].ToString()                );
+                    Convert.ToInt32(row["OBJEDNAVKY_ID_OBJEDNAVKY"]));
                 Occasions.Add(occasion);
             }
         }

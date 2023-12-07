@@ -11,13 +11,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Entities
     {
         public int Id { get; set; }
         public OccasionTypeEnum OccasionType { get; set; }
-        public string? Note { get; set; }
-
-        public Occasion(int id, OccasionTypeEnum occasionType, string? note)
+        public int OrderId { get; set; }
+        public Occasion(int id, OccasionTypeEnum occasionType, int orderId)
         {
             Id = id;
             OccasionType = occasionType;
-            Note = note;
+            OrderId = orderId;
         }
     }
 }

@@ -208,7 +208,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateOccasionNavigationService()
         {
-            return new LayoutNavigationService<OccasionViewModel>(navigationStore, () => new OccasionViewModel(CreateOccasionFormNavigationService(), occasionStore), CreateNavigationBarViewModel);
+            return new LayoutNavigationService<OccasionViewModel>(navigationStore, () => new OccasionViewModel(), CreateNavigationBarViewModel);
         }
 
         private INavigationService CreateOccasionFormNavigationService()
