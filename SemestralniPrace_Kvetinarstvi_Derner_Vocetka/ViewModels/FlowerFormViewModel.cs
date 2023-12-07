@@ -1,4 +1,5 @@
-﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
+﻿using Microsoft.Win32;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Enums;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
@@ -7,8 +8,10 @@ using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
@@ -16,6 +19,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
     {
         public RelayCommand BtnCancel { get; private set; }
         public RelayCommand BtnOk { get; private set; }
+        public ICommand SelectImageCommand { get; }
         private readonly AccountStore accountStore;
         public string errorMessage;
         public ObservableCollection<string> FlowerStateComboBoxItems { get; set; }
@@ -36,7 +40,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             if (flower != null) { InitializeFlower(); }
             FlowerStateComboBoxItems = new ObservableCollection<string>();
             PopulateFlowerStateComboBox();
-            _image = new byte[16];
+            _image = new byte[32];
+            SelectImageCommand = new RelayCommand(SelectImage);
         }
 
         private void PopulateFlowerStateComboBox()
@@ -46,6 +51,28 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             foreach (FlowerStateEnum value in Enum.GetValues(typeof(FlowerStateEnum)))
             {
                 FlowerStateComboBoxItems.Add(value.ToString());
+            }
+        }
+
+        private void SelectImage()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            openFileDialog.Title = "Select an Image";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                FileStream fileStream = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read);
+                BinaryReader br = new BinaryReader(fileStream);
+                string selectedImagePath = openFileDialog.FileName;
+                //ALT File.readbytes...
+                // Read the selected image into a byte array
+                Image = br.ReadBytes((int)fileStream.Length);
+
+                // Now 'imageData' contains the selected image as a byte array
+                // You can use it as needed, such as storing it in your Flower model
+                // flowerStore.Flower.ImageData = imageData; // Assuming Flower model has an ImageData property
             }
         }
 

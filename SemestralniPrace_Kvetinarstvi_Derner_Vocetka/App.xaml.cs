@@ -148,7 +148,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateOtherGoodsFormNavigationService()
         {
-            return new ModalNavigationService<OtherGoodsFormViewModel>(modalNavigationStore, () => new OtherGoodsFormViewModel(CreateCloseModalNavigationService(), otherGoodsStore, CreateCloseModalNavigationService()));
+            return new ModalNavigationService<OtherGoodsFormViewModel>(modalNavigationStore, () => new OtherGoodsFormViewModel(CreateCloseModalNavigationService(), otherGoodsStore, CreateOtherGoodsNavigationService()));
         }
 
         private INavigationService CreateAddressTypeNavigationService()

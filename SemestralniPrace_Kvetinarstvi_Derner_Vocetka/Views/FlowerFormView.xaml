@@ -16,6 +16,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <!-- Name -->
@@ -38,11 +39,14 @@
         <ComboBox Grid.Row="5" x:Name="FlowerStateComboBox" Margin="110,10,70,10" ItemsSource="{Binding FlowerStateComboBoxItems}" SelectedItem="{Binding FlowerState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <Label Grid.Row="5" Content="Flower State" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
 
+        <Button Content="Select" Command="{Binding SelectImageCommand}" HorizontalAlignment="Left" Margin="110,0,0,0" Grid.Row="6" VerticalAlignment="Center" Width="119" />
+        <Label Grid.Row="6" Content="Image" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+
         <!-- TextBlock for ErrorMessage -->
-        <TextBlock Grid.Row="6" Text="{Binding ErrorMessage, Mode=TwoWay}" Foreground="Red" TextAlignment="Center"/>
+        <TextBlock Grid.Row="7" Text="{Binding ErrorMessage, Mode=TwoWay}" Foreground="Red" TextAlignment="Center"/>
 
         <!-- Buttons -->
-        <Button Content="Ok" Command="{Binding BtnOk}" HorizontalAlignment="Left" Margin="60,0,0,0" Grid.Row="7" VerticalAlignment="Center" />
-        <Button Content="Cancel" Command="{Binding BtnCancel}" HorizontalAlignment="Left" Margin="190,0,0,0" Grid.Row="7"/>
+        <Button Content="Ok" Command="{Binding BtnOk}" HorizontalAlignment="Left" Margin="60,0,0,0" Grid.Row="8" VerticalAlignment="Center" />
+        <Button Content="Cancel" Command="{Binding BtnCancel}" HorizontalAlignment="Left" Margin="190,0,0,0" Grid.Row="8"/>
     </Grid>
 </UserControl>

@@ -1,3 +1,4 @@
+using Oracle.ManagedDataAccess.Client;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Entities;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Enums;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Interfaces;
@@ -81,10 +82,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "NAZEV", entity.Name },
                 { "CENA", entity.Price },
                 { "SKLAD", entity.Warehouse },
-                { "OBRAZEK", entity.Image },
+                { "OBRAZEK", entity.Image},
                 {"STAV", entity.State.ToString()},
                 {"STARI", entity.Age}
             };
+
             await dbUtil.ExecuteStoredProcedureAsync("addkvetiny", parameters);
         }
 
@@ -96,7 +98,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "NAZEV", entity.Name },
                 { "CENA", entity.Price },
                 { "SKLAD", entity.Warehouse },
-                { "OBRAZEK", null },
+                { "OBRAZEK", entity.Image },
                 {"ID_KVETINA", entity.IdFlower},
                 {"STAV", entity.State.ToString()},
                 {"STARI", entity.Age}
