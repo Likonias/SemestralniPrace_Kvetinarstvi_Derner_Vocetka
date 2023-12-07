@@ -258,7 +258,7 @@ public class OracleDbUtil
             using (OracleCommand command = new OracleCommand(null, connection))
             {
                 //validateLogin
-                command.CommandText = "BEGIN :result := GetZboziByObjednavkaId(:" + id + ", :" + parametr + "); END;";
+                command.CommandText = "BEGIN :result := GetZboziByObjednavkaId(:" + id.ToString() + ", :" + parametr + "); END;";
                 command.Parameters.Add("result", OracleDbType.RefCursor, ParameterDirection.ReturnValue);
 
                 try

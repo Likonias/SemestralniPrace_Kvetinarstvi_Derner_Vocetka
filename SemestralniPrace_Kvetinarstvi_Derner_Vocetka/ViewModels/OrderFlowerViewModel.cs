@@ -15,6 +15,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public RelayCommand BtnClose { get; }
         private DataTable tableData;
         private OracleDbUtil dbUtil;
+        private OrderStore orderStore;
         public DataTable TableData
         {
             get { return tableData; }
@@ -26,6 +27,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         }
         public OrderFlowerViewModel(OrderStore orderStore, INavigationService navigationService)
         {
+            this.orderStore = orderStore;
             NavigationService = navigationService;
             BtnClose = new RelayCommand(BtnCloseClicked);
             dbUtil = new OracleDbUtil();
@@ -36,7 +38,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private async Task InitializeTableData()
         {
             TableData = new DataTable();
-            TableData = await dbUtil.ExecuteGetGoodsFunctionAsync()
+            TableData = await dbUtil.ExecuteGetGoodsFunctionAsync("GetZboziByObjednavkaId", orderStore.Id, "K");
         }
 
         private void BtnCloseClicked()
