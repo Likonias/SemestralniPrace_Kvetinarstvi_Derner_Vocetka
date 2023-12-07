@@ -258,9 +258,11 @@ public class OracleDbUtil
             using (OracleCommand command = new OracleCommand(null, connection))
             {
                 //validateLogin
-                command.CommandText = "BEGIN :result := GetZboziByObjednavkaId(:" + id.ToString() + ", :" + parametr + "); END;";
+                command.CommandText = "BEGIN :result := GetZboziByObjednavkaId(:p_objednavka_id, :p_druh_zbozi); END;";
+                
                 command.Parameters.Add("result", OracleDbType.RefCursor, ParameterDirection.ReturnValue);
-
+                command.Parameters.Add("p_objednavka_id", OracleDbType.Int32).Value = id;
+                command.Parameters.Add("p_druh_zbozi", OracleDbType.Varchar2).Value = parametr;
                 try
                 {
                     using (OracleDataAdapter adapter = new OracleDataAdapter(command))
