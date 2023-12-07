@@ -30,5 +30,6 @@
         <TextBox Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="907,32,0,0" Width="83" VerticalAlignment="Top"/>
         <Button Content="Show Flowers" Command="{Binding BtnFlowers}" HorizontalAlignment="Left" Margin="908,179,0,240" Width="82" Height="30"/>
         <Button Content="Show Others" Command="{Binding BtnOthers}" HorizontalAlignment="Left" Margin="908,128,0,291" Width="82" Height="30"/>
+        <Button Content="Create Order" Command="{Binding BtnCreateOrder}" HorizontalAlignment="Left" Margin="908,248,0,172" Width="82" Height="30"/>
     </Grid>
 </UserControl>

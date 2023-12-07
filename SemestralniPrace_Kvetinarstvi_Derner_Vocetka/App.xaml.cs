@@ -133,12 +133,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateOrderNavigationService()
         {
-            return new LayoutNavigationService<OrderViewModel>(navigationStore, () => new OrderViewModel(CreateOrderFormNavigationService(), orderStore, CreateOrderFlowerNavigationService(), CreateOrderOtherNavigationService()), CreateNavigationBarViewModel);
+            return new LayoutNavigationService<OrderViewModel>(navigationStore, () => new OrderViewModel(CreateOrderFormNavigationService(), orderStore, CreateOrderFlowerNavigationService(), CreateOrderOtherNavigationService(), CreateOrderFormNavigationService()), CreateNavigationBarViewModel);
         }
 
         private INavigationService CreateOrderFormNavigationService()
         {
-            return new ModalNavigationService<OrderFormViewModel>(modalNavigationStore, () => new OrderFormViewModel(orderStore, CreateCloseModalNavigationService()));
+            return new ModalNavigationService<OrderFormViewModel>(modalNavigationStore, () => new OrderFormViewModel(orderStore, CreateCloseModalNavigationService(), CreateOrderFlowerNavigationService(), CreateOrderOtherNavigationService()));
         }
 
         private INavigationService CreateOtherGoodsNavigationService()

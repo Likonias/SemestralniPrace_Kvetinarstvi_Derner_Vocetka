@@ -25,10 +25,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 OnPropertyChanged(nameof(TableData));
             }
         }
-        public OrderFlowerViewModel(OrderStore orderStore, INavigationService navigationService)
+        public OrderFlowerViewModel(OrderStore orderStore, INavigationService closeNavigationService)
         {
             this.orderStore = orderStore;
-            NavigationService = navigationService;
+            CloseNavigationService = closeNavigationService;
             BtnClose = new RelayCommand(BtnCloseClicked);
             dbUtil = new OracleDbUtil();
             tableData = new DataTable();
@@ -43,8 +43,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private void BtnCloseClicked()
         {
-            NavigationService.Navigate();
+            CloseNavigationService.Navigate();
         }
-        public INavigationService NavigationService { get; }
+        public INavigationService CloseNavigationService { get; }
     }
 }

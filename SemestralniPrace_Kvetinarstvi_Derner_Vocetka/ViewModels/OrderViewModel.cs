@@ -20,8 +20,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private OracleDbUtil dbUtil;
         public RelayCommand BtnFlowers { get; }
         public RelayCommand BtnOthers { get; }
+        public RelayCommand BtnCreateOrder { get; }
         private INavigationService createOrderFlower;
         private INavigationService createOrderOther;
+        private INavigationService createOrderFormView;
         public DataTable TableData
         {
             get { return tableData; }
@@ -34,17 +36,24 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         public DataRowView SelectedItem { get; set; }
 
-        public OrderViewModel(INavigationService navigationService, OrderStore orderStore, INavigationService createOrderFlower, INavigationService createOrderOther)
+        public OrderViewModel(INavigationService navigationService, OrderStore orderStore, INavigationService createOrderFlower, INavigationService createOrderOther, INavigationService createOrderFormView)
         {
             this.navigationService = navigationService;
             this.orderStore = orderStore;
             this.createOrderFlower = createOrderFlower;
             this.createOrderOther = createOrderOther;
+            this.createOrderFormView = createOrderFormView;
             dbUtil = new OracleDbUtil();
             tableData = new DataTable();
             BtnFlowers = new RelayCommand(BtnFlowersClicked);
             BtnOthers = new RelayCommand(BtnOthersClicked);
+            BtnCreateOrder = new RelayCommand(BtnCreateOrderClicked);
             InitializeTableData();
+        }
+
+        private void BtnCreateOrderClicked()
+        {
+            createOrderFormView.Navigate();
         }
 
         private void BtnOthersClicked()

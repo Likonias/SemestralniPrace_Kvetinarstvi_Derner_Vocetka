@@ -5,8 +5,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="500" d:DesignWidth="900">
     <Grid>
-            
+        <Label FontSize="50" Content="Order Form"/>
+        <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="478,239,52,97"/>
+
+        <Label  Content="Selected Goods" Width="100" Height="30" Margin="505,92,295,378"/>
+        <ComboBox  x:Name="GoodsComboBox" ItemsSource="{Binding GoodsComboBoxItems}" SelectedItem="{Binding SelectedGoods, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="610,92,164,378" />
+        <Label  Content="Count" Width="50" Height="30" Margin="554,144,296,326"/>
+        <TextBox x:Name="CountTextBox" HorizontalAlignment="Left" Margin="610,144,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126" Text="{Binding Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="30"/>
+        <Button Content="Add to order" Command="{Binding BtnAddToOrder}" HorizontalAlignment="Left" Margin="610,192,0,278" Width="126" Height="30"/>
+
+        <Label  Content="Selected Occasion" Width="100" Height="30" Margin="48,97,752,373"/>
+        <ComboBox  x:Name="OccasionComboBox" ItemsSource="{Binding OccasionComboBoxItems}" SelectedItem="{Binding SelectedOccasion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="153,97,621,373" />
+
+        <Label  Content="Selected Billing" Width="100" Height="30" Margin="48,144,752,326"/>
+        <ComboBox  x:Name="BillingComboBox" ItemsSource="{Binding BillingComboBoxItems}" SelectedItem="{Binding SelectedBilling, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="153,143,621,327" />
+        <Label  Content="Billing Note" Width="100" Height="30" Margin="48,189,752,281"/>
+        <TextBox x:Name="BillingTextBox" HorizontalAlignment="Left" Margin="153,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126" Text="{Binding BillingNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="30"/>
+
+        <Label  Content="Selected Delivery" Width="100" Height="30" Margin="48,239,752,231"/>
+        <ComboBox  x:Name="DeliveryComboBox" ItemsSource="{Binding DeliveryComboBoxItems}" SelectedItem="{Binding SelectedDelivery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="153,239,621,231" />
+
+        <Label  Content="Delivery Company" Width="100" Height="30" Margin="48,281,752,189"/>
+        <ComboBox  x:Name="DeliveryCompanyComboBox" ItemsSource="{Binding DeliveryCompanyComboBoxItems}" SelectedItem="{Binding SelectedDeliveryCompany, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="153,281,621,189" />
+
+        <Button Content="Ok" Command="{Binding BtnOk}" HorizontalAlignment="Left" Margin="291,434,0,36" Width="82" Height="30"/>
+        <Button Content="Cancel" Command="{Binding BtnCancel}" HorizontalAlignment="Left" Margin="551,434,0,36" Width="82" Height="30"/>
     </Grid>
 </UserControl>
