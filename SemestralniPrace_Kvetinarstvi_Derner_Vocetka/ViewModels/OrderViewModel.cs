@@ -51,7 +51,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         {
             if (SelectedItem?.Row[0].ToString() != null)
             {
-                // metoda int.Parse(SelectedItem.Row[0].ToString()
+                orderStore.Id = int.Parse(SelectedItem.Row[0].ToString());
                 createOrderOther.Navigate();
             }
         }
@@ -60,7 +60,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         {
             if (SelectedItem?.Row[0].ToString() != null)
             {
-                // metoda int.Parse(SelectedItem.Row[0].ToString()
+                orderStore.Id = int.Parse(SelectedItem.Row[0].ToString());
                 createOrderFlower.Navigate();
             }
         }

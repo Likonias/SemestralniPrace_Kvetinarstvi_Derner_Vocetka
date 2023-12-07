@@ -228,12 +228,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateOrderOtherNavigationService()
         {
-            return new ModalNavigationService<OrderOtherViewModel>(modalNavigationStore, () => new OrderOtherViewModel(CreateCloseModalNavigationService()));
+            return new ModalNavigationService<OrderOtherViewModel>(modalNavigationStore, () => new OrderOtherViewModel(orderStore, CreateCloseModalNavigationService()));
         }
 
         private INavigationService CreateOrderFlowerNavigationService()
         {
-            return new ModalNavigationService<OrderFlowerViewModel>(modalNavigationStore, () => new OrderFlowerViewModel(CreateCloseModalNavigationService()));
+            return new ModalNavigationService<OrderFlowerViewModel>(modalNavigationStore, () => new OrderFlowerViewModel(orderStore, CreateCloseModalNavigationService()));
         }
 
         private INavigationService CreateSystemCatalogNavigationService()
