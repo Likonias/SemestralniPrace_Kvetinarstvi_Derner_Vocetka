@@ -9,20 +9,23 @@
     <Grid Width="1000">
         <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
-                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
-                <DataGridTextColumn Header="Wage" Binding="{Binding Wage}"/>
-                <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
-                <DataGridTextColumn Header="Telephone" Binding="{Binding Tel}"/>
-                <DataGridTextColumn Header="Supervisor" Binding="{Binding Supervisor}"/>
-                <DataGridTextColumn Header="Position" Binding="{Binding Position}"/>
+                <DataGridTextColumn Header="Id objednávky" Binding="{Binding ID_OBJEDNAVKY}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Celková cena" Binding="{Binding CELKOVA_CENA}"/>
+                <DataGridTextColumn Header="Id stavu" Binding="{Binding ID_STAV}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Datum úhrady" Binding="{Binding DATUM_UHRADY}"/>
+                <DataGridTextColumn Header="Datum přijetí" Binding="{Binding DATUM_PRIJETI}"/>
+                <DataGridTextColumn Header="Id platby" Binding="{Binding ID_PLATBA}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Druh platby" Binding="{Binding DRUH_PLATBY}"/>
+                <DataGridTextColumn Header="Poznámka" Binding="{Binding POZNAMKA}"/>
+                <DataGridTextColumn Header="Id zákazníka" Binding="{Binding ID_ZAKAZNIK}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Jméno zákazníka" Binding="{Binding ZAKAZNIK_FULL_NAME}"/>
+                <DataGridTextColumn Header="Email zákazníka" Binding="{Binding ZAKAZNIK_EMAIL}"/>
+                <DataGridTextColumn Header="Jméno zaměstnance" Binding="{Binding ZAMESTNANEC_FULL_NAME}"/>
+                <DataGridTextColumn Header="Email zaměstnance" Binding="{Binding ZAMESTNANEC_EMAIL}"/>
+                <DataGridTextColumn Header="Druh příležitosti" Binding="{Binding DRUH_PRILEZITOSTI}"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Content="Přidej" Command="{Binding BtnAdd}" HorizontalAlignment="Left" Margin="860,45,0,0" Width="80" VerticalAlignment="Top"/>
-        <Button Content="Uprav" Command="{Binding BtnEdit}" HorizontalAlignment="Left" Margin="860,105,0,0" Width="80"  VerticalAlignment="Top"/>
-        <Button Content="Vymaž" Command="{Binding BtnDelete}" HorizontalAlignment="Left" Margin="860,150,0,0" Width="80" VerticalAlignment="Top"/>
         <Label Content="Search bar:" Margin="800,240,130,0" Height="30" VerticalAlignment="Top"/>
         <TextBox Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="875,246,0,0" Width="103" VerticalAlignment="Top"/>
     </Grid>

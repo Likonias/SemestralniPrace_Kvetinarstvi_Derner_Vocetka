@@ -203,6 +203,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     allowedValues.Add(ComboBoxTableNamesEnum.DeliveryMethods);
                     allowedValues.Add(ComboBoxTableNamesEnum.InPersonPickups);
                     allowedValues.Add(ComboBoxTableNamesEnum.Occasions);
+                    allowedValues.Add(ComboBoxTableNamesEnum.Orders);
                     break;
                     
             }

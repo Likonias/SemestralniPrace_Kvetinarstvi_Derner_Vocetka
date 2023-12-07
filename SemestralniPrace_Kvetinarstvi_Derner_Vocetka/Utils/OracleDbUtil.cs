@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Markup;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
@@ -249,6 +250,55 @@ public class OracleDbUtil
             }
             
         }
+    }
+
+    public async Task<DataTable> ExecuteGetGoodsFunctionAsync(string functionName, int id, string parametr) {
+        using (OracleConnection connection = new OracleConnection(connectionString))
+        {
+            using (OracleCommand command = new OracleCommand(null, connection))
+            {
+                //validateLogin
+                command.CommandText = "BEGIN :result := GetZboziByObjednavkaId(:" + id + ", :" + parametr + "); END;";
+                command.Parameters.Add("result", OracleDbType.RefCursor, ParameterDirection.ReturnValue);
+
+                try
+                {
+                    using (OracleDataAdapter adapter = new OracleDataAdapter(command))
+                    {
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+
+                        return dataTable;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+
+        }
+    }
+
+    public async Task<DataTable> LoadDataFromViewAsync(string view)
+    {
+        DataTable dataTable = new DataTable();
+
+        using (OracleConnection connection = new OracleConnection(connectionString))
+        {
+            connection.Open();
+
+            using (OracleCommand command = new OracleCommand("SELECT * FROM " + view + "", connection))
+            {
+                using (OracleDataAdapter adapter = new OracleDataAdapter(command))
+                {
+                    adapter.Fill(dataTable);
+                }
+            }
+        }
+
+        return dataTable;
     }
 
 
