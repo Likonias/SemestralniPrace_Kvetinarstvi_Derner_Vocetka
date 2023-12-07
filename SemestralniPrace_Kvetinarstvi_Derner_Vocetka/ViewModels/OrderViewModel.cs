@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
@@ -17,7 +18,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private OrderStore orderStore;
         private DataTable tableData;
         private OracleDbUtil dbUtil;
-
+        public RelayCommand BtnFlowers { get; }
+        public RelayCommand BtnOthers { get; }
+        private INavigationService createOrderFlower;
+        private INavigationService createOrderOther;
         public DataTable TableData
         {
             get { return tableData; }
@@ -30,13 +34,35 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         public DataRowView SelectedItem { get; set; }
 
-        public OrderViewModel(INavigationService navigationService, OrderStore orderStore)
+        public OrderViewModel(INavigationService navigationService, OrderStore orderStore, INavigationService createOrderFlower, INavigationService createOrderOther)
         {
             this.navigationService = navigationService;
             this.orderStore = orderStore;
+            this.createOrderFlower = createOrderFlower;
+            this.createOrderOther = createOrderOther;
             dbUtil = new OracleDbUtil();
             tableData = new DataTable();
+            BtnFlowers = new RelayCommand(BtnFlowersClicked);
+            BtnOthers = new RelayCommand(BtnOthersClicked);
             InitializeTableData();
+        }
+
+        private void BtnOthersClicked()
+        {
+            if (SelectedItem?.Row[0].ToString() != null)
+            {
+                // metoda int.Parse(SelectedItem.Row[0].ToString()
+                createOrderOther.Navigate();
+            }
+        }
+
+        private void BtnFlowersClicked()
+        {
+            if (SelectedItem?.Row[0].ToString() != null)
+            {
+                // metoda int.Parse(SelectedItem.Row[0].ToString()
+                createOrderFlower.Navigate();
+            }
         }
 
         private async Task InitializeTableData()
@@ -51,6 +77,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         }
 
         private string searchQuery;
+        
+
         public string SearchQuery
         {
             get { return searchQuery; }

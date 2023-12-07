@@ -110,6 +110,12 @@
             <DataTemplate DataType="{x:Type viewmodels:HistoryViewModel}">
                 <views:HistoryView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:OrderOtherViewModel}">
+                <views:OrderOtherView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:OrderFlowerViewModel}">
+                <views:OrderFlowerView/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:LayoutViewModel}" >
                 <components:Layout/>
             </DataTemplate>
