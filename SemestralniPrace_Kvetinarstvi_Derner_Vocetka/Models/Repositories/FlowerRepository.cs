@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -108,12 +110,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "NAZEV", entity.Name },
                 { "CENA", entity.Price },
                 { "SKLAD", entity.Warehouse },
-                { "OBRAZEK", entity.Image },
                 {"ID_KVETINA", entity.IdFlower},
                 {"STAV", entity.State.ToString()},
                 {"STARI", entity.Age}
             };
-            await dbUtil.ExecuteStoredProcedureAsync("updatekvetiny", parameters);
+
+            OracleParameter blobParameter = new OracleParameter();
+            blobParameter.ParameterName = "OBRAZEK";
+            blobParameter.OracleDbType = OracleDbType.Blob;
+            blobParameter.Value = entity.Image;
+
+            await dbUtil.ExecuteStoredProcedureAsyncWithBlob("updatekvetiny", blobParameter, parameters);
         }
 
         public async Task Delete(Flower entity)
@@ -138,9 +145,20 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dataTable.Columns.Add("Warehouse", typeof(int));
             dataTable.Columns.Add("FlowerState", typeof(string));
             dataTable.Columns.Add("Age", typeof(int));
+            dataTable.Columns.Add("Image", typeof(byte[]));
 
             foreach (var flower in Flowers)
             {
+                Image image = null;
+
+                if (flower.Image != null && flower.Image.Length > 0)
+                {
+                    using (MemoryStream ms = new MemoryStream(flower.Image))
+                    {
+                        image = Image.FromStream(ms);
+                    }
+                }
+
                 dataTable.Rows.Add(
                     flower.IdFlower,
                     flower.Name,
@@ -148,7 +166,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                     flower.Type,
                     flower.Warehouse,
                     flower.State.ToString(),
-                    flower.Age
+                    flower.Age,
+                    flower.Image
                     );
             }
 

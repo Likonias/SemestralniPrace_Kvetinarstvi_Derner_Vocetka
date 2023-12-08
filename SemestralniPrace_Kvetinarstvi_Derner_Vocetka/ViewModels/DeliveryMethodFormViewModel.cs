@@ -47,9 +47,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private void Ok()
         {
-            // TODO: Implement your logic for saving or updating the DeliveryMethod
-            // Use the properties from the ViewModel, e.g., DeliveryMethod.IdDeliveryMethod, DeliveryMethod.WarehouseReleaseDate, etc.
-
             closeNavService.Navigate();
             openDeliveryMethodViewModel.Navigate();
         }

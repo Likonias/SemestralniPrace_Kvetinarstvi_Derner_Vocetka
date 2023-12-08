@@ -31,9 +31,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components
         [Description("Address Types")]
         AddressTypes,
 
-        [Description("Billings")]
-        Billings,
-
         [Description("Delivery Methods")]
         DeliveryMethods,
 
