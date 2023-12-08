@@ -1,3 +1,4 @@
+using Oracle.ManagedDataAccess.Client;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Enums;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Interfaces;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
@@ -5,9 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 {
@@ -64,8 +68,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
             foreach (DataRow row in dataTable.Rows)
             {
-                //TODO fix otherGoods add
-                byte[] imageBytes = row["OBRAZEK"] as byte[];
+                byte[] imageBytes = row["OBRAZEK"] as byte[] ?? new byte[0];
+                
                 DateTime dateString = (DateTime)row["DATUM_TRVANLIVOSTI"]; // Assuming this is a string representation of the date
                 DateOnly dateOnly = DateOnly.FromDateTime(dateString);
                 
@@ -92,11 +96,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "NAZEV", entity.Name },
                 { "CENA", entity.Price },
                 { "SKLAD", entity.Warehouse },
-                { "OBRAZEK", entity.Image },
                 { "ZEME_PUVODU", entity.CountryOfOrigin },
                 { "DATUM_TRVANLIVOSTI", entity.ExpirationDate.Value.Day + "." + entity.ExpirationDate.Value.Month + "." + entity.ExpirationDate.Value.Year}
             };
-            await dbUtil.ExecuteStoredProcedureAsync("addostatni", parameters);
+
+            OracleParameter blobParameter = new OracleParameter();
+            blobParameter.ParameterName = "OBRAZEK";
+            blobParameter.OracleDbType = OracleDbType.Blob;
+            blobParameter.Value = entity.Image;
+
+            await dbUtil.ExecuteStoredProcedureAsyncWithBlob("addostatni", blobParameter, parameters);
+
         }
 
         public async Task Update(OtherGoods entity)
@@ -108,12 +118,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "CENA", entity.Price },
                 { "TYP", entity.Type },
                 { "SKLAD", entity.Warehouse },
-                { "OBRAZEK", entity.Image },
                 {"ID_OSTATNI", entity.IdOtherGoods},
                 { "ZEME_PUVODU", entity.CountryOfOrigin },
                 { "DATUM_TRVANLIVOSTI", entity.ExpirationDate.Value.Day + "." + entity.ExpirationDate.Value.Month + "." + entity.ExpirationDate.Value.Year}
             };
-            await dbUtil.ExecuteStoredProcedureAsync("updateostatni", parameters);
+
+            OracleParameter blobParameter = new OracleParameter();
+            blobParameter.ParameterName = "OBRAZEK";
+            blobParameter.OracleDbType = OracleDbType.Blob;
+            blobParameter.Value = entity.Image;
+
+            await dbUtil.ExecuteStoredProcedureAsyncWithBlob("updateostatni", blobParameter, parameters);
         }
 
         public async Task Delete(OtherGoods otherGoods)
@@ -138,16 +153,27 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dataTable.Columns.Add("Warehouse");
             dataTable.Columns.Add("CountryOfOrigin");
             dataTable.Columns.Add("ExpirationDate");
+            dataTable.Columns.Add("Image", typeof(byte[]));
 
             foreach (var otherGoods in OtherGoods)
             {
+                Image image = null;
+                if (otherGoods.Image != null && otherGoods.Image.Length > 0)
+                {
+                    using (MemoryStream ms = new MemoryStream(otherGoods.Image))
+                    {
+                        image = Image.FromStream(ms);
+                    }
+                }
+
                 dataTable.Rows.Add(
                     otherGoods.IdOtherGoods,
                     otherGoods.Name,
                     otherGoods.Price,
                     otherGoods.Warehouse,
                     otherGoods.CountryOfOrigin,
-                    otherGoods.ExpirationDate.Value.Day + "." + otherGoods.ExpirationDate.Value.Month + "." + otherGoods.ExpirationDate.Value.Year
+                    otherGoods.ExpirationDate.Value.Day + "." + otherGoods.ExpirationDate.Value.Month + "." + otherGoods.ExpirationDate.Value.Year,
+                    otherGoods.Image
                 );
             }
 
