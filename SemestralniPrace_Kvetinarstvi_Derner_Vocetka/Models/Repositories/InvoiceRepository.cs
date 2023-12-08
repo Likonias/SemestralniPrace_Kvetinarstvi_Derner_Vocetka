@@ -24,19 +24,20 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         
         public async Task<Invoice> GetById(Int32 id)
         {
-            string command = $"SELECT * FROM faktury WHERE ID_FAKTURA = {id}";
+            string command = $"SELECT * FROM faktury WHERE ID_FAKTURY = {id}";
             var dataTable = await dbUtil.ExecuteQueryAsync(command);
 
             if (dataTable.Rows.Count == 0)
                 return null;
             
             var row = dataTable.Rows[0];
+            byte[] pdfBytes = row["FAKTURA_PDF"] as byte[] ?? new byte[0]; // Get the image bytes or empty byte array if null
             var invoice = new Invoice(
-                Convert.ToInt32(row["ID_FAKTURA"]),
+                Convert.ToInt32(row["ID_FAKTURY"]),
                 Convert.ToDateTime(row["DATUM"]),
                 Convert.ToInt32(row["CENA"]),
                 row["OBJEDNAVKY_ID_OBJEDNAVKA"] != DBNull.Value ? Convert.ToInt32(row["OrderId"]) : (int?)null,
-                null
+                pdfBytes
             );
             
             return (Invoice)Convert.ChangeType(invoice, typeof(Invoice));
@@ -50,12 +51,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
             foreach (DataRow row in dataTable.Rows)
             {
+                byte[] pdfBytes = row["FAKTURA_PDF"] as byte[] ?? new byte[0];
                 var invoice = new Invoice(
-                    Convert.ToInt32(row["ID_FAKTURA"]),
+                    Convert.ToInt32(row["ID_FAKTURY"]),
                     Convert.ToDateTime(row["DATUM"]),
                     Convert.ToInt32(row["CENA"]),
-                    row["OBJEDNAVKY_ID_OBJEDNAVKA"] != DBNull.Value ? Convert.ToInt32(row["OrderId"]) : (int?)null,
-                    null
+                    Convert.ToInt32(row["OBJEDNAVKY_ID_OBJEDNAVKY"]),
+                    pdfBytes
                 );
                 Invoices.Add(invoice);
             }
@@ -95,13 +97,21 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             await GetAll();
             var dataTable = new DataTable();
-            
+
+            dataTable.Columns.Add("Id", typeof(int));
             dataTable.Columns.Add("Datum", typeof(DateTime));
             dataTable.Columns.Add("Cena", typeof(int));
-            
+            dataTable.Columns.Add("ID_ORDER", typeof(int));
+            dataTable.Columns.Add("PDF", typeof(byte[]));
+
             foreach (var invoice in Invoices)
             {
-                dataTable.Rows.Add(invoice.Date, invoice.Price);
+                dataTable.Rows.Add(
+                    invoice.Id,
+                    invoice.Date, 
+                    invoice.Price,
+                    invoice.OrderId,
+                    invoice.InvoicePdf);
             }
             
             return dataTable;

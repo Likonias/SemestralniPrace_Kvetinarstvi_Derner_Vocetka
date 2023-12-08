@@ -23,11 +23,16 @@
         <Label Grid.Row="0" Content="Warehouse Release Date" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
 
         <!-- TransportCompany -->
-        <TextBox Grid.Row="1" x:Name="TransportCompanyTextBox" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" Text="{Binding TransportCompany, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="DeliveryCompanyComboBox"
+          HorizontalAlignment="Left"
+          Margin="110,10,0,40"
+          ItemsSource="{Binding DeliveryCompanyComboBoxItems}" Grid.RowSpan="3" Grid.Row="1" Width="120" RenderTransformOrigin="0.666,0.554">
+            <!-- Add other properties as needed -->
+        </ComboBox>
         <Label Grid.Row="1" Content="Transport Company" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
 
         <!-- DeliveryMethod ComboBox -->
-        <ComboBox Grid.Row="3" x:Name="DeliveryMethodComboBox" Margin="110,10,70,10" ItemsSource="{Binding DeliveryMethodComboBoxItems}" SelectedItem="{Binding DeliveryMethod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <ComboBox Grid.Row="3" x:Name="DeliveryMethodComboBox" Margin="118,10,62,10" ItemsSource="{Binding DeliveryMethodComboBoxItems}" SelectedItem="{Binding DeliveryMethod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <Label Grid.Row="3" Content="Delivery Method" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
 
         <!-- IdOrder -->

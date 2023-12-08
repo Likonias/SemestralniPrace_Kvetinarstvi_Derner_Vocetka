@@ -1,10 +1,13 @@
-﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories;
+﻿using Microsoft.Win32;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using System;
 using System.Data;
+using System.IO;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
@@ -12,54 +15,74 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
     {
         private readonly Navigation.Stores.InvoiceStore invoiceStore;
         private Models.Invoice invoice;
-
-        public RelayCommand BtnAdd { get; }
-        public RelayCommand BtnEdit { get; }
-        public RelayCommand BtnDelete { get; }
         public DataRowView SelectedItem { get; set; }
-        public DataTable TableData { get; set; }
+        public RelayCommand BtnDownloadPdf { get; }
+        private DataTable tableData;
+        private OracleDbUtil dbUtil;
+        public DataTable TableData
+        {
+            get { return tableData; }
+            set
+            {
+                tableData = value;
+                OnPropertyChanged(nameof(TableData));
+            }
+        }
         private InvoiceRepository invoiceRepository;
         private INavigationService createInvoiceForm;
         public InvoiceViewModel(INavigationService createInvoiceForm, InvoiceStore invoiceStore)
         {
+            dbUtil = new OracleDbUtil();
             this.createInvoiceForm = createInvoiceForm;
-            BtnAdd = new RelayCommand(BtnAddPressed);
-            BtnEdit = new RelayCommand(BtnEditPressed);
-            BtnDelete = new RelayCommand(BtnDeletePressed);
+            BtnDownloadPdf = new RelayCommand(BtnDownloadPdfPressed);
             invoiceRepository = new InvoiceRepository();
             this.invoiceStore = invoiceStore;
+            tableData = new DataTable();
+
             InitializeTableData();
         }
 
         private async Task InitializeTableData()
         {
             TableData = new DataTable();
-            // Call your method to populate the TableData with invoice data
-            // E.g., TableData = await invoiceRepository.ConvertToDataTable();
+            TableData = await invoiceRepository.ConvertToDataTable();
         }
 
-        private async void BtnDeletePressed()
+        private async void BtnDownloadPdfPressed()
         {
-            if (SelectedItem?.Row[0].ToString() != null)
+            int invoiceId = Convert.ToInt32(SelectedItem.Row["Id"]);
+            string fileName = await GetFileNameFromBlobInfo(invoiceId, "faktury");
+
+            if (SelectedItem != null)
             {
-                await invoiceRepository.Delete(int.Parse(SelectedItem.Row[0].ToString()));
-                InitializeTableData();
-            }
-        }
+                // Assuming that the "PDF" column in your DataTable contains byte[] data
+                byte[] pdfBytes = (byte[])SelectedItem.Row["PDF"];
 
-        private async void BtnEditPressed()
-        {
-            if (SelectedItem?.Row[0].ToString() != null)
-            {
-                invoiceStore.Invoice = await invoiceRepository.GetById(int.Parse(SelectedItem.Row[0].ToString()));
-                createInvoiceForm.Navigate();
-            }
-        }
+                if (pdfBytes != null && pdfBytes.Length > 0)
+                {
+                    // Convert the PDF byte array to a Base64 string
+                    string base64Pdf = Convert.ToBase64String(pdfBytes);
 
-        private void BtnAddPressed()
-        {
-            invoiceStore.Invoice = null;
-            createInvoiceForm.Navigate();
+                    // Prompt the user to choose a file location
+                    SaveFileDialog saveFileDialog = new SaveFileDialog();
+                    saveFileDialog.Filter = "Text files (*.txt)|*.txt";
+                    saveFileDialog.FileName = $"{fileName}.txt"; // Default file name based on invoice ID
+
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        // Save the Base64 string to the chosen location
+                        File.WriteAllText(saveFileDialog.FileName, base64Pdf);
+
+                        // Optionally, you can display a message to the user indicating that the download was successful.
+                        MessageBox.Show("PDF saved as text successfully!", "Save Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+                else
+                {
+                    // Optionally, handle the case where the PDF data is empty or null.
+                    MessageBox.Show("No PDF data available for saving.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
 
         private string searchQuery;
@@ -84,9 +107,28 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
             DataView dv = TableData.DefaultView;
             dv.RowFilter = $"CONVERT(Date, 'System.String') LIKE '%{SearchQuery}%' OR " +
-                            $"CONVERT(Price, 'System.String') LIKE '%{SearchQuery}%' OR " +
-                            $"CONVERT(OrderId, 'System.String') LIKE '%{SearchQuery}%'";
+                            $"CONVERT(Price, 'System.String') LIKE '%{SearchQuery}%'";
             TableData = dv.ToTable();
+        }
+
+        public async Task<string> GetFileNameFromBlobInfo(int foreignId, string tableName)
+        {
+            string sql = $"SELECT NAME FROM BLOB_INFO WHERE FOREIGN_ID = {foreignId} AND TABLE_NAME = '{tableName}'";
+
+            var dataTable = await dbUtil.ExecuteQueryAsync(sql);
+
+            if (dataTable.Rows.Count == 0)
+            {
+                return "faktura";
+
+            }
+            else
+            {
+                var row = dataTable.Rows[0];
+                return row["NAME"].ToString();
+            }
+
+
         }
     }
 }

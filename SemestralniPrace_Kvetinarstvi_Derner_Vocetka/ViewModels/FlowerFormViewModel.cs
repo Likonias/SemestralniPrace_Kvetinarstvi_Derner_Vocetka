@@ -67,8 +67,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             {
                 FileStream fileStream = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read);
                 BinaryReader br = new BinaryReader(fileStream);
+                
                 string selectedImagePath = openFileDialog.FileName;
-
                 fileName = Path.GetFileName(selectedImagePath);
                 fileExtension = Path.GetExtension(selectedImagePath);
                 //ALT File.readbytes...

@@ -38,13 +38,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 return null;
             
             var row = dataTable.Rows[0];
+            byte[] imageBytes = row["OBRAZEK"] as byte[] ?? new byte[0]; // Get the image bytes or empty byte array if null
+
             var flower = new Flower(
                 Convert.ToInt32(row["ID_ZBOZI"]),
                 row["NAZEV"].ToString(),
                 Convert.ToDouble(row["CENA"]),
                 Convert.ToChar(row["TYP"]),
                 Convert.ToInt32(row["SKLAD"]),
-                null,
+                imageBytes,
                 Convert.ToInt32(row["ID_KVETINA"]),
                 MapDatabaseValueToEnum(row["STAV"].ToString()),
                 Convert.ToInt32(row["STARI"])
@@ -83,15 +85,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             var parameters = new Dictionary<string, object>
             {
-                { "p_NAZEV", entity.Name },
-                { "p_CENA", entity.Price },
-                { "p_SKLAD", entity.Warehouse },
+                { "NAZEV", entity.Name },
+                { "CENA", entity.Price },
+                { "SKLAD", entity.Warehouse },
                 // Convert the byte[] to OracleParameter with OracleDbType.Blob
                 //{ "OBRAZEK", new OracleParameter("OBRAZEK", OracleDbType.Blob) { Value = entity.Image } },
-                { "p_STAV", entity.State.ToString() },
-                { "p_STARI", entity.Age },
-                { "p_file_name", fileName },
-                { "p_file_extension", fileExtension }
+                { "STAV", entity.State.ToString() },
+                { "STARI", entity.Age },
+                { "FILE_NAME", fileName },
+                { "FILE_EXTENSION", fileExtension }
             };
 
             OracleParameter blobParameter = new OracleParameter();

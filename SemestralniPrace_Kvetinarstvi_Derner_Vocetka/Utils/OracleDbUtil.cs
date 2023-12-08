@@ -346,4 +346,21 @@ public class OracleDbUtil
         }
     }
 
+    public async Task<string> GetFileNameFromBlobInfo(int foreignId, string tableName)
+    {
+        string sql = $"SELECT NAME FROM BLOB_INFO WHERE FOREIGN_ID = {foreignId} AND TABLE_NAME = '{tableName}'";
+
+        var dataTable = await ExecuteQueryAsync(sql);
+
+        if (dataTable.Rows.Count == 0)
+        {
+            return "faktura";
+            
+        }
+        else {
+            var row = dataTable.Rows[0];
+            return row["NAME"].ToString();
+        } 
+    }
+
 }

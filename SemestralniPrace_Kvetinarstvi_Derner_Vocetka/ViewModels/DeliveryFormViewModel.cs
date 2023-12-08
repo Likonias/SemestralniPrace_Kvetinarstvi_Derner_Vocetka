@@ -5,6 +5,8 @@ using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
@@ -20,6 +22,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private Delivery delivery;
         private readonly DeliveryRepository deliveryRepository;
 
+        private ObservableCollection<string> deliveryCompanies;
+
+        public List<string> DeliveryCompanyComboBoxItems { get; }
+
+
         public DeliveryFormViewModel(INavigationService closeModalNavigationService, DeliveryStore deliveryStore, INavigationService openDeliveryViewModel)
         {
             this.closeModalNavigationService = closeModalNavigationService;
@@ -29,6 +36,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             this.openDeliveryViewModel = openDeliveryViewModel;
             deliveryRepository = new DeliveryRepository();
             delivery = deliveryStore.Delivery;
+            DeliveryCompanyComboBoxItems = new List<string>
+            {
+                "PPL",
+                "DHL",
+                "CeskaPosta"
+            };
             if (delivery != null) { InitializeDelivery(); }
         }
 

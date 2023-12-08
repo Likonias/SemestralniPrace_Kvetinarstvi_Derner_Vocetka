@@ -25,7 +25,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
       
         public async Task<InPersonPickup> GetById(Int32 id)
         {
-            string command = $"SELECT * FROM osobne" +
+            string command = $"SELECT * FROM osobne " +
                              $"JOIN ZPUSOBY_PREVZETI on ZPUSOBY_PREVZETI.id_zpusob_prevzeti = osobne.id_zpusob_prevzeti" +
                              $"WHERE ID_OSOBNE = {id}";
             var dataTable = await dbUtil.ExecuteQueryAsync(command);
@@ -49,7 +49,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         public async Task GetAll()
         {
             InPersonPickups.Clear();
-            string command = $"SELECT * FROM osobne" +
+            string command = $"SELECT * FROM osobne " +
                              $"JOIN ZPUSOBY_PREVZETI on ZPUSOBY_PREVZETI.id_zpusob_prevzeti = osobne.id_zpusob_prevzeti";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
 

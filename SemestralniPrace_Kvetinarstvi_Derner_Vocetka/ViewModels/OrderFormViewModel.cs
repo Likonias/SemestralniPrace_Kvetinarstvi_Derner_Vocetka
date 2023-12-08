@@ -193,20 +193,38 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 cusId = cusAcc.Id;
                 emplId = orderStore.IdAccount;
             }
-            var parameters = new Dictionary<string, object>
+            if (SelectedDeliveryCompany != null)
             {
-                { "p_zakaznici_id", cusId },
-                { "p_zamestnanci_id", emplId },
-                { "p_zpusob_prevzeti_typ", zpusobPrevzeti },
-                { "ZBOZI_IDS", string.Join(",", GoodsIdInOrder) },
-                { "ZBOZI_POCET", string.Join(",", GoodsCountInOrder) },
-                { "p_prilezitost", SelectedOccasion.ToString() },
-                { "p_druh_platby", BillingComboBoxItems.IndexOf(SelectedBilling) + 1 },
-                { "p_spolecnost", SelectedDeliveryCompany },
-                { "p_faktura_pdf", pdfUtil.GeneratePdf(cusAcc.FirstName + " " + cusAcc.LastName, SelectedDelivery.ToString(),GoodsIdInOrder,GoodsCountInOrder,SelectedOccasion.ToString(),SelectedBilling.ToString(),SelectedDeliveryCompany.ToString()) }
-            };
-
-            await dbUtil.ExecuteStoredProcedureAsync("create_objednavka", parameters);
+                var parameters = new Dictionary<string, object>
+                {
+                    { "p_zakaznici_id", cusId },
+                    { "p_zamestnanci_id", emplId },
+                    { "p_zpusob_prevzeti_typ", zpusobPrevzeti },
+                    { "ZBOZI_IDS", string.Join(",", GoodsIdInOrder) },
+                    { "ZBOZI_POCET", string.Join(",", GoodsCountInOrder) },
+                    { "p_prilezitost", SelectedOccasion.ToString() },
+                    { "p_druh_platby", BillingComboBoxItems.IndexOf(SelectedBilling) + 1 },
+                    { "p_spolecnost", SelectedDeliveryCompany},
+                    { "p_faktura_pdf", pdfUtil.GeneratePdf(cusAcc.FirstName + " " + cusAcc.LastName, SelectedDelivery.ToString(),GoodsIdInOrder,GoodsCountInOrder,SelectedOccasion.ToString(),SelectedBilling.ToString(),SelectedDeliveryCompany.ToString()) }
+                };
+                await dbUtil.ExecuteStoredProcedureAsync("create_objednavka", parameters);
+            }
+            else
+            {
+                var parameters = new Dictionary<string, object>
+                {
+                    { "p_zakaznici_id", cusId },
+                    { "p_zamestnanci_id", emplId },
+                    { "p_zpusob_prevzeti_typ", zpusobPrevzeti },
+                    { "ZBOZI_IDS", string.Join(",", GoodsIdInOrder) },
+                    { "ZBOZI_POCET", string.Join(",", GoodsCountInOrder) },
+                    { "p_prilezitost", SelectedOccasion.ToString() },
+                    { "p_druh_platby", BillingComboBoxItems.IndexOf(SelectedBilling) + 1 },
+                    { "p_spolecnost", "Osobne"},
+                    { "p_faktura_pdf", pdfUtil.GeneratePdf(cusAcc.FirstName + " " + cusAcc.LastName, SelectedDelivery.ToString(),GoodsIdInOrder,GoodsCountInOrder,SelectedOccasion.ToString(),SelectedBilling.ToString(),"Osobne") }
+                };
+                await dbUtil.ExecuteStoredProcedureAsync("create_objednavka", parameters);
+            }
 
             closeNavigationService.Navigate();
         }

@@ -25,7 +25,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task<Delivery> GetById(Int32 id)
         {
-            string command = $"SELECT * FROM doruceni WHERE" +
+            string command = $"SELECT * FROM doruceni WHERE " +
                              $"JOIN ZPUSOBY_PREVZETI on ZPUSOBY_PREVZETI.id_zpusob_prevzeti = doruceni.id_zpusob_prevzeti" +
                              $" ID_DORUCENI = {id}";
             var dataTable = await dbUtil.ExecuteQueryAsync(command);
@@ -50,7 +50,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         public async Task GetAll()
         {
             Deliveries.Clear();
-            string command = $"SELECT * FROM doruceni" +
+            string command = $"SELECT * FROM doruceni " +
                              $"JOIN ZPUSOBY_PREVZETI on ZPUSOBY_PREVZETI.id_zpusob_prevzeti = doruceni.id_zpusob_prevzeti";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
 
@@ -109,12 +109,20 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await GetAll();
             DataTable dataTable = new DataTable();
 
-            dataTable.Columns.Add("TransportCompany", typeof(string));
+            dataTable.Columns.Add("ID_DORUCENI", typeof(int));
+            dataTable.Columns.Add("DATUM_VYDANI", typeof(DateTime));
+            dataTable.Columns.Add("OBJEDNAVKY_ID_OBJEDNAVKA", typeof(int));
+            dataTable.Columns.Add("TYP", typeof(DeliveryMethodEnum)); // Assuming DeliveryMethodEnum is the correct type
+            dataTable.Columns.Add("SPOLECNOST", typeof(string));
 
             foreach (var delivery in Deliveries)
             {
                 DataRow row = dataTable.NewRow();
-                row["TransportCompany"] = delivery.TransportCompany;
+                row["ID_DORUCENI"] = delivery.IdDelivery;
+                row["DATUM_VYDANI"] = delivery.WarehouseReleaseDate;
+                row["OBJEDNAVKY_ID_OBJEDNAVKA"] = delivery.IdOrder;
+                row["TYP"] = delivery.Method;
+                row["SPOLECNOST"] = delivery.TransportCompany;
                 dataTable.Rows.Add(row);
             }
 
