@@ -14,8 +14,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 {
     public class OrderGoodsRepository 
     {
-        //TODO jak implemetujeme OrderGoods?
-        
         public ObservableCollection<OrderGoods> OrderGoods { get; set; }
         private OracleDbUtil dbUtil;
         

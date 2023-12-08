@@ -79,6 +79,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 case "All_Ind_Columns":
                     commandText = "SELECT index_name, table_name, column_name FROM all_ind_columns";
                     break;
+                case "Statistics":
+                    commandText = "SELECT table_name, num_rows, tablespace_name FROM user_tables";
+                    break;
+                case "Complete_Ind_Columns":
+                    commandText = "SELECT * FROM all_ind_columns";
+                    break;
+                case "User_Tables":
+                    commandText = "SELECT * FROM user_tables";
+                    break;
                 default:
                     commandText = "SELECT object_name, object_type FROM user_objects WHERE object_type IN ('TABLE', 'VIEW')";
                     break;
@@ -96,7 +105,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             Procedures,
             All_Objects,
             All_Tab_Columns,
-            All_Ind_Columns
+            All_Ind_Columns,
+            Statistics,
+            Complete_Ind_Columns,
+            User_Tables
+            
         }
 
     }

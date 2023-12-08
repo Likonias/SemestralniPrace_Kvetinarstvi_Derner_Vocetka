@@ -31,9 +31,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private Address address;
         private AddressStore addressStore;
         private INavigationService openAddressViewModel;
+        private OracleDbUtil dbUtil;
         public AddressFormViewModel(AccountStore accountStore, INavigationService closeModalNavigationService, AddressStore addressStore, INavigationService openAddressViewModel)
         {
             closeNavSer = closeModalNavigationService;
+            dbUtil = new OracleDbUtil();
             BtnCancel = new RelayCommand(Cancel);
             BtnOk = new RelayCommand(Ok);
             address = addressStore.Address;
@@ -80,14 +82,32 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             {
                 //todo finish setting up id if it is a customer or a employee logic a taky address typ id
                 AddressRepository addressRepository = new AddressRepository();
+
+                Account selectedAcc = await dbUtil.ExecuteGetAccountFunctionAsync("getUserByEmail", AddressOwner);
+
                 if (addressStore.Address == null)
                 {
-                    address = new Address(0, Street, StreetNumber, City, Zip, null, null, null);
+                    if(selectedAcc.EmployeePosition == null)
+                    {
+                        address = new Address(0, Street, StreetNumber, City, Zip, null, selectedAcc.Id, AddressTypeComboBoxItems.IndexOf(AddressType) + 1);
+                    }
+                    else
+                    {
+                        address = new Address(0, Street, StreetNumber, City, Zip, selectedAcc.Id, null, AddressTypeComboBoxItems.IndexOf(AddressType) + 1);
+                    }
+                    
                     await addressRepository.Add(address);
                 }
                 else 
                 {
-                    address = new Address(addressStore.Address.Id, Street, StreetNumber, City, Zip, null, null, null);
+                    if (selectedAcc.EmployeePosition == null)
+                    {
+                        address = new Address(addressStore.Address.Id, Street, StreetNumber, City, Zip, null, selectedAcc.Id, AddressTypeComboBoxItems.IndexOf(AddressType) + 1);
+                    }
+                    else
+                    {
+                        address = new Address(addressStore.Address.Id, Street, StreetNumber, City, Zip, selectedAcc.Id, null, AddressTypeComboBoxItems.IndexOf(AddressType) + 1);
+                    }
                     await addressRepository.Update(address);
                 }
                 
