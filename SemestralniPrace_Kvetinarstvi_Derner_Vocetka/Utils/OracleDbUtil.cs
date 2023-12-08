@@ -104,7 +104,14 @@ public class OracleDbUtil
                 {
                     foreach (var param in parameters)
                     {
-                        command.Parameters.Add(param.Key, param.Value);
+                        if (param.Value == null)
+                        {
+                            command.Parameters.Add(param.Key, DBNull.Value);
+                        }
+                        else
+                        {
+                            command.Parameters.Add(param.Key, param.Value);
+                        }
                     }
                 }
 

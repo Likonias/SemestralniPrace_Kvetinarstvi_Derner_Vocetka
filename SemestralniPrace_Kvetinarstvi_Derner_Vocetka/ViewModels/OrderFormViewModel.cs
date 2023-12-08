@@ -192,17 +192,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             }
             var parameters = new Dictionary<string, object>
             {
-                { "ZAKAZNICI_ID", cusId },
-                { "ZAMESTNANCI_ID", emplId },
-                { "ZPUSOB_PREVZETI_TYP", zpusobPrevzeti },
-                { "ZBOZI_IDS", GoodsIdInOrder },
-                { "ZBOZI_POCET", GoodsCountInOrder },
-                { "PRILEZITOST", SelectedOccasion },
-                { "DRUH_PLATBY", BillingComboBoxItems.IndexOf(SelectedBilling) + 1 },
-                { "SPOLECNOST", SelectedDeliveryCompany }
+                { "p_zakaznici_id", cusId },
+                { "p_zamestnanci_id", emplId },
+                { "p_zpusob_prevzeti_typ", zpusobPrevzeti },
+                { "ZBOZI_IDS", string.Join(",", GoodsIdInOrder) },
+                { "ZBOZI_POCET", string.Join(",", GoodsCountInOrder) },
+                { "p_prilezitost", SelectedOccasion.ToString() },
+                { "p_druh_platby", BillingComboBoxItems.IndexOf(SelectedBilling) + 1 },
+                { "p_spolecnost", SelectedDeliveryCompany }
             };
 
-            await dbUtil.ExecuteStoredProcedureAsync("addadresy", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("create_objednavka", parameters);
 
             closeNavigationService.Navigate();
         }
