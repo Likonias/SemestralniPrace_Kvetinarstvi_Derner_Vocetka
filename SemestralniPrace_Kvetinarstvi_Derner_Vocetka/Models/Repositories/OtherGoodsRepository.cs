@@ -39,7 +39,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
           
             var row = dataTable.Rows[0];
 
-            //TODO fix otherGoods add
             byte[] imageBytes = row["OBRAZEK"] as byte[];
             DateTime dateString = (DateTime)row["DATUM_TRVANLIVOSTI"]; // Assuming this is a string representation of the date
             DateOnly dateOnly = DateOnly.FromDateTime(dateString);
@@ -190,7 +189,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public Task Delete(int id)
         {
-            //TODO kazis to ludku
             throw new NotImplementedException();
         }
     }

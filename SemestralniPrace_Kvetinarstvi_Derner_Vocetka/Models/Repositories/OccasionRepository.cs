@@ -13,7 +13,6 @@ using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Entities;
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories{
     public class OccasionRepository : IRepository<Occasion>
     {
-        //TODO Occasion is going to be initialized inside of the order, it can be null or something chosen from the enum
         public ObservableCollection<Occasion> Occasions { get; set; }
         private OracleDbUtil dbUtil;
 

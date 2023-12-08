@@ -14,7 +14,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
     public class BillingViewModel : ViewModelBase
     {
-        //TODO NOT FINISHED
         private readonly BillingStore billingStore;
         private readonly BillingRepository billingRepository;
         private INavigationService createBillingForm;
