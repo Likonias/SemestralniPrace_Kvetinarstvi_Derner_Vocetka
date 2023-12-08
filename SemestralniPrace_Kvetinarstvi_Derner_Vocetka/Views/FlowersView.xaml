@@ -26,6 +26,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Image Name" Binding="{Binding Image_name}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Přidej" Command="{Binding BtnAdd}" Visibility="{Binding IsNotCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" Margin="860,45,0,0" Width="80" VerticalAlignment="Top"/>
