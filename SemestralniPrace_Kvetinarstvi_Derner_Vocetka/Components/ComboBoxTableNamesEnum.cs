@@ -46,14 +46,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components
         [Description("Occasions")]
         Occasions,
 
-        [Description("Order Status")]
-        OrderStatus,
-
         [Description("System Catalog")]
         SystemCatalog,
 
         [Description("Database History")]
-        History
+        History,
+
+        [Description("Other Goods Preview")]
+        UserOther,
+
+        [Description("Flowers Preview")]
+        UserFlower
 
     }
 }

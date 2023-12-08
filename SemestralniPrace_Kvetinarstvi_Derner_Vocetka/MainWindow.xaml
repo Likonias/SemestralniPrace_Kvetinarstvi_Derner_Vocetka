@@ -116,6 +116,12 @@
             <DataTemplate DataType="{x:Type viewmodels:OrderFlowerViewModel}">
                 <views:OrderFlowerView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:UserFlowerViewModel}">
+                <views:UserFlowerView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:UserOtherViewModel}">
+                <views:UserOtherVIew/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:LayoutViewModel}" >
                 <components:Layout/>
             </DataTemplate>

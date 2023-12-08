@@ -241,6 +241,16 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             return new LayoutNavigationService<SystemCatalogViewModel>(navigationStore, () => new SystemCatalogViewModel(), CreateNavigationBarViewModel);
         }
 
+        private INavigationService CreateUserOtherNavigationService()
+        {
+            return new LayoutNavigationService<UserOtherViewModel>(navigationStore, () => new UserOtherViewModel(), CreateNavigationBarViewModel);
+        }
+
+        private INavigationService CreateUserFlowerNavigationService()
+        {
+            return new LayoutNavigationService<UserFlowerViewModel>(navigationStore, () => new UserFlowerViewModel(), CreateNavigationBarViewModel);
+        }
+
         private NavigationBarViewModel CreateNavigationBarViewModel()
         {
             UpdateServiceManager();
@@ -291,6 +301,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             serviceManager.RegisterNavigationService<OrderStatusFormViewModel>(CreateOrderStatusFormNavigationService());
             serviceManager.RegisterNavigationService<SystemCatalogViewModel>(CreateSystemCatalogNavigationService());
             serviceManager.RegisterNavigationService<HistoryViewModel>(CreateHistoryNavigationService());
+            serviceManager.RegisterNavigationService<UserOtherViewModel>(CreateUserOtherNavigationService());
+            serviceManager.RegisterNavigationService<UserFlowerViewModel>(CreateUserFlowerNavigationService());
         }
 
     }

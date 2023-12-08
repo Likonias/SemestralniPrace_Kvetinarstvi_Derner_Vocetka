@@ -42,6 +42,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public ICommand NavigateOrderStatusCommand { get; }
         public ICommand NavigateSystemCatalogCommand { get; }
         public ICommand NavigateHistoryCommand { get; }
+        public ICommand NavigateUserOtherCommand { get; }
+        public ICommand NavigateUserFlowerCommand { get; }
         public ObservableCollection<string> ComboBoxItems { get; set; }
 
         private string selectedComboBoxItem;
@@ -90,6 +92,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             NavigateOrderStatusCommand = new NavigateCommand<OrderStatusViewModel>(navigationServiceManager.GetNavigationService<OrderStatusViewModel>());
             NavigateSystemCatalogCommand = new NavigateCommand<SystemCatalogViewModel>(navigationServiceManager.GetNavigationService<SystemCatalogViewModel>());
             NavigateHistoryCommand = new NavigateCommand<HistoryViewModel>(navigationServiceManager.GetNavigationService<HistoryViewModel>());
+            NavigateUserOtherCommand = new NavigateCommand<UserOtherViewModel>(navigationServiceManager.GetNavigationService<UserOtherViewModel>());
+            NavigateUserFlowerCommand = new NavigateCommand<UserFlowerViewModel>(navigationServiceManager.GetNavigationService<UserFlowerViewModel>());
 
             this.accountStore = accountStore;
             ComboBoxItems = new ObservableCollection<string>();
@@ -190,23 +194,40 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     }
                     break;
                 case EmployeePositionEnum.MAJITEL:
+                    allowedValues.Add(ComboBoxTableNamesEnum.Orders);
+                    allowedValues.Add(ComboBoxTableNamesEnum.Employees);
                     allowedValues.Add(ComboBoxTableNamesEnum.Addresses);
+                    allowedValues.Add(ComboBoxTableNamesEnum.Customers);
+                    allowedValues.Add(ComboBoxTableNamesEnum.Flowers);
+                    allowedValues.Add(ComboBoxTableNamesEnum.OtherGoods);
+                    allowedValues.Add(ComboBoxTableNamesEnum.Occasions);
                     break;
                 case EmployeePositionEnum.PRODAVAC:
+                    allowedValues.Add(ComboBoxTableNamesEnum.Orders);
                     allowedValues.Add(ComboBoxTableNamesEnum.Customers);
+                    allowedValues.Add(ComboBoxTableNamesEnum.Flowers);
+                    allowedValues.Add(ComboBoxTableNamesEnum.OtherGoods);
+                    allowedValues.Add(ComboBoxTableNamesEnum.Occasions);
+                    allowedValues.Add(ComboBoxTableNamesEnum.Addresses);
                     break;
                 default:
-                    allowedValues.Add(ComboBoxTableNamesEnum.Flowers);
-                    allowedValues.Add(ComboBoxTableNamesEnum.Addresses);
-                    allowedValues.Add(ComboBoxTableNamesEnum.Employees);
-                    allowedValues.Add(ComboBoxTableNamesEnum.OtherGoods);
-                    allowedValues.Add(ComboBoxTableNamesEnum.DeliveryMethods);
-                    allowedValues.Add(ComboBoxTableNamesEnum.InPersonPickups);
-                    allowedValues.Add(ComboBoxTableNamesEnum.Occasions);
-                    allowedValues.Add(ComboBoxTableNamesEnum.Orders);
+                    if (IsLoggedIn)
+                    {
+                        allowedValues.Add(ComboBoxTableNamesEnum.Orders);
+                        allowedValues.Add(ComboBoxTableNamesEnum.Flowers);
+                        allowedValues.Add(ComboBoxTableNamesEnum.OtherGoods);
+                        allowedValues.Add(ComboBoxTableNamesEnum.Occasions);
+                    }
+                    else
+                    {
+                        allowedValues.Add(ComboBoxTableNamesEnum.UserOther);
+                        allowedValues.Add(ComboBoxTableNamesEnum.UserFlower);
+                    }
                     break;
                     
             }
+
+            
 
             return allowedValues;
         }
@@ -251,14 +272,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 case ComboBoxTableNamesEnum.Occasions:
                     NavigateOccasionCommand.Execute(null);
                     break;
-                case ComboBoxTableNamesEnum.OrderStatus:
-                    NavigateOrderStatusCommand.Execute(null);
-                    break;
                 case ComboBoxTableNamesEnum.SystemCatalog:
                     NavigateSystemCatalogCommand.Execute(null);
                     break;
                 case ComboBoxTableNamesEnum.History:
                     NavigateHistoryCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.UserOther:
+                    NavigateUserOtherCommand.Execute(null);
+                    break;
+                case ComboBoxTableNamesEnum.UserFlower:
+                    NavigateUserFlowerCommand.Execute(null);
                     break;
             }
         }
