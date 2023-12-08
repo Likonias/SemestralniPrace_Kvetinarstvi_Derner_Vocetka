@@ -95,7 +95,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 if (flowerStore.Flower == null)
                 {
                     flower = new Flower(0, Name, Price, 'K', Warehouse, Image, 0, FlowerState ?? FlowerStateEnum.A, Age);
-                    await flowerRepository.Add(flower);
+                    await flowerRepository.Add(flower, fileName, fileExtension);
                 }
                 else
                 {
