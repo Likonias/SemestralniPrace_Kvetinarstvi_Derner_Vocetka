@@ -49,12 +49,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
             foreach (DataRow row in dataTable.Rows)
             {
-                var billing = new Billing(
-                    Convert.ToInt32(row["ID_PLATBA"]),
-                    (BillingTypeEnum)Enum.Parse(typeof(BillingTypeEnum), row["DRUH_PLATBY"].ToString()),
-                    row["POZNAMKA"].ToString()
-                );
-                Billings.Add(billing);
+                if (Enum.TryParse(row["DRUH_PLATBY"].ToString(), out BillingTypeEnum billingType))
+                {
+                    var billing = new Billing(
+                        Convert.ToInt32(row["ID_PLATBA"]),
+                        billingType,
+                        row["POZNAMKA"].ToString()
+                    );
+                    Billings.Add(billing);
+                }
             }
         }
 
@@ -92,16 +95,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await GetAll();
             DataTable dataTable = new DataTable();
 
-            dataTable.Columns.Add("BillingType", typeof(string));
-            dataTable.Columns.Add("Note", typeof(string));
+            dataTable.Columns.Add("IdBilling");
+            dataTable.Columns.Add("BillingType");
+            dataTable.Columns.Add("Note");
 
             foreach (var billing in Billings)
             {
-                DataRow row = dataTable.NewRow();
-                row["BillingType"] = billing.BillingType.ToString();
-                row["Note"] = billing.Note ?? null;
-
-                dataTable.Rows.Add(row);
+                dataTable.Rows.Add(
+                    billing.Id,
+                    billing.BillingType,
+                    billing.Note
+                );
             }
 
             return dataTable;

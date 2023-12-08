@@ -204,6 +204,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     allowedValues.Add(ComboBoxTableNamesEnum.InPersonPickups);
                     allowedValues.Add(ComboBoxTableNamesEnum.Occasions);
                     allowedValues.Add(ComboBoxTableNamesEnum.Orders);
+                    allowedValues.Add(ComboBoxTableNamesEnum.Billings);
                     break;
                     
             }

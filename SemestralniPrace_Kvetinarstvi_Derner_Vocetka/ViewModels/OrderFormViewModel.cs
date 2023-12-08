@@ -113,9 +113,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 {
                     if (enteredCount <= GoodsCount[selectedGoodsIndex])
                     {
-                        GoodsIdInOrder.Add(GoodsId[selectedGoodsIndex]);
-                        GoodsCountInOrder.Add(GoodsCount[selectedGoodsIndex]);
+                        int existingIndex = GoodsIdInOrder.IndexOf(GoodsId[selectedGoodsIndex]);
 
+                        if (existingIndex >= 0)
+                        {
+                            GoodsCountInOrder[existingIndex] += enteredCount;
+                        }
+                        else
+                        {
+                            GoodsIdInOrder.Add(GoodsId[selectedGoodsIndex]);
+                            GoodsCountInOrder.Add(enteredCount);
+                        }
                         GoodsCount[selectedGoodsIndex] -= enteredCount;
 
                         dataTable.Rows.Add(
@@ -135,10 +143,29 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             closeNavigationService.Navigate();
         }
 
-        private void BtnOkClicked()
+        private async void BtnOkClicked()
         {
-            //TODO použití procedury
-            throw new NotImplementedException();
+            char zpusobPrevzeti = 'O';
+            if (DeliveryComboBoxItems.IndexOf(SelectedDelivery) == 1)
+            {
+                zpusobPrevzeti = 'D';
+            }
+            var parameters = new Dictionary<string, object>
+            {
+                { "ZAKAZNICI_ID", 0 },
+                { "ZAMESTNANCI_ID", 0 },
+                { "PLATBY", BillingComboBoxItems.IndexOf(SelectedBilling) },
+                { "ZPUSOB_PREVZETI_TYP", zpusobPrevzeti },
+                { "ZBOZI_IDS", GoodsIdInOrder },
+                { "ZBOZI_POCET", GoodsCountInOrder },
+                { "PRILEZITOST", OccasionComboBoxItems.IndexOf(SelectedOccasion) },
+                { "DRUH_PLATBY", BillingComboBoxItems.IndexOf(SelectedBilling) },
+                { "SPOLECNOST", SelectedDeliveryCompany }
+            };
+
+            await dbUtil.ExecuteStoredProcedureAsync("addadresy", parameters);
+
+            closeNavigationService.Navigate();
         }
 
         private async void LoadGoodsFromDatabase()
@@ -194,6 +221,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     IsDeliverySelected = true;
                 }
                 OnPropertyChanged(nameof(SelectedDelivery));
+            }
+        }
+
+        private string _selectedDeliveryCompany;
+        public string SelectedDeliveryCompany
+        {
+            get => _selectedDeliveryCompany;
+            set
+            {
+                _selectedDeliveryCompany = value;
+                OnPropertyChanged(nameof(SelectedDeliveryCompany));
             }
         }
 
