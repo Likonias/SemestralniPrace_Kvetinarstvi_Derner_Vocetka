@@ -38,8 +38,27 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private async Task InitializeTableData()
         {
+            
+            DataTable dt = await dbUtil.ExecuteGetGoodsFunctionAsync("GetZboziByObjednavkaId", orderStore.Id, "O");
+
             TableData = new DataTable();
-            TableData = await dbUtil.ExecuteGetGoodsFunctionAsync("GetZboziByObjednavkaId", orderStore.Id, "O");
+
+            TableData.Columns.Add("Nazev");
+            TableData.Columns.Add("Cena");
+            TableData.Columns.Add("Sklad");
+            TableData.Columns.Add("Země původu");
+            TableData.Columns.Add("Datum Trvanlivosti");
+
+            foreach (DataRow row in dt.Rows)
+            {
+                TableData.Rows.Add(
+                    row["NAZEV"].ToString(),
+                    Convert.ToInt32(row["CENA"]),
+                    row["SKLAD"].ToString(),
+                    row["ZEME_PUVODU"].ToString(),
+                    row["DATUM_TRVANLIVOSTI"].ToString()
+                );
+            }
         }
 
         private void BtnCloseClicked()

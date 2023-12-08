@@ -204,7 +204,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     allowedValues.Add(ComboBoxTableNamesEnum.InPersonPickups);
                     allowedValues.Add(ComboBoxTableNamesEnum.Occasions);
                     allowedValues.Add(ComboBoxTableNamesEnum.Orders);
-                    allowedValues.Add(ComboBoxTableNamesEnum.Billings);
                     break;
                     
             }
@@ -236,9 +235,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     break;
                 case ComboBoxTableNamesEnum.AddressTypes:
                     NavigateAddressTypeCommand.Execute(null);
-                    break;
-                case ComboBoxTableNamesEnum.Billings:
-                    NavigateBillingCommand.Execute(null);
                     break;
                 case ComboBoxTableNamesEnum.DeliveryMethods:
                     NavigateDeliveryMethodCommand.Execute(null);

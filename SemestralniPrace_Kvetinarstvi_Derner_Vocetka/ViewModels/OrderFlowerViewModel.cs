@@ -1,4 +1,5 @@
-﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
+﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using System;
@@ -37,8 +38,28 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private async Task InitializeTableData()
         {
+            DataTable dt = await dbUtil.ExecuteGetGoodsFunctionAsync("GetZboziByObjednavkaId", orderStore.Id, "K");
+
             TableData = new DataTable();
-            TableData = await dbUtil.ExecuteGetGoodsFunctionAsync("GetZboziByObjednavkaId", orderStore.Id, "K");
+
+            TableData.Columns.Add("Nazev");
+            TableData.Columns.Add("Cena");
+            TableData.Columns.Add("Sklad");
+            TableData.Columns.Add("Stav");
+            TableData.Columns.Add("Stáří");
+
+            foreach (DataRow row in dt.Rows)
+            {
+                TableData.Rows.Add(
+                    row["NAZEV"].ToString(),
+                    Convert.ToInt32(row["CENA"]),
+                    row["SKLAD"].ToString(),
+                    row["STAV"].ToString(),
+                    Convert.ToInt32(row["STARI"])
+                );
+            }
+
+            
         }
 
         private void BtnCloseClicked()
