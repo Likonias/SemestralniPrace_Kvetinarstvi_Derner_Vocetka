@@ -26,7 +26,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         public async Task<InPersonPickup> GetById(Int32 id)
         {
             string command = $"SELECT * FROM osobne " +
-                             $"JOIN ZPUSOBY_PREVZETI on ZPUSOBY_PREVZETI.id_zpusob_prevzeti = osobne.id_zpusob_prevzeti" +
+                             $"LEFT JOIN ZPUSOBY_PREVZETI on ZPUSOBY_PREVZETI.id_zpusob_prevzeti = osobne.id_zpusob_prevzeti" +
                              $"WHERE ID_OSOBNE = {id}";
             var dataTable = await dbUtil.ExecuteQueryAsync(command);
 
@@ -50,7 +50,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             InPersonPickups.Clear();
             string command = $"SELECT * FROM osobne " +
-                             $"JOIN ZPUSOBY_PREVZETI on ZPUSOBY_PREVZETI.id_zpusob_prevzeti = osobne.id_zpusob_prevzeti";
+                             $"LEFT JOIN ZPUSOBY_PREVZETI on ZPUSOBY_PREVZETI.id_zpusob_prevzeti = osobne.id_zpusob_prevzeti";
             DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
 
             foreach (DataRow row in dataTable.Rows)
@@ -58,7 +58,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 var inPersonPickup = new InPersonPickup(
                     Convert.ToInt32(row["id_zpusob_prevzeti"]),
                     Convert.ToDateTime(row["DATUM_VYDANI"]),
-                    Convert.ToInt32(row["OBJEDNAVKY_ID_OBJEDNAVKA"]),
+                    Convert.ToInt32(row["OBJEDNAVKY_ID_OBJEDNAVKY"]),
                     (DeliveryMethodEnum)Enum.Parse(typeof(DeliveryMethodEnum), row["TYP"].ToString()),
                     Convert.ToInt32(row["ID_OSOBNE"]),
                     row["CAS"].ToString()
@@ -111,16 +111,27 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         public async Task<DataTable> ConvertToDataTable()
         {
             await GetAll();
-            var dataTable = new DataTable();
-          
-            dataTable.Columns.Add("ID", typeof(int));
-            dataTable.Columns.Add("Čas", typeof(string));
-          
+            DataTable dataTable = new DataTable();
+
+            dataTable.Columns.Add("Id", typeof(int));
+            dataTable.Columns.Add("DeliveryDate", typeof(DateTime));
+            dataTable.Columns.Add("OrderId", typeof(int));
+            dataTable.Columns.Add("DeliveryMethod", typeof(DeliveryMethodEnum));
+            dataTable.Columns.Add("InPersonPickupId", typeof(int));
+            dataTable.Columns.Add("Time", typeof(string));
+
             foreach (var inPersonPickup in InPersonPickups)
             {
-                dataTable.Rows.Add(inPersonPickup.IdPickup, inPersonPickup.Time);
+                DataRow row = dataTable.NewRow();
+                row["Id"] = inPersonPickup.IdDeliveryMethod;
+                row["DeliveryDate"] = inPersonPickup.WarehouseReleaseDate;
+                row["OrderId"] = inPersonPickup.IdOrder;
+                row["DeliveryMethod"] = inPersonPickup.Method;
+                row["InPersonPickupId"] = inPersonPickup.IdPickup;
+                row["Time"] = inPersonPickup.Time;
+                dataTable.Rows.Add(row);
             }
-          
+
             return dataTable;
         }
 
