@@ -35,7 +35,18 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 OnPropertyChanged(nameof(TableData));
             }
         }
-        public FlowersViewModel(INavigationService createFlowersForm, FlowerStore flowerStore)
+        private bool inNotCustomer;
+        public bool IsNotCustomer
+        {
+            get { return inNotCustomer; }
+            set
+            {
+                inNotCustomer = value;
+                OnPropertyChanged("IsNotCustomer");
+            }
+        }
+        private AccountStore AccountStore;
+        public FlowersViewModel(INavigationService createFlowersForm, FlowerStore flowerStore, AccountStore accountStore)
         {
             this.createFlowersForm = createFlowersForm;
             this.flowerStore = flowerStore;
@@ -46,6 +57,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             tableData = new DataTable();
             flowerRepository = new FlowerRepository();
             InitializeTableData();
+            AccountStore = accountStore;
+            if (accountStore.CurrentAccount.EmployeePosition == null) { IsNotCustomer = false; } else { IsNotCustomer = true; }
         }
         private async Task InitializeTableData()
         {

@@ -214,8 +214,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     if (IsLoggedIn)
                     {
                         allowedValues.Add(ComboBoxTableNamesEnum.Orders);
-                        allowedValues.Add(ComboBoxTableNamesEnum.UserOther);
-                        allowedValues.Add(ComboBoxTableNamesEnum.UserFlower);
+                        allowedValues.Add(ComboBoxTableNamesEnum.Flowers);
+                        allowedValues.Add(ComboBoxTableNamesEnum.OtherGoods);
                         allowedValues.Add(ComboBoxTableNamesEnum.Occasions);
                     }
                     else
