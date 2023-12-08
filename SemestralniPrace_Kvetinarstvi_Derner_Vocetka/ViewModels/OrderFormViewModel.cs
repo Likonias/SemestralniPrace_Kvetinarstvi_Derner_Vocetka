@@ -21,6 +21,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private INavigationService closeNavigationService;
         private INavigationService createOrderFlower;
         private INavigationService createOrderOther;
+        private PdfUtil pdfUtil;
         public DataTable TableData
         {
             get { return tableData; }
@@ -76,6 +77,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private DataTable dataTable;
         public OrderFormViewModel(OrderStore orderStore, INavigationService closeNavigationService, INavigationService createOrderFlower, INavigationService createOrderOther)
         {
+            pdfUtil = new PdfUtil();
             this.orderStore = orderStore;
             this.closeNavigationService = closeNavigationService;
             this.createOrderFlower = createOrderFlower;
@@ -172,7 +174,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private async void BtnOkClicked()
         {
-            Account cusAcc;
+            Account cusAcc = new Account();
             int? emplId = null;
             int cusId;
             char zpusobPrevzeti = 'O';
@@ -183,6 +185,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             if (orderStore.IsCustomer)
             {
                 cusId = orderStore.IdAccount;
+                cusAcc = await dbUtil.ExecuteGetAccountFunctionAsync("getuserbyemail", orderStore.Email);
             }
             else
             {
@@ -199,7 +202,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 { "ZBOZI_POCET", string.Join(",", GoodsCountInOrder) },
                 { "p_prilezitost", SelectedOccasion.ToString() },
                 { "p_druh_platby", BillingComboBoxItems.IndexOf(SelectedBilling) + 1 },
-                { "p_spolecnost", SelectedDeliveryCompany }
+                { "p_spolecnost", SelectedDeliveryCompany },
+                { "p_faktura_pdf", pdfUtil.GeneratePdf(cusAcc.FirstName + " " + cusAcc.LastName, SelectedDelivery.ToString(),GoodsIdInOrder,GoodsCountInOrder,SelectedOccasion.ToString(),SelectedBilling.ToString(),SelectedDeliveryCompany.ToString()) }
             };
 
             await dbUtil.ExecuteStoredProcedureAsync("create_objednavka", parameters);

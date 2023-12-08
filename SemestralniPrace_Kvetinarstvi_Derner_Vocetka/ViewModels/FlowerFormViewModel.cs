@@ -28,6 +28,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private Flower flower;
         private FlowerStore flowerStore;
         private INavigationService openFlowerViewModel;
+        private string fileName;
+        private string fileExtension;
 
         public FlowerFormViewModel(INavigationService closeModalNavigationService, FlowerStore flowerStore, INavigationService? openFlowerViewModel)
         {
@@ -66,6 +68,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 FileStream fileStream = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read);
                 BinaryReader br = new BinaryReader(fileStream);
                 string selectedImagePath = openFileDialog.FileName;
+
+                fileName = Path.GetFileName(selectedImagePath);
+                fileExtension = Path.GetExtension(selectedImagePath);
                 //ALT File.readbytes...
                 // Read the selected image into a byte array
                 Image = br.ReadBytes((int)fileStream.Length);
@@ -90,7 +95,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 if (flowerStore.Flower == null)
                 {
                     flower = new Flower(0, Name, Price, 'K', Warehouse, Image, 0, FlowerState ?? FlowerStateEnum.A, Age);
-                    await flowerRepository.Add(flower);
+                    await flowerRepository.Add(flower, fileName, fileExtension);
                 }
                 else
                 {
