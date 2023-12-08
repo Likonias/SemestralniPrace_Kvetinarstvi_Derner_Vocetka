@@ -66,9 +66,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                     row["CISLO_POPISNE"].ToString(),
                     row["MESTO"].ToString(),
                     row["PSC"].ToString(),
-                    row["ZAMESTNANCI_ID_ZAMESTNANEC"] != DBNull.Value ? Convert.ToInt32(row["EmployeeId"]) : (int?)null,
-                    row["ZAKAZNICI_ID_ZAKAZNIK"] != DBNull.Value ? Convert.ToInt32(row["CustomerId"]) : (int?)null,
-                    row["DRUHY_ADRES_ID_DRUH_ADRESY"] != DBNull.Value ? Convert.ToInt32(row["AddressTypeId"]) : (int?)null
+                    row["ZAMESTNANCI_ID_ZAMESTNANEC"] != DBNull.Value ? Convert.ToInt32(row["ZAMESTNANCI_ID_ZAMESTNANEC"]) : (int?)null,
+                    row["ZAKAZNICI_ID_ZAKAZNIK"] != DBNull.Value ? Convert.ToInt32(row["ZAKAZNICI_ID_ZAKAZNIK"]) : (int?)null,
+                    row["DRUHY_ADRES_ID_DRUH_ADRESY"] != DBNull.Value ? Convert.ToInt32(row["DRUHY_ADRES_ID_DRUH_ADRESY"]) : (int?)null
                 );
                 Addresses.Add(address);
             }
@@ -124,7 +124,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dataTable.Columns.Add("StreetNumber", typeof(string));
             dataTable.Columns.Add("City", typeof(string));
             dataTable.Columns.Add("Zip", typeof(string));
-            dataTable.Columns.Add("AddressType", typeof(AddressType));
+            //dataTable.Columns.Add("AddressType", typeof(AddressType));
 
             foreach (var address in Addresses)
             {
@@ -135,7 +135,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 row["StreetNumber"] = address.StreetNumber;
                 row["City"] = address.City;
                 row["Zip"] = address.Zip;
-                row["AddressType"] = address.AddressTypeId ?? null; 
+                //row["AddressType"] = address.AddressTypeId. ?? null; 
 
                 dataTable.Rows.Add(row);
             }

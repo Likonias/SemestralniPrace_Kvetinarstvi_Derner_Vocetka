@@ -58,8 +58,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     Convert.ToInt32(row["STARI"])
                 );
             }
-
-            
         }
 
         private void BtnCloseClicked()
