@@ -1,5 +1,6 @@
 ﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Enums;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
@@ -38,6 +39,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private List<int> GoodsCountInOrder { get; set; }
         public List<string> DeliveryComboBoxItems { get; }
         public List<string> DeliveryCompanyComboBoxItems { get; }
+        public List<string> CustomerComboBoxItems { get; }
         public RelayCommand BtnOk { get; }
         public RelayCommand BtnCancel { get; }
         public RelayCommand BtnAddToOrder { get; }
@@ -59,6 +61,16 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             {
                 isDeliverySelected = value;
                 OnPropertyChanged("IsDeliverySelected");
+            }
+        }
+        private bool isEmployee;
+        public bool IsEmployee
+        {
+            get { return isEmployee; }
+            set
+            {
+                isEmployee = value;
+                OnPropertyChanged(nameof(IsEmployee));
             }
         }
         private DataTable dataTable;
@@ -101,7 +113,22 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             BtnOk = new RelayCommand(BtnOkClicked);
             BtnCancel = new RelayCommand(BtnCancelClicked);
 
+            IsEmployee = !orderStore.IsCustomer;
+            CustomerComboBoxItems = new List<string>();
+            InitializeCustomerComboBox();
             LoadGoodsFromDatabase();
+        }
+
+        private async void InitializeCustomerComboBox()
+        {
+            CustomerRepository customerRepository = new CustomerRepository();
+            await customerRepository.GetAll();
+            
+            foreach (Customer customer in customerRepository.Customers) 
+            {
+                CustomerComboBoxItems.Add(customer.Email);
+            }
+
         }
 
         private void BtnAddToOrderClicked()
@@ -145,21 +172,34 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private async void BtnOkClicked()
         {
+            Account cusAcc;
+            int? emplId = null;
+            int cusId;
             char zpusobPrevzeti = 'O';
             if (DeliveryComboBoxItems.IndexOf(SelectedDelivery) == 1)
             {
                 zpusobPrevzeti = 'D';
             }
+            if (orderStore.IsCustomer)
+            {
+                cusId = orderStore.IdAccount;
+            }
+            else
+            {
+                cusAcc = await dbUtil.ExecuteGetAccountFunctionAsync("getuserbyemail", SelectedCustomer);
+                cusId = cusAcc.Id;
+                emplId = orderStore.IdAccount;
+            }
             var parameters = new Dictionary<string, object>
             {
-                { "ZAKAZNICI_ID", 0 },
-                { "ZAMESTNANCI_ID", 0 },
+                { "ZAKAZNICI_ID", cusId },
+                { "ZAMESTNANCI_ID", emplId },
                 { "PLATBY", BillingComboBoxItems.IndexOf(SelectedBilling) },
                 { "ZPUSOB_PREVZETI_TYP", zpusobPrevzeti },
                 { "ZBOZI_IDS", GoodsIdInOrder },
                 { "ZBOZI_POCET", GoodsCountInOrder },
-                { "PRILEZITOST", OccasionComboBoxItems.IndexOf(SelectedOccasion) },
-                { "DRUH_PLATBY", BillingComboBoxItems.IndexOf(SelectedBilling) },
+                { "PRILEZITOST", OccasionComboBoxItems.IndexOf(SelectedOccasion) + 1 },
+                { "DRUH_PLATBY", BillingComboBoxItems.IndexOf(SelectedBilling) + 1 },
                 { "SPOLECNOST", SelectedDeliveryCompany }
             };
 
@@ -209,6 +249,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             }
         }
 
+        private string _selectedCustomer;
+        public string SelectedCustomer
+        {
+            get => _selectedCustomer;
+            set
+            {
+                _selectedCustomer = value;
+                OnPropertyChanged(nameof(SelectedCustomer));
+            }
+        }
+        
         private string _selectedDelivery;
         public string SelectedDelivery
         {
@@ -278,6 +329,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 }
             }
             return false;
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
         }
     }
 }

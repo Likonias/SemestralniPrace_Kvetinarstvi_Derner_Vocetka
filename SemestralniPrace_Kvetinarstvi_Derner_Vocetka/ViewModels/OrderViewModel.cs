@@ -35,14 +35,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         }
 
         public DataRowView SelectedItem { get; set; }
-
-        public OrderViewModel(INavigationService navigationService, OrderStore orderStore, INavigationService createOrderFlower, INavigationService createOrderOther, INavigationService createOrderFormView)
+        private AccountStore accountStore;
+        public OrderViewModel(INavigationService navigationService, OrderStore orderStore, INavigationService createOrderFlower, INavigationService createOrderOther, INavigationService createOrderFormView, AccountStore accountStore)
         {
             this.navigationService = navigationService;
             this.orderStore = orderStore;
             this.createOrderFlower = createOrderFlower;
             this.createOrderOther = createOrderOther;
             this.createOrderFormView = createOrderFormView;
+            this.accountStore = accountStore;
             dbUtil = new OracleDbUtil();
             tableData = new DataTable();
             BtnFlowers = new RelayCommand(BtnFlowersClicked);
@@ -53,6 +54,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private void BtnCreateOrderClicked()
         {
+            orderStore.IdAccount = accountStore.CurrentAccount.Id;
+            if(accountStore.CurrentAccount.EmployeePosition == null )
+            {
+                orderStore.IsCustomer = true;
+            }
+            else
+            {
+                orderStore.IsCustomer = false;
+            }
             createOrderFormView.Navigate();
         }
 

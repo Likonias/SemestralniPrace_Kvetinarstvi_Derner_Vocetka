@@ -10,7 +10,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores
     {
 
         public int Id { get; set; }
-        
+        public int IdAccount { get; set; }
+        public bool IsCustomer { get; set; }
         public OrderStore()
         {
            
