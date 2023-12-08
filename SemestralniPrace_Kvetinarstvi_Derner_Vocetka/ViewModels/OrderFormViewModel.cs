@@ -194,11 +194,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             {
                 { "ZAKAZNICI_ID", cusId },
                 { "ZAMESTNANCI_ID", emplId },
-                { "PLATBY", BillingComboBoxItems.IndexOf(SelectedBilling) },
                 { "ZPUSOB_PREVZETI_TYP", zpusobPrevzeti },
                 { "ZBOZI_IDS", GoodsIdInOrder },
                 { "ZBOZI_POCET", GoodsCountInOrder },
-                { "PRILEZITOST", OccasionComboBoxItems.IndexOf(SelectedOccasion) + 1 },
+                { "PRILEZITOST", SelectedOccasion },
                 { "DRUH_PLATBY", BillingComboBoxItems.IndexOf(SelectedBilling) + 1 },
                 { "SPOLECNOST", SelectedDeliveryCompany }
             };

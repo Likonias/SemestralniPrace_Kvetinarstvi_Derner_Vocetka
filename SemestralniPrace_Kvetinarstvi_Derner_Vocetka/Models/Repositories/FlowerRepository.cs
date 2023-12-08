@@ -60,13 +60,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             
             foreach (DataRow row in dataTable.Rows)
             {
+                byte[] imageBytes = row["OBRAZEK"] as byte[] ?? new byte[0]; // Get the image bytes or empty byte array if null
+
                 var flower = new Flower(
                     Convert.ToInt32(row["ID_ZBOZI"]),
                     row["NAZEV"].ToString(),
                     Convert.ToDouble(row["CENA"]),
                     Convert.ToChar(row["TYP"]),
                     Convert.ToInt32(row["SKLAD"]),
-                    null,
+                    imageBytes,
                     Convert.ToInt32(row["ID_KVETINA"]),
                     MapDatabaseValueToEnum(row["STAV"].ToString()),
                     Convert.ToInt32(row["STARI"])
@@ -82,12 +84,18 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "NAZEV", entity.Name },
                 { "CENA", entity.Price },
                 { "SKLAD", entity.Warehouse },
-                { "OBRAZEK", entity.Image},
-                {"STAV", entity.State.ToString()},
-                {"STARI", entity.Age}
+                // Convert the byte[] to OracleParameter with OracleDbType.Blob
+                //{ "OBRAZEK", new OracleParameter("OBRAZEK", OracleDbType.Blob) { Value = entity.Image } },
+                { "STAV", entity.State.ToString() },
+                { "STARI", entity.Age }
             };
 
-            await dbUtil.ExecuteStoredProcedureAsync("addkvetiny", parameters);
+            OracleParameter blobParameter = new OracleParameter();
+            blobParameter.ParameterName = "OBRAZEK";
+            blobParameter.OracleDbType = OracleDbType.Blob;
+            blobParameter.Value = entity.Image;
+
+            await dbUtil.ExecuteStoredProcedureAsyncWithBlob("addkvetiny",blobParameter, parameters);
         }
 
         public async Task Update(Flower entity)
