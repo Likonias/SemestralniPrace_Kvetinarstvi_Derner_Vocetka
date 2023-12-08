@@ -26,6 +26,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private OtherGoods otherGoods;
         private OtherGoodsStore otherGoodsStore;
         private INavigationService openOtherGoodsViewModel;
+        private string fileName;
+        private string fileExtension;
 
         public OtherGoodsFormViewModel(INavigationService closeModalNavigationService, OtherGoodsStore otherGoodsStore, INavigationService? openOtherGoodsViewModel)
         {
@@ -52,6 +54,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 FileStream fileStream = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read);
                 BinaryReader br = new BinaryReader(fileStream);
                 string selectedImagePath = openFileDialog.FileName;
+                fileName = Path.GetFileName(selectedImagePath);
+                fileExtension = Path.GetExtension(selectedImagePath);
                 //ALT File.readbytes...
                 // Read the selected image into a byte array
                 Image = br.ReadBytes((int)fileStream.Length);
@@ -75,7 +79,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 if (otherGoodsStore.OtherGoods == null)
                 {
                     otherGoods = new OtherGoods(0, Name, Price, 'O', Warehouse, Image, 0, CountryOfOrigin, (DateOnly)ExpirationDate);
-                    await otherGoodsRepository.Add(otherGoods);
+                    await otherGoodsRepository.Add(otherGoods, fileName, fileExtension);
                 }
                 else
                 {

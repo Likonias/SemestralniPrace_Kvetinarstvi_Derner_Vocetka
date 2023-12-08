@@ -148,6 +148,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dataTable.Columns.Add("FlowerState", typeof(string));
             dataTable.Columns.Add("Age", typeof(int));
             dataTable.Columns.Add("Image", typeof(byte[]));
+            dataTable.Columns.Add("Image_name", typeof(string));
 
             foreach (var flower in Flowers)
             {
@@ -169,7 +170,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                     flower.Warehouse,
                     flower.State.ToString(),
                     flower.Age,
-                    flower.Image
+                    flower.Image,
+                    await dbUtil.GetFileNameFromBlobInfo(flower.IdGoods, "ZBOZI")
                     );
             }
 

@@ -350,11 +350,11 @@ public class OracleDbUtil
     {
         string sql = $"SELECT NAME FROM BLOB_INFO WHERE FOREIGN_ID = {foreignId} AND TABLE_NAME = '{tableName}'";
 
-        var dataTable = await ExecuteQueryAsync(sql);
+        var dataTable = await ExecuteQueryAsync(sql).ConfigureAwait(false);
 
         if (dataTable.Rows.Count == 0)
         {
-            return "faktura";
+            return "";
             
         }
         else {

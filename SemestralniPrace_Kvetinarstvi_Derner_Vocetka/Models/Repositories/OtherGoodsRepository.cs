@@ -87,7 +87,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             }
         }
 
-        public async Task Add(OtherGoods entity)
+        public async Task Add(OtherGoods entity, string fileName, string fileExtension)
         {
             
             var parameters = new Dictionary<string, object>
@@ -96,7 +96,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "CENA", entity.Price },
                 { "SKLAD", entity.Warehouse },
                 { "ZEME_PUVODU", entity.CountryOfOrigin },
-                { "DATUM_TRVANLIVOSTI", entity.ExpirationDate.Value.Day + "." + entity.ExpirationDate.Value.Month + "." + entity.ExpirationDate.Value.Year}
+                { "DATUM_TRVANLIVOSTI", entity.ExpirationDate.Value.Day + "." + entity.ExpirationDate.Value.Month + "." + entity.ExpirationDate.Value.Year},
+                { "FILE_NAME", fileName },
+                { "FILE_EXTENSION", fileExtension }
             };
 
             OracleParameter blobParameter = new OracleParameter();
@@ -153,6 +155,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dataTable.Columns.Add("CountryOfOrigin");
             dataTable.Columns.Add("ExpirationDate");
             dataTable.Columns.Add("Image", typeof(byte[]));
+            dataTable.Columns.Add("Image_name", typeof(string));
+
 
             foreach (var otherGoods in OtherGoods)
             {
@@ -172,7 +176,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                     otherGoods.Warehouse,
                     otherGoods.CountryOfOrigin,
                     otherGoods.ExpirationDate.Value.Day + "." + otherGoods.ExpirationDate.Value.Month + "." + otherGoods.ExpirationDate.Value.Year,
-                    otherGoods.Image
+                    otherGoods.Image,
+                    await dbUtil.GetFileNameFromBlobInfo(otherGoods.IdGoods, "ZBOZI")
+
                 );
             }
 
@@ -189,6 +195,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public Task Delete(int id)
         {
+            throw new NotImplementedException();
+        }
+
+        public Task Add(OtherGoods entity)
+        {
+            //not using rn
             throw new NotImplementedException();
         }
     }
