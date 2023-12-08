@@ -310,6 +310,26 @@ public class OracleDbUtil
         return dataTable;
     }
 
+    public async Task<DataTable> LoadDataFromViewAsyncWithWhere(string view, int whereid)
+    {
+        DataTable dataTable = new DataTable();
+
+        using (OracleConnection connection = new OracleConnection(connectionString))
+        {
+            connection.Open();
+
+            using (OracleCommand command = new OracleCommand("SELECT * FROM " + view + " WHERE ID_ZAKAZNIK = " + whereid + "", connection))
+            {
+                using (OracleDataAdapter adapter = new OracleDataAdapter(command))
+                {
+                    adapter.Fill(dataTable);
+                }
+            }
+        }
+
+        return dataTable;
+    }
+
     public async Task<DataTable> ExecuteStoredProcedureAsyncWithBlob(string procedureName, OracleParameter blob, Dictionary<string, object> parameters = null)
     {
         using (OracleConnection connection = new OracleConnection(connectionString))

@@ -88,7 +88,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private async Task InitializeTableData()
         {
             TableData = new DataTable();
-            TableData = await dbUtil.LoadDataFromViewAsync("OBJEDNAVKY_VIEW");
+            if (accountStore.CurrentAccount.EmployeePosition == null)
+            {
+                TableData = await dbUtil.LoadDataFromViewAsyncWithWhere("OBJEDNAVKY_VIEW", accountStore.CurrentAccount.Id);
+            }
+            else
+            {
+                TableData = await dbUtil.LoadDataFromViewAsync("OBJEDNAVKY_VIEW");
+            }
         }
 
         public override void Dispose()
