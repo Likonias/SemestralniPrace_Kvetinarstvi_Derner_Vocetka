@@ -77,21 +77,23 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             }
         }
 
-        public async Task Add(Flower entity)
+        public async Task Add(Flower entity, string fileName, string fileExtension)
         {
             var parameters = new Dictionary<string, object>
             {
-                { "NAZEV", entity.Name },
-                { "CENA", entity.Price },
-                { "SKLAD", entity.Warehouse },
+                { "p_NAZEV", entity.Name },
+                { "p_CENA", entity.Price },
+                { "p_SKLAD", entity.Warehouse },
                 // Convert the byte[] to OracleParameter with OracleDbType.Blob
                 //{ "OBRAZEK", new OracleParameter("OBRAZEK", OracleDbType.Blob) { Value = entity.Image } },
-                { "STAV", entity.State.ToString() },
-                { "STARI", entity.Age }
+                { "p_STAV", entity.State.ToString() },
+                { "p_STARI", entity.Age },
+                { "p_file_name", fileName },
+                { "p_file_extension", fileExtension }
             };
 
             OracleParameter blobParameter = new OracleParameter();
-            blobParameter.ParameterName = "OBRAZEK";
+            blobParameter.ParameterName = "p_OBRAZEK";
             blobParameter.OracleDbType = OracleDbType.Blob;
             blobParameter.Value = entity.Image;
 

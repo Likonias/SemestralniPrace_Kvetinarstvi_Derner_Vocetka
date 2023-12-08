@@ -55,6 +55,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private void BtnCreateOrderClicked()
         {
             orderStore.IdAccount = accountStore.CurrentAccount.Id;
+            orderStore.Email = accountStore.CurrentAccount.Email;
             if(accountStore.CurrentAccount.EmployeePosition == null )
             {
                 orderStore.IsCustomer = true;
