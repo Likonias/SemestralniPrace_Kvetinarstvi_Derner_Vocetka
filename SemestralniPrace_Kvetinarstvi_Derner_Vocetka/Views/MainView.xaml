@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1000">
     <Grid>
-        <Label FontSize="50" Content="Welcome to the database application!" Margin="0,0,0,482" Grid.RowSpan="2" RenderTransformOrigin="0.506,1.546"/>
+        <Label FontSize="50" Height="600" Content="Welcome to the database application!"/>
     </Grid>
 </UserControl>

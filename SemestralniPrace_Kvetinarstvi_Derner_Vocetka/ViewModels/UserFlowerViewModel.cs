@@ -26,12 +26,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public UserFlowerViewModel()
         {
             this.dbUtil = new OracleDbUtil();
+            InitializeTableData();
         }
 
         private async Task InitializeTableData()
         {
             TableData = new DataTable();
-            //TableData = 
+            TableData = await dbUtil.LoadDataFromViewAsync("kytky_view");
         }
     }
 }

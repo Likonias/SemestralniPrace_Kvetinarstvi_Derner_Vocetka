@@ -27,12 +27,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public UserOtherViewModel()
         {
             this.dbUtil = new OracleDbUtil();
+            InitializeTableData();
         }
 
         private async Task InitializeTableData()
         {
             TableData = new DataTable();
-            //TableData = 
+            TableData = await dbUtil.LoadDataFromViewAsync("ostatni_view");
         }
     }
 }
