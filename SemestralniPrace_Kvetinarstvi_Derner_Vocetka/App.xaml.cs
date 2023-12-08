@@ -94,7 +94,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateFlowersNavigationService()
         {
-            return new LayoutNavigationService<FlowersViewModel>(navigationStore, () => new FlowersViewModel(CreateFlowersFormNavigationService(), flowerStore), CreateNavigationBarViewModel);
+            return new LayoutNavigationService<FlowersViewModel>(navigationStore, () => new FlowersViewModel(CreateFlowersFormNavigationService(), flowerStore, accountStore), CreateNavigationBarViewModel);
         }
 
         private INavigationService CreateFlowersFormNavigationService() {
@@ -118,7 +118,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateCustomerFormNavigationService()
         {
-            return new ModalNavigationService<CustomerFormViewModel>(modalNavigationStore, () => new CustomerFormViewModel(customerStore, CreateCloseModalNavigationService(), CreateCustomerNavigationService()));
+            return new ModalNavigationService<CustomerFormViewModel>(modalNavigationStore, () => new CustomerFormViewModel(customerStore, CreateCloseModalNavigationService(), CreateCustomerNavigationService(), accountStore));
         }
 
         private INavigationService CreateEmployeeNavigationService()
@@ -143,7 +143,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateOtherGoodsNavigationService()
         {
-            return new LayoutNavigationService<OtherGoodsViewModel>(navigationStore, () => new OtherGoodsViewModel(CreateOtherGoodsFormNavigationService(), otherGoodsStore), CreateNavigationBarViewModel);
+            return new LayoutNavigationService<OtherGoodsViewModel>(navigationStore, () => new OtherGoodsViewModel(CreateOtherGoodsFormNavigationService(), otherGoodsStore, accountStore), CreateNavigationBarViewModel);
         }
 
         private INavigationService CreateOtherGoodsFormNavigationService()

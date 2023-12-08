@@ -49,7 +49,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             }
         }
         private INavigationService createCustomerView;
-        public CustomerFormViewModel(CustomerStore customerStore, INavigationService closeNavSer, INavigationService createCustomerView)
+        private AccountStore accountStore;
+        public CustomerFormViewModel(CustomerStore customerStore, INavigationService closeNavSer, INavigationService createCustomerView, AccountStore accountStore)
         {
             this.customerStore = customerStore;
             this.closeNavSer = closeNavSer;
@@ -59,6 +60,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             BtnCancel = new RelayCommand(Cancel);
             BtnOk = new RelayCommand(Ok);
             dbUtil = new OracleDbUtil();
+            this.accountStore = accountStore;
         }
 
         private void InitializeCustomer()
@@ -108,7 +110,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     await customerRepository.Update(customerStore.Customer.Id, FirstName, LastName, Email, Tel);
                     closeNavSer.Navigate();
                 }
-                createCustomerView.Navigate();
+                if(accountStore.IsLoggedIn)
+                {
+                    createCustomerView.Navigate();
+                }
+                
             }
             else
             {
