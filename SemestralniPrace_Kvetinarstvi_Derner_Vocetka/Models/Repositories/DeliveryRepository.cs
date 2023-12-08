@@ -37,7 +37,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             var delivery = new Delivery(
                 Convert.ToInt32(row["id_zpusob_prevzeti"]),
                 Convert.ToDateTime(row["DATUM_VYDANI"]),
-                Convert.ToInt32(row["OBJEDNAVKY_ID_OBJEDNAVKA"]),
+                Convert.ToInt32(row["OBJEDNAVKY_ID_OBJEDNAVKY"]),
                 (DeliveryMethodEnum)Enum.Parse(typeof(DeliveryMethodEnum), row["TYP"].ToString()),
                 Convert.ToInt32(row["ID_DORUCENI"]),
                 row["SPOLECNOST"].ToString()
@@ -59,7 +59,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 var delivery = new Delivery(
                     Convert.ToInt32(row["id_zpusob_prevzeti"]),
                     Convert.ToDateTime(row["DATUM_VYDANI"]),
-                    Convert.ToInt32(row["OBJEDNAVKY_ID_OBJEDNAVKA"]),
+                    Convert.ToInt32(row["OBJEDNAVKY_ID_OBJEDNAVKY"]),
                     (DeliveryMethodEnum)Enum.Parse(typeof(DeliveryMethodEnum), row["TYP"].ToString()),
                     Convert.ToInt32(row["ID_DORUCENI"]),
                     row["SPOLECNOST"].ToString()
