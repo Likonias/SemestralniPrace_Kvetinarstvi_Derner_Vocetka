@@ -51,7 +51,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private async void BtnDownloadPdfPressed()
         {
             int invoiceId = Convert.ToInt32(SelectedItem.Row["Id"]);
-            string fileName = await GetFileNameFromBlobInfo(invoiceId, "faktury");
+            string fileName = await GetFileNameFromBlobInfo(invoiceId, "FAKTURY");
 
             if (SelectedItem != null)
             {
@@ -60,21 +60,18 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
                 if (pdfBytes != null && pdfBytes.Length > 0)
                 {
-                    // Convert the PDF byte array to a Base64 string
-                    string base64Pdf = Convert.ToBase64String(pdfBytes);
-
                     // Prompt the user to choose a file location
                     SaveFileDialog saveFileDialog = new SaveFileDialog();
-                    saveFileDialog.Filter = "Text files (*.txt)|*.txt";
-                    saveFileDialog.FileName = $"{fileName}.txt"; // Default file name based on invoice ID
+                    saveFileDialog.Filter = "Word files (*.docx)|*.docx";
+                    saveFileDialog.FileName = $"{fileName}.docx";  // Default file name based on invoice ID
 
                     if (saveFileDialog.ShowDialog() == true)
                     {
-                        // Save the Base64 string to the chosen location
-                        File.WriteAllText(saveFileDialog.FileName, base64Pdf);
+                        // Save the PDF bytes to the chosen location
+                        File.WriteAllBytes(saveFileDialog.FileName, pdfBytes);
 
                         // Optionally, you can display a message to the user indicating that the download was successful.
-                        MessageBox.Show("PDF saved as text successfully!", "Save Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("PDF saved successfully!", "Save Complete", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
                 else
