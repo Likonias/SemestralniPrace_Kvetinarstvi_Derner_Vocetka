@@ -9,11 +9,11 @@
     <Grid Width="1000">
         <DataGrid SelectedItem="{Binding SelectedItem}"  DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding ID_DORUCENI}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="Transport Company" Binding="{Binding SPOLECNOST}"/>
-                <DataGridTextColumn Header="Delivery Date" Binding="{Binding DATUM_VYDANI}"/>
-                <DataGridTextColumn Header="Order Id" Binding="{Binding OBJEDNAVKY_ID_OBJEDNAVKA}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="Delivery Method" Binding="{Binding TYP}"/>
+                <DataGridTextColumn Width="*" Header="Id" Binding="{Binding ID_DORUCENI}" Visibility="Hidden"/>
+                <DataGridTextColumn Width="*" Header="Transport Company" Binding="{Binding SPOLECNOST}"/>
+                <DataGridTextColumn Width="*" Header="Delivery Date" Binding="{Binding DATUM_VYDANI}"/>
+                <DataGridTextColumn Width="*" Header="Order Id" Binding="{Binding OBJEDNAVKY_ID_OBJEDNAVKA}" Visibility="Hidden"/>
+                <DataGridTextColumn Width="*" Header="Delivery Method" Binding="{Binding TYP}"/>
                 <!-- Add more columns based on your model properties -->
             </DataGrid.Columns>
         </DataGrid>

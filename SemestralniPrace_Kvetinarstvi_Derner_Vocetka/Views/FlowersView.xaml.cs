@@ -24,5 +24,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views
         {
             InitializeComponent();
         }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

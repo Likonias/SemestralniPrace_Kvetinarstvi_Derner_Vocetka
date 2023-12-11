@@ -9,12 +9,12 @@
     <Grid Width="1000">
         <DataGrid SelectedItem="{Binding SelectedItem}"  DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="DeliveryDate" Binding="{Binding DeliveryDate}"/>
-                <DataGridTextColumn Header="OrderId" Binding="{Binding OrderId}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="DeliveryMethod" Binding="{Binding DeliveryMethod}"/>
-                <DataGridTextColumn Header="InPersonPickupId" Binding="{Binding IdPickup}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="Time" Binding="{Binding Time}"/>
+                <DataGridTextColumn Width="*" Header="Id" Binding="{Binding Id}" Visibility="Hidden"/>
+                <DataGridTextColumn Width="*" Header="DeliveryDate" Binding="{Binding DeliveryDate}"/>
+                <DataGridTextColumn Width="*" Header="OrderId" Binding="{Binding OrderId}" Visibility="Hidden"/>
+                <DataGridTextColumn Width="*" Header="DeliveryMethod" Binding="{Binding DeliveryMethod}"/>
+                <DataGridTextColumn Width="*" Header="InPersonPickupId" Binding="{Binding IdPickup}" Visibility="Hidden"/>
+                <DataGridTextColumn Width="*" Header="Time" Binding="{Binding Time}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Search bar:" Margin="800,240,130,0" Height="30" VerticalAlignment="Top"/>

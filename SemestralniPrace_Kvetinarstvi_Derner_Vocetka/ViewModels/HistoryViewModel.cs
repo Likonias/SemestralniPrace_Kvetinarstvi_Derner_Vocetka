@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
+    //TODO VIEW SLOUPCE
     public class HistoryViewModel : ViewModelBase
     {
         private OracleDbUtil dbUtil;

@@ -10,8 +10,8 @@
         <DataGrid SelectedItem="{Binding SelectedItem}"  ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding IdBilling}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="Billing Type" Binding="{Binding BillingType}"/>
-                <DataGridTextColumn Header="Note" Binding="{Binding Note}"/>
+                <DataGridTextColumn Width="*" Header="Billing Type" Binding="{Binding BillingType}"/>
+                <DataGridTextColumn Width="*" Header="Note" Binding="{Binding Note}"/>
                 <!-- Add other columns as needed -->
             </DataGrid.Columns>
         </DataGrid>

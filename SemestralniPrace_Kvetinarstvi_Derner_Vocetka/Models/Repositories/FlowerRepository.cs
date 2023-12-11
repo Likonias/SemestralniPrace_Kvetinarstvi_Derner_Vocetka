@@ -143,7 +143,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dataTable.Columns.Add("Id", typeof(int));
             dataTable.Columns.Add("Name", typeof(string));
             dataTable.Columns.Add("Price", typeof(int));
-            dataTable.Columns.Add("Type", typeof(byte));
             dataTable.Columns.Add("Warehouse", typeof(int));
             dataTable.Columns.Add("FlowerState", typeof(string));
             dataTable.Columns.Add("Age", typeof(int));
@@ -166,7 +165,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                     flower.IdFlower,
                     flower.Name,
                     flower.Price,
-                    flower.Type,
                     flower.Warehouse,
                     flower.State.ToString(),
                     flower.Age,

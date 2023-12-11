@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
+    //TODO SLOUPCE WIDTH
     public class OrderFlowerViewModel : ViewModelBase
     {
         public RelayCommand BtnClose { get; }

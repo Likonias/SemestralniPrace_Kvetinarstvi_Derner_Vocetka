@@ -10,9 +10,9 @@
         <DataGrid SelectedItem="{Binding SelectedItem}"  DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="Date" Binding="{Binding Datum}"/>
-                <DataGridTextColumn Header="Price" Binding="{Binding Cena}"/>
-                <DataGridTextColumn Header="OrderId" Binding="{Binding ID_ORDER}" Visibility="Hidden"/>
+                <DataGridTextColumn Width="*" Header="Date" Binding="{Binding Datum}"/>
+                <DataGridTextColumn Width="*" Header="Price" Binding="{Binding Cena}"/>
+                <DataGridTextColumn Width="*" Header="OrderId" Binding="{Binding ID_ORDER}" Visibility="Hidden"/>
                 <DataGridTemplateColumn Header="Download PDF">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

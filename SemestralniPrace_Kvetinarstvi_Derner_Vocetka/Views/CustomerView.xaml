@@ -10,10 +10,10 @@
         <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
-                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
-                <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
-                <DataGridTextColumn Header="Telephone" Binding="{Binding Tel}"/>
+                <DataGridTextColumn Width="*" Header="First Name" Binding="{Binding FirstName}"/>
+                <DataGridTextColumn Width="*" Header="Last Name" Binding="{Binding LastName}"/>
+                <DataGridTextColumn Width="*" Header="Email" Binding="{Binding Email}"/>
+                <DataGridTextColumn Width="*" Header="Telephone" Binding="{Binding Tel}"/>
             </DataGrid.Columns>
         </DataGrid>
 

@@ -10,8 +10,8 @@
         <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding IdDeliveryMethod}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="WarehouseReleaseDate" Binding="{Binding WarehouseReleaseDate}"/>
-                <DataGridTextColumn Header="Method" Binding="{Binding Method}"/>
+                <DataGridTextColumn Width="*" Header="WarehouseReleaseDate" Binding="{Binding WarehouseReleaseDate}"/>
+                <DataGridTextColumn Width="*" Header="Method" Binding="{Binding Method}"/>
             </DataGrid.Columns>
         </DataGrid>
 

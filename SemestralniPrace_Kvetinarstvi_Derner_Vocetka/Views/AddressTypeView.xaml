@@ -10,7 +10,7 @@
         <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,10,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="AddressType" Binding="{Binding AddressType}"/>
+                <DataGridTextColumn Width="*" Header="AddressType" Binding="{Binding AddressType}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

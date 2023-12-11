@@ -10,10 +10,10 @@
         <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="Street" Binding="{Binding Street}"/>
-                <DataGridTextColumn Header="StreetNumber" Binding="{Binding StreetNumber}"/>
-                <DataGridTextColumn Header="City" Binding="{Binding City}"/>
-                <DataGridTextColumn Header="Zip" Binding="{Binding Zip}"/>
+                <DataGridTextColumn Width="*" Header="Street" Binding="{Binding Street}"/>
+                <DataGridTextColumn Width="*" Header="StreetNumber" Binding="{Binding StreetNumber}"/>
+                <DataGridTextColumn Width="*" Header="City" Binding="{Binding City}"/>
+                <DataGridTextColumn Width="*" Header="Zip" Binding="{Binding Zip}"/>
             </DataGrid.Columns>
         </DataGrid>
         

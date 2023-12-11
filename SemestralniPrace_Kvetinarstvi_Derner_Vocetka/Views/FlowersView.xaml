@@ -11,22 +11,22 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <Grid Width="1000">
-        <DataGrid SelectedItem="{Binding SelectedItem}"  DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10">
+        <DataGrid  SelectedItem="{Binding SelectedItem}"  DataGrid.ItemsSource="{Binding TableData}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Auto" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10" SelectionChanged="DataGrid_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding IdFlower}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
-                <DataGridTextColumn Header="Stock" Binding="{Binding Warehouse}"/>
-                <DataGridTextColumn Header="State" Binding="{Binding FlowerState}"/>
-                <DataGridTextColumn Header="Age" Binding="{Binding Age}"/>
-                <DataGridTemplateColumn Header="Image">
+                <DataGridTextColumn Width="*" Header="Id" Binding="{Binding IdFlower}" Visibility="Collapsed"/>
+                <DataGridTextColumn Width="150" Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn Width="50" Header="Price" Binding="{Binding Price}"/>
+                <DataGridTextColumn Width="50" Header="Stock" Binding="{Binding Warehouse}"/>
+                <DataGridTextColumn Width="50" Header="State" Binding="{Binding FlowerState}"/>
+                <DataGridTextColumn Width="50" Header="Age" Binding="{Binding Age}"/>
+                <DataGridTemplateColumn Width="100" Header="Image">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Image Width="50" Height="50" Source="{Binding Image, Converter={StaticResource ImageConverter}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Image Name" Binding="{Binding Image_name}"/>
+                <DataGridTextColumn Width="*" Header="Image Name" Binding="{Binding Image_name}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Přidej" Command="{Binding BtnAdd}" Visibility="{Binding IsNotCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" Margin="860,45,0,0" Width="80" VerticalAlignment="Top"/>

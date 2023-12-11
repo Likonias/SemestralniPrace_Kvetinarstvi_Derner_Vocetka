@@ -15,19 +15,19 @@
         <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding IdOtherGoods}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
-                <DataGridTextColumn Header="Stock" Binding="{Binding Warehouse}"/>
-                <DataGridTextColumn Header="Country of Origin" Binding="{Binding CountryOfOrigin}"/>
-                <DataGridTextColumn Header="Expiration Date" Binding="{Binding ExpirationDate}"/>
-                <DataGridTemplateColumn Header="Image">
+                <DataGridTextColumn Width="150" Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn Width="50" Header="Price" Binding="{Binding Price}"/>
+                <DataGridTextColumn Width="50" Header="Stock" Binding="{Binding Warehouse}"/>
+                <DataGridTextColumn Width="110" Header="Country of Origin" Binding="{Binding CountryOfOrigin}"/>
+                <DataGridTextColumn Width="90" Header="Expiration Date" Binding="{Binding ExpirationDate}"/>
+                <DataGridTemplateColumn Width="100" Header="Image">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Image Width="50" Height="50" Source="{Binding Image, Converter={StaticResource ImageConverter}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Image Name" Binding="{Binding Image_name}"/>
+                <DataGridTextColumn Width="*" Header="Image Name" Binding="{Binding Image_name}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Add" Command="{Binding BtnAdd}" Visibility="{Binding IsNotCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" Margin="860,45,0,0" Width="80" VerticalAlignment="Top"/>
