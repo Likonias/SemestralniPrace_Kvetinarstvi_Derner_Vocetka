@@ -31,17 +31,15 @@
 
         <Label  Content="Selected Billing" Width="100" Height="30" Margin="48,144,752,326"/>
         <ComboBox  x:Name="BillingComboBox" ItemsSource="{Binding BillingComboBoxItems}" SelectedItem="{Binding SelectedBilling, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="153,143,621,327" />
-        <Label  Content="Billing Note" Width="100" Height="30" Margin="48,189,752,281"/>
-        <TextBox x:Name="BillingTextBox" HorizontalAlignment="Left" Margin="153,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126" Text="{Binding BillingNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="30"/>
 
-        <Label  Content="Selected Delivery" Width="100" Height="30" Margin="48,239,752,231"/>
-        <ComboBox  x:Name="DeliveryComboBox" ItemsSource="{Binding DeliveryComboBoxItems}" SelectedItem="{Binding SelectedDelivery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="153,239,621,231" />
+        <Label  Content="Selected Delivery" Width="100" Height="30" Margin="48,184,752,286"/>
+        <ComboBox  x:Name="DeliveryComboBox" ItemsSource="{Binding DeliveryComboBoxItems}" SelectedItem="{Binding SelectedDelivery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="153,186,621,284" />
 
-        <Label  Content="Delivery Company" Width="100" Visibility="{Binding IsDeliverySelected, Converter={StaticResource BooleanToVisibilityConverter}}" Height="30" Margin="48,281,752,189"/>
-        <ComboBox  x:Name="DeliveryCompanyComboBox" Visibility="{Binding IsDeliverySelected, Converter={StaticResource BooleanToVisibilityConverter}}" ItemsSource="{Binding DeliveryCompanyComboBoxItems}" SelectedItem="{Binding SelectedDeliveryCompany, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="153,281,621,189" />
+        <Label  Content="Delivery Company" Width="100" Visibility="{Binding IsDeliverySelected, Converter={StaticResource BooleanToVisibilityConverter}}" Height="30" Margin="48,231,752,239"/>
+        <ComboBox  x:Name="DeliveryCompanyComboBox" Visibility="{Binding IsDeliverySelected, Converter={StaticResource BooleanToVisibilityConverter}}" ItemsSource="{Binding DeliveryCompanyComboBoxItems}" SelectedItem="{Binding SelectedDeliveryCompany, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="153,234,621,236" />
 
-        <Label  Content="Selected Customer" Width="100" Visibility="{Binding IsEmployee, Converter={StaticResource BooleanToVisibilityConverter}}" Height="30" Margin="48,323,752,147"/>
-        <ComboBox  x:Name="CustomerComboBox" Visibility="{Binding IsEmployee, Converter={StaticResource BooleanToVisibilityConverter}}" ItemsSource="{Binding CustomerComboBoxItems}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="153,323,621,147" />
+        <Label  Content="Selected Customer" Width="100" Visibility="{Binding IsEmployee, Converter={StaticResource BooleanToVisibilityConverter}}" Height="30" Margin="48,276,752,194"/>
+        <ComboBox  x:Name="CustomerComboBox" Visibility="{Binding IsEmployee, Converter={StaticResource BooleanToVisibilityConverter}}" ItemsSource="{Binding CustomerComboBoxItems}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="153,278,621,192" />
 
         <Button Content="Ok" Command="{Binding BtnOk}" HorizontalAlignment="Left" Margin="291,434,0,36" Width="82" Height="30"/>
         <Button Content="Cancel" Command="{Binding BtnCancel}" HorizontalAlignment="Left" Margin="551,434,0,36" Width="82" Height="30"/>

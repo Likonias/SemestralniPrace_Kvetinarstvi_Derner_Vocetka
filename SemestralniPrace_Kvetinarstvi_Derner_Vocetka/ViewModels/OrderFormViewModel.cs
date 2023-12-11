@@ -288,9 +288,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             set
             {
                 _selectedDelivery = value;
-                if(value == "Delivery Company")
+                if (value == "Delivery Company")
                 {
                     IsDeliverySelected = true;
+                }
+                else
+                {
+                    IsDeliverySelected = false;
                 }
                 OnPropertyChanged(nameof(SelectedDelivery));
             }
