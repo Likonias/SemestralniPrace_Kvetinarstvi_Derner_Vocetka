@@ -7,6 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1000">
     <Grid Width="980">
-        <DataGrid SelectedItem="{Binding SelectedItem}"  DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single" Margin="10,10,10,10"/>
+        <DataGrid SelectedItem="{Binding SelectedItem}"  DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,10,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Occasion" Binding="{Binding Occasion}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

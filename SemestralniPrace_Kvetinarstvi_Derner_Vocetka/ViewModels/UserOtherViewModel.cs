@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
+    //todo sloupce
     public class UserOtherViewModel : ViewModelBase
     {
 

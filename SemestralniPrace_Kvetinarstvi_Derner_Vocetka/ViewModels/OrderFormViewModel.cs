@@ -75,13 +75,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             }
         }
         private DataTable dataTable;
-        public OrderFormViewModel(OrderStore orderStore, INavigationService closeNavigationService, INavigationService createOrderFlower, INavigationService createOrderOther)
+        private INavigationService navigateOrders;
+        public OrderFormViewModel(OrderStore orderStore, INavigationService closeNavigationService, INavigationService createOrderFlower, INavigationService createOrderOther, INavigationService navigateOrders)
         {
             pdfUtil = new PdfUtil();
             this.orderStore = orderStore;
             this.closeNavigationService = closeNavigationService;
             this.createOrderFlower = createOrderFlower;
             this.createOrderOther = createOrderOther;
+            this.navigateOrders = navigateOrders;
             dbUtil = new OracleDbUtil();
             TableData = new DataTable();
             
@@ -227,6 +229,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             }
 
             closeNavigationService.Navigate();
+            navigateOrders.Navigate();
         }
 
         private async void LoadGoodsFromDatabase()

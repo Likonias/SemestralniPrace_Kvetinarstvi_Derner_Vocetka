@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
-    //TODO SLOUPCE WIDTH
     public class OrderOtherViewModel : ViewModelBase
     {
         public RelayCommand BtnClose { get; }
@@ -47,8 +46,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             TableData.Columns.Add("Nazev");
             TableData.Columns.Add("Cena");
             TableData.Columns.Add("Sklad");
-            TableData.Columns.Add("Země původu");
-            TableData.Columns.Add("Datum Trvanlivosti");
+            TableData.Columns.Add("ZemePuv");
+            TableData.Columns.Add("DatumTrvanlivosti");
 
             foreach (DataRow row in dt.Rows)
             {

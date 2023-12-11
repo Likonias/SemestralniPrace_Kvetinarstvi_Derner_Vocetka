@@ -80,7 +80,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         {
             if (CheckAddress())
             {
-                //todo finish setting up id if it is a customer or a employee logic a taky address typ id
                 AddressRepository addressRepository = new AddressRepository();
 
                 Account selectedAcc = await dbUtil.ExecuteGetAccountFunctionAsync("getUserByEmail", AddressOwner);

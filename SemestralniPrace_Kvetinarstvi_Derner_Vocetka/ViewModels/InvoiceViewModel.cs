@@ -11,6 +11,7 @@ using System.Windows;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
+    //todo doesnt dowload pdf
     public class InvoiceViewModel : ViewModelBase
     {
         private readonly Navigation.Stores.InvoiceStore invoiceStore;

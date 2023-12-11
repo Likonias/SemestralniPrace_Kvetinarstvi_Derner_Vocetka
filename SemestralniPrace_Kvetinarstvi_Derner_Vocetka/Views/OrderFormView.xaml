@@ -14,8 +14,8 @@
         <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="478,239,52,97">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding ID_ZBOZI}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="Name" Binding="{Binding NAZEV}"/>
-                <DataGridTextColumn Header="Count" Binding="{Binding SKLAD}"/>
+                <DataGridTextColumn Header="Name" Width="*" Binding="{Binding NAZEV}"/>
+                <DataGridTextColumn Header="Count" Width="*" Binding="{Binding SKLAD}"/>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -26,19 +26,19 @@
         <TextBlock Text="{Binding ErrorMessage, Mode=TwoWay}" Foreground="Red" Margin="610,177,164,298"/>
         <Button Content="Add to order" Command="{Binding BtnAddToOrder}" HorizontalAlignment="Left" Margin="610,204,0,266" Width="126" Height="30"/>
 
-        <Label  Content="Selected Occasion" Width="100" Height="30" Margin="48,97,752,373"/>
+        <Label  Content="Selected Occasion" Height="30" Margin="25,97,760,373"/>
         <ComboBox  x:Name="OccasionComboBox" ItemsSource="{Binding OccasionComboBoxItems}" SelectedItem="{Binding SelectedOccasion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="153,97,621,373" />
 
-        <Label  Content="Selected Billing" Width="100" Height="30" Margin="48,144,752,326"/>
+        <Label  Content="Selected Billing" Height="30" Margin="25,144,760,326"/>
         <ComboBox  x:Name="BillingComboBox" ItemsSource="{Binding BillingComboBoxItems}" SelectedItem="{Binding SelectedBilling, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="153,143,621,327" />
 
-        <Label  Content="Selected Delivery" Width="100" Height="30" Margin="48,184,752,286"/>
+        <Label  Content="Selected Delivery" Height="30" Margin="25,184,760,286"/>
         <ComboBox  x:Name="DeliveryComboBox" ItemsSource="{Binding DeliveryComboBoxItems}" SelectedItem="{Binding SelectedDelivery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="153,186,621,284" />
 
-        <Label  Content="Delivery Company" Width="100" Visibility="{Binding IsDeliverySelected, Converter={StaticResource BooleanToVisibilityConverter}}" Height="30" Margin="48,231,752,239"/>
+        <Label  Content="Delivery Company" Visibility="{Binding IsDeliverySelected, Converter={StaticResource BooleanToVisibilityConverter}}" Height="30" Margin="25,231,760,239"/>
         <ComboBox  x:Name="DeliveryCompanyComboBox" Visibility="{Binding IsDeliverySelected, Converter={StaticResource BooleanToVisibilityConverter}}" ItemsSource="{Binding DeliveryCompanyComboBoxItems}" SelectedItem="{Binding SelectedDeliveryCompany, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="153,234,621,236" />
 
-        <Label  Content="Selected Customer" Width="100" Visibility="{Binding IsEmployee, Converter={StaticResource BooleanToVisibilityConverter}}" Height="30" Margin="48,276,752,194"/>
+        <Label  Content="Selected Customer" Visibility="{Binding IsEmployee, Converter={StaticResource BooleanToVisibilityConverter}}" Height="30" Margin="25,276,760,194"/>
         <ComboBox  x:Name="CustomerComboBox" Visibility="{Binding IsEmployee, Converter={StaticResource BooleanToVisibilityConverter}}" ItemsSource="{Binding CustomerComboBoxItems}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="153,278,621,192" />
 
         <Button Content="Ok" Command="{Binding BtnOk}" HorizontalAlignment="Left" Margin="291,434,0,36" Width="82" Height="30"/>

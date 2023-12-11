@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
-    //TODO SLOUPCE WIDTH
     public class OrderFlowerViewModel : ViewModelBase
     {
         public RelayCommand BtnClose { get; }
@@ -47,7 +46,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             TableData.Columns.Add("Cena");
             TableData.Columns.Add("Sklad");
             TableData.Columns.Add("Stav");
-            TableData.Columns.Add("Stáří");
+            TableData.Columns.Add("Stari");
 
             foreach (DataRow row in dt.Rows)
             {

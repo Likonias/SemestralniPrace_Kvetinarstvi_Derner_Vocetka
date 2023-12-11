@@ -121,7 +121,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                    $"CONVERT(Price, 'System.String') LIKE '%{SearchQuery}%' OR " +
                    $"CONVERT(Warehouse, 'System.String') LIKE '%{SearchQuery}%' OR " +
                    $"CONVERT(FlowerState, 'System.String') LIKE '%{SearchQuery}%' OR " +
-                   $"CONVERT(Age, 'System.String') LIKE '%{SearchQuery}%'";
+                   $"CONVERT(Age, 'System.String') LIKE '%{SearchQuery}%' OR " +                 
+                   $"CONVERT(Image_name, 'System.String') LIKE '%{SearchQuery}%'";
 
             TableData = dv.ToTable();
         }

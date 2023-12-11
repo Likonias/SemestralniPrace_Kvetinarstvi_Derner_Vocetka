@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
-    //TODO SLOUPCE WIDTH
     public class OccasionViewModel : ViewModelBase
     {
         private OracleDbUtil dbUtil;
@@ -37,7 +36,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private async Task InitializeTableData()
         {
             TableData = new DataTable();
-            TableData.Columns.Add("OccasionType");
+            TableData.Columns.Add("Occasion");
 
             foreach (OccasionTypeEnum occasion in Enum.GetValues(typeof(OccasionTypeEnum)))
             {

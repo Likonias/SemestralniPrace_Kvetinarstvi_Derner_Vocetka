@@ -42,7 +42,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             if (flower != null) { InitializeFlower(); }
             FlowerStateComboBoxItems = new ObservableCollection<string>();
             PopulateFlowerStateComboBox();
-            _image = new byte[32];
+            _image = null;
             SelectImageCommand = new RelayCommand(SelectImage);
         }
 

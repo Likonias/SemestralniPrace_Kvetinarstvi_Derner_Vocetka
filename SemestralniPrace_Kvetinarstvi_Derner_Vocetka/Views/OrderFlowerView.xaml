@@ -7,7 +7,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="900">
     <Grid Width="900">
-        <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single" Margin="10,10,132,10"/>
+        <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,132,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Nazev}"/>
+                <DataGridTextColumn Width="*" Header="Price" Binding="{Binding Cena}"/>
+                <DataGridTextColumn Width="*" Header="Inventory" Binding="{Binding Sklad}"/>
+                <DataGridTextColumn Width="*" Header="Flower State" Binding="{Binding Stav}"/>
+                <DataGridTextColumn Width="*" Header="Flower Age" Binding="{Binding Stari}"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <Button Content="Close" Command="{Binding BtnClose}" HorizontalAlignment="Left" Margin="808,210,0,210" Width="55" />
     </Grid>
 </UserControl>

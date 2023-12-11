@@ -184,7 +184,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             
             List<ComboBoxTableNamesEnum> allowedValues = new List<ComboBoxTableNamesEnum>();
 
-            //TODO Finish setting up priviledges
             switch (employeePosition)
             {
                 case EmployeePositionEnum.ADMIN:
