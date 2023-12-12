@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
     <Grid>
         <TextBlock Text="Account" FontSize="50" />
         <TextBlock Margin="0,74,0,-74" FontSize="30">
@@ -16,7 +19,7 @@
             <Run Text="Email: "/>
             <Run Text="{Binding Email, Mode=TwoWay}" />
         </TextBlock>
-        <Label FontSize="20" Content="I want to make my account private" Margin="0,225,0,-225"/>
-        <CheckBox Content="{Binding IsPrivate}" Margin="318,238,650,179"/>
+        <Label FontSize="20" Content="I want to make my account private" Visibility="{Binding IsCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,225,0,-225"/>
+        <CheckBox IsChecked="{Binding IsCheckedPrivate}" Visibility="{Binding IsCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="318,238,640,248"/>
     </Grid>
 </UserControl>
