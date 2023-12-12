@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
-    //todo sloupce
     public class UserFlowerViewModel : ViewModelBase
     {
         private DataTable tableData;
@@ -32,8 +31,30 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         private async Task InitializeTableData()
         {
+            DataTable dt = await dbUtil.LoadDataFromViewAsync("kytky_view");
+
             TableData = new DataTable();
-            TableData = await dbUtil.LoadDataFromViewAsync("kytky_view");
+            
+            TableData.Columns.Add("Name", typeof(string));
+            TableData.Columns.Add("Price", typeof(int));
+            TableData.Columns.Add("Warehouse", typeof(int));
+            TableData.Columns.Add("FlowerState", typeof(string));
+            TableData.Columns.Add("Age", typeof(int));
+            TableData.Columns.Add("Image", typeof(byte[]));
+
+            foreach (DataRow row in dt.Rows)
+            {
+                byte[] imageBytes = row["OBRAZEK"] as byte[] ?? new byte[0];
+
+                TableData.Rows.Add(
+                    row["NAZEV"].ToString(),
+                    Convert.ToInt32(row["CENA"]),
+                    row["SKLAD"].ToString(),
+                    row["STAV"].ToString(),
+                    row["STARI"].ToString(),
+                    imageBytes
+                );
+            }
         }
     }
 }

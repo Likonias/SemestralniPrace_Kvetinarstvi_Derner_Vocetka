@@ -11,7 +11,7 @@
         <Components:ImageConverter x:Key="ImageConverter" />
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
-    <Grid Width="1000">
+    <Grid Width="980">
         <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding IdOtherGoods}" Visibility="Hidden"/>

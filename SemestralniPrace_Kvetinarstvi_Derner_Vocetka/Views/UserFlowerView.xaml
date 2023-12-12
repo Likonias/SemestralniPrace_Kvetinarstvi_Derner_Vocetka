@@ -10,6 +10,21 @@
         <Components:ImageConverter x:Key="ImageConverter" />
     </UserControl.Resources>
     <Grid Width="980">
-        <DataGrid SelectedItem="{Binding SelectedItem}" HorizontalAlignment="Stretch" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single" Margin="10,10,10,10"/>
+        <DataGrid  SelectedItem="{Binding SelectedItem}"  DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,10,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn Width="*" Header="Price" Binding="{Binding Price}"/>
+                <DataGridTextColumn Width="*" Header="Stock" Binding="{Binding Warehouse}"/>
+                <DataGridTextColumn Width="*" Header="State" Binding="{Binding FlowerState}"/>
+                <DataGridTextColumn Width="*" Header="Age" Binding="{Binding Age}"/>
+                <DataGridTemplateColumn Width="100" Header="Image">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Width="50" Height="50" Source="{Binding Image, Converter={StaticResource ImageConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

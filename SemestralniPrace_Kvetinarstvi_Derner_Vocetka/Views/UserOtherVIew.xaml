@@ -3,10 +3,29 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
+             xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views" xmlns:Components="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <Components:ImageConverter x:Key="ImageConverter" />
+    </UserControl.Resources>
     <Grid Width="980">
-        <DataGrid SelectedItem="{Binding SelectedItem}"  DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single" Margin="10,10,10,10"/>
+        <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,10,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding IdOtherGoods}" Visibility="Hidden"/>
+                <DataGridTextColumn Width="150" Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn Width="*" Header="Price" Binding="{Binding Price}"/>
+                <DataGridTextColumn Width="*" Header="Stock" Binding="{Binding Warehouse}"/>
+                <DataGridTextColumn Width="*" Header="Country of Origin" Binding="{Binding CountryOfOrigin}"/>
+                <DataGridTextColumn Width="*" Header="Expiration Date" Binding="{Binding ExpirationDate}"/>
+                <DataGridTemplateColumn Width="100" Header="Image">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Width="50" Height="50" Source="{Binding Image, Converter={StaticResource ImageConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
