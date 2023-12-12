@@ -23,29 +23,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dbUtil = new OracleDbUtil();
         }
       
-        public async Task<InPersonPickup> GetById(Int32 id)
-        {
-            string command = $"SELECT * FROM osobne " +
-                             $"LEFT JOIN ZPUSOBY_PREVZETI on ZPUSOBY_PREVZETI.id_zpusob_prevzeti = osobne.id_zpusob_prevzeti" +
-                             $"WHERE ID_OSOBNE = {id}";
-            var dataTable = await dbUtil.ExecuteQueryAsync(command);
-
-            if (dataTable.Rows.Count == 0)
-                return null;
-          
-            var row = dataTable.Rows[0];
-            var inPersonPickup = new InPersonPickup(
-                Convert.ToInt32(row["id_zpusob_prevzeti"]),
-                Convert.ToDateTime(row["DATUM_VYDANI"]),
-                Convert.ToInt32(row["OBJEDNAVKY_ID_OBJEDNAVKA"]),
-                (DeliveryMethodEnum)Enum.Parse(typeof(DeliveryMethodEnum), row["TYP"].ToString()),
-                Convert.ToInt32(row["ID_OSOBNE"]),
-                row["CAS"].ToString()
-            );
-          
-            return (InPersonPickup)Convert.ChangeType(inPersonPickup, typeof(InPersonPickup));
-        }
-
         public async Task GetAll()
         {
             InPersonPickups.Clear();

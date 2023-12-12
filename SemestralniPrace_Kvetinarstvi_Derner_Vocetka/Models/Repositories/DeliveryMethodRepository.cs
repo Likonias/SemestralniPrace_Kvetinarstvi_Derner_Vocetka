@@ -12,6 +12,7 @@ using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Entities;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 {
+    //todo what is this? where is it used? not implemented in functions
     public class DeliveryMethodRepository : IRepository<DeliveryMethod>
     {
         public ObservableCollection<DeliveryMethod> DeliveryMethods { get; set; }
@@ -26,7 +27,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         public async Task<DeliveryMethod> GetById(Int32 id)
         {
             string command = $"SELECT * FROM doruceni WHERE ID_DORUCENI = {id}";
-            var dataTable = await dbUtil.ExecuteQueryAsync(command);
+            var parameters = new Dictionary<string, object>
+            {
+                { "p_id", id },
+            };
+            DataTable dataTable = await dbUtil.ExecuteCommandAsync(command, parameters);
 
             if (dataTable.Rows.Count == 0)
                 return null;

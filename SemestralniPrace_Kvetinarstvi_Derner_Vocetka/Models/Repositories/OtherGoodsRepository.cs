@@ -28,12 +28,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task<OtherGoods> GetById(int id)
         {
-            string command = $"SELECT zbozi.ID_ZBOZI, zbozi.NAZEV, zbozi.CENA, zbozi.TYP, zbozi.SKLAD, zbozi.OBRAZEK, ostatni.id_ostatni, ostatni.zeme_puvodu, ostatni.datum_trvanlivosti FROM ostatni " +
-                             $"LEFT JOIN zbozi ON ostatni.id_zbozi = zbozi.id_zbozi " +
-                             $"WHERE ID_OSTATNI = {id}";
+            string command = "GET_OSTATNI_BY_ID";
 
-            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
-          
+            var parameters = new Dictionary<string, object>
+            {
+                { "p_id", id },
+            };
+            DataTable dataTable = await dbUtil.ExecuteCommandAsync(command, parameters);
+
             if (dataTable.Rows.Count == 0)
                 return null;
           
@@ -61,9 +63,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         public async Task GetAll()
         {
             OtherGoods.Clear();
-            string command = $"SELECT zbozi.ID_ZBOZI, zbozi.NAZEV, zbozi.CENA, zbozi.TYP, zbozi.SKLAD, zbozi.OBRAZEK, ostatni.id_ostatni, ostatni.zeme_puvodu, ostatni.datum_trvanlivosti FROM ostatni " +
-                             $"LEFT JOIN zbozi ON ostatni.id_zbozi = zbozi.id_zbozi";
-            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
+            string command = "GET_ALL_OSTATNI";
+            DataTable dataTable = await dbUtil.ExecuteCommandAsync(command);
 
             foreach (DataRow row in dataTable.Rows)
             {

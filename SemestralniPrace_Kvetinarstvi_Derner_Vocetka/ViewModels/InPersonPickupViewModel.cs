@@ -39,9 +39,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         {
             this.createInPersonPickupForm = createInPersonPickupForm;
             this.inPersonPickupStore = inPersonPickupStore;
-            BtnAdd = new RelayCommand(BtnAddPressed);
-            BtnEdit = new RelayCommand(BtnEditPressed);
-            BtnDelete = new RelayCommand(BtnDeletePressed);
             dbUtil = new OracleDbUtil();
             tableData = new DataTable();
             inPersonPickupRepository = new InPersonPickupRepository();
@@ -57,32 +54,6 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public override void Dispose()
         {
             base.Dispose();
-        }
-
-        private async void BtnDeletePressed()
-        {
-            if (SelectedItem?.Row[0].ToString() != null)
-            {
-                int pickupIdToDelete = int.Parse(SelectedItem.Row[0].ToString());
-                InPersonPickup pickupToDelete = await inPersonPickupRepository.GetById(pickupIdToDelete);
-                await inPersonPickupRepository.Delete(pickupToDelete);
-                InitializeTableData();
-            }
-        }
-
-        private async void BtnEditPressed()
-        {
-            if (SelectedItem?.Row[0].ToString() != null)
-            {
-                inPersonPickupStore.InPersonPickup = await inPersonPickupRepository.GetById(int.Parse(SelectedItem.Row[0].ToString()));
-                createInPersonPickupForm.Navigate();
-            }
-        }
-
-        private void BtnAddPressed()
-        {
-            inPersonPickupStore.InPersonPickup = null;
-            createInPersonPickupForm.Navigate();
         }
 
         private string searchQuery;

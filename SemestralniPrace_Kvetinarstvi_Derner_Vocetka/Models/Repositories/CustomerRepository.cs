@@ -24,8 +24,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         
         public async Task<Customer> GetById(Int32 id)
         {
-            string command = $"SELECT * FROM zakaznici WHERE ID_ZAKAZNIK = {id}";
-            var dataTable = await dbUtil.ExecuteQueryAsync(command);
+            string command = "GET_ZAKAZNIK_BY_ID";
+            var parameters = new Dictionary<string, object>
+            {
+                { "p_id", id },
+            };
+            DataTable dataTable = await dbUtil.ExecuteCommandAsync(command, parameters);
             var row = dataTable.Rows[0];
             var customer = new Customer(
                 Convert.ToInt32(row["ID_ZAKAZNIK"]),
@@ -41,8 +45,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         public async Task GetAll()
         {
             Customers.Clear();
-            string command = "SELECT * FROM zakaznici";
-            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
+            string command = "GET_ALL_ZAKAZNICI";
+            DataTable dataTable = await dbUtil.ExecuteCommandAsync(command);
 
             foreach (DataRow row in dataTable.Rows)
             {

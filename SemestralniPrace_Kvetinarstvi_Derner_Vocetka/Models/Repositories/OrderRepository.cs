@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 {
+    //TODO SKIPPED
     public class OrderRepository : IRepository<Order>
     {
         public ObservableCollection<Order> Orders { get; set; }

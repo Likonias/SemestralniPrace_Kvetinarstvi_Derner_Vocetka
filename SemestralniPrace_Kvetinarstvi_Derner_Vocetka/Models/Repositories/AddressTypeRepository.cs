@@ -11,7 +11,7 @@ using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 {
-    public class AddressTypeRepository : IRepository<AddressType>
+    public class AddressTypeRepository
     {
         public ObservableCollection<AddressType> AddressType { get; set; }
         private OracleDbUtil dbUtil;
@@ -22,23 +22,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             dbUtil = new OracleDbUtil();
         }
 
-        public async Task<AddressType> GetById(Int32 id)
-        {
-            string command = $"SELECT * FROM druh_adresy WHERE ID_DRUH_ADRESY = {id}";
-            var dataTable = await dbUtil.ExecuteQueryAsync(command);
-            var row = dataTable.Rows[0];
-            var addressType = new AddressType(
-                Convert.ToInt32(row["ID_DRUH_ADRESY"]),
-                (AddressTypeEnum)Enum.Parse(typeof(AddressTypeEnum), row["DRUH_ADRESY"].ToString())
-            );
-            return addressType;
-        }
-
         public async Task GetAll()
         {
             AddressType.Clear();
-            string command = "SELECT * FROM druh_adresy";
-            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
+            string command = "GET_ALL_ADDRESSTYPES";
+            DataTable dataTable = await dbUtil.ExecuteCommandAsync(command);
 
             foreach (DataRow row in dataTable.Rows)
             {

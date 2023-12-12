@@ -44,8 +44,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         public async Task GetAll()
         {
             Billings.Clear();
-            string command = "SELECT * FROM platby";
-            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
+            string command = "GET_ALL_PLATBY";
+            DataTable dataTable = await dbUtil.ExecuteCommandAsync(command);
 
             foreach (DataRow row in dataTable.Rows)
             {
@@ -63,8 +63,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task<Billing> GetById(int id)
         {
-            string command = $"SELECT * FROM platby WHERE ID_PLATBA = {id}";
-            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
+            string command = "GET_PLATBY_BY_ID";
+            var parameters = new Dictionary<string, object>
+            {
+                { "p_id", id },
+            };
+            DataTable dataTable = await dbUtil.ExecuteCommandAsync(command, parameters);
 
             if (dataTable.Rows.Count == 0)
                 return null;

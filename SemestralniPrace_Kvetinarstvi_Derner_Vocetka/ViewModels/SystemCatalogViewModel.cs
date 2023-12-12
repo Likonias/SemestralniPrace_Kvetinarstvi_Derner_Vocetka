@@ -13,7 +13,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
     public class SystemCatalogViewModel : ViewModelBase
     {
-
+        //todo redo it
         private OracleDbUtil dbUtil;
         private DataTable tableData;
         public DataTable TableData

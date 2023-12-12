@@ -24,8 +24,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         
         public async Task<Employee> GetById(int id)
         {
-            string command = $"SELECT * FROM zamestnaneci WHERE ID_ZAMESTNANEC = {id}";
-            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
+            string command = "GET_ZAMESTNANEC_BY_ID";
+            var parameters = new Dictionary<string, object>
+            {
+                { "p_id", id },
+            };
+            DataTable dataTable = await dbUtil.ExecuteCommandAsync(command, parameters);
             if (dataTable.Rows.Count == 0)
                 return null;
             var row = dataTable.Rows[0];
@@ -47,8 +51,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         public async Task GetAll()
         {
             Employees.Clear();
-            string command = "SELECT * FROM zamestnaneci";
-            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
+            string command = "GET_ALL_ZAMESTNANCI";
+            DataTable dataTable = await dbUtil.ExecuteCommandAsync(command);
 
             foreach (DataRow row in dataTable.Rows)
             {

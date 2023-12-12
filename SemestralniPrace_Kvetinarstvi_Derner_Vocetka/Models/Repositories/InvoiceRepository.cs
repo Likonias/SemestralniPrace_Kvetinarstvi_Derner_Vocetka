@@ -24,8 +24,12 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         
         public async Task<Invoice> GetById(Int32 id)
         {
-            string command = $"SELECT * FROM faktury WHERE ID_FAKTURY = {id}";
-            var dataTable = await dbUtil.ExecuteQueryAsync(command);
+            string command = "GET_FAKTURY_BY_ID";
+            var parameters = new Dictionary<string, object>
+            {
+                { "p_id", id },
+            };
+            DataTable dataTable = await dbUtil.ExecuteCommandAsync(command, parameters);
 
             if (dataTable.Rows.Count == 0)
                 return null;
@@ -46,8 +50,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         public async Task GetAll()
         {
             Invoices.Clear();
-            string command = "SELECT * FROM faktury";
-            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
+            string command = "GET_ALL_FAKTURY";
+            DataTable dataTable = await dbUtil.ExecuteCommandAsync(command);
 
             foreach (DataRow row in dataTable.Rows)
             {

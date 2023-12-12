@@ -330,6 +330,48 @@ public class OracleDbUtil
         return dataTable;
     }
 
+    public async Task<DataTable> ExecuteCommandAsync(string commandText, Dictionary<string, object> parameters = null)
+    {
+        using (OracleConnection connection = new OracleConnection(connectionString))
+        {
+            using (OracleCommand command = new OracleCommand(commandText, connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+
+                OracleParameter outputParameter = new OracleParameter("cursor", OracleDbType.RefCursor)
+                {
+                    Direction = ParameterDirection.ReturnValue
+                };
+                command.Parameters.Add(outputParameter);
+
+                if (parameters != null)
+                {
+                    foreach (var parameter in parameters)
+                    {
+                        command.Parameters.Add(parameter.Key, parameter.Value);
+                    }
+                }
+
+                try
+                {
+                    await connection.OpenAsync();
+
+                    using (OracleDataAdapter adapter = new OracleDataAdapter(command))
+                    {
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+                        return dataTable;
+                    }
+                }
+                catch (OracleException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+        }
+    }
+
     public async Task<DataTable> ExecuteStoredProcedureAsyncWithBlob(string procedureName, OracleParameter blob, Dictionary<string, object> parameters = null)
     {
         using (OracleConnection connection = new OracleConnection(connectionString))

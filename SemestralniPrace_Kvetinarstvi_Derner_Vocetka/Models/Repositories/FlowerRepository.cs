@@ -28,12 +28,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         
         public async Task<Flower> GetById(Int32 id)
         { 
-            string command = $"SELECT zbozi.ID_ZBOZI, zbozi.NAZEV, zbozi.CENA, zbozi.TYP, zbozi.SKLAD, zbozi.OBRAZEK, kvetiny.ID_KVETINA, kvetiny.STAV, kvetiny.STARI FROM kvetiny " +
-                             $"LEFT JOIN zbozi ON kvetiny.id_zbozi = zbozi.id_zbozi " +
-                             $"WHERE ID_KVETINA = {id}";
-            
-            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
-            
+            string command = "GET_KVETINA_BY_ID";
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "p_id", id },
+            };
+            DataTable dataTable = await dbUtil.ExecuteCommandAsync(command, parameters);
+
             if (dataTable.Rows.Count == 0)
                 return null;
             
@@ -58,9 +60,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         public async Task GetAll()
         {
             Flowers.Clear();
-            string command = $"SELECT zbozi.ID_ZBOZI, zbozi.NAZEV, zbozi.CENA, zbozi.TYP, zbozi.SKLAD, zbozi.OBRAZEK, kvetiny.ID_KVETINA, kvetiny.STAV, kvetiny.STARI FROM kvetiny " +
-                             $"LEFT JOIN zbozi ON kvetiny.id_zbozi = zbozi.id_zbozi ";
-            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
+            string command = "GET_ALL_KVETINY";
+            DataTable dataTable = await dbUtil.ExecuteCommandAsync(command);
             
             foreach (DataRow row in dataTable.Rows)
             {

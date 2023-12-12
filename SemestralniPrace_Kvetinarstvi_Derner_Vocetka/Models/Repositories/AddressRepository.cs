@@ -55,8 +55,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         public async Task GetAll()
         {
             Addresses.Clear();
-            string command = "SELECT * FROM Adresy";
-            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
+            string command = "GET_ALL_ADDRESSES";
+            DataTable dataTable = await dbUtil.ExecuteCommandAsync(command);
 
             foreach (DataRow row in dataTable.Rows)
             {
@@ -77,8 +77,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task<Address> GetById(int id)
         {
-            string command = $"SELECT * FROM Adresy WHERE Id_adresa = {id}";
-            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "p_id", id },
+            };
+            string command = "GET_ADDRESS_BY_ID";
+            DataTable dataTable = await dbUtil.ExecuteCommandAsync(command, parameters);
 
             if (dataTable.Rows.Count == 0)
                 return null;
@@ -90,9 +95,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 row["CISLO_POPISNE"].ToString(),
                 row["MESTO"].ToString(),
                 row["PSC"].ToString(),
-                row["ZAMESTNANCI_ID_ZAMESTNANEC"] != DBNull.Value ? Convert.ToInt32(row["EmployeeId"]) : (int?)null,
-                row["ZAKAZNICI_ID_ZAKAZNIK"] != DBNull.Value ? Convert.ToInt32(row["CustomerId"]) : (int?)null,
-                row["DRUHY_ADRES_ID_DRUH_ADRESY"] != DBNull.Value ? Convert.ToInt32(row["AddressTypeId"]) : (int?)null
+                row["ZAMESTNANCI_ID_ZAMESTNANEC"] != DBNull.Value ? Convert.ToInt32(row["ZAMESTNANCI_ID_ZAMESTNANEC"]) : (int?)null,
+                row["ZAKAZNICI_ID_ZAKAZNIK"] != DBNull.Value ? Convert.ToInt32(row["ZAKAZNICI_ID_ZAKAZNIK"]) : (int?)null,
+                row["DRUHY_ADRES_ID_DRUH_ADRESY"] != DBNull.Value ? Convert.ToInt32(row["DRUHY_ADRES_ID_DRUH_ADRESY"]) : (int?)null
             );
 
             return address;

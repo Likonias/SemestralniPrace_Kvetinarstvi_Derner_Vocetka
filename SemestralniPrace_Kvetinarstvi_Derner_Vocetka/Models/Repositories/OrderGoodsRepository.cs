@@ -12,6 +12,7 @@ using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Entities;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 {
+    //TODO SKIPPED
     public class OrderGoodsRepository 
     {
         public ObservableCollection<OrderGoods> OrderGoods { get; set; }

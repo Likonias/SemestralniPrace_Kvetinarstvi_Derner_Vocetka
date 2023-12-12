@@ -39,7 +39,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             this.openOtherGoodsViewModel = openOtherGoodsViewModel;
             if (otherGoods != null) { InitializeOtherGoods(); }
             OtherGoodsTypeComboBoxItems = new ObservableCollection<string>();
-            _image = new byte[16];
+            _image = null;
             SelectImageCommand = new RelayCommand(SelectImage);
         }
         private void SelectImage()

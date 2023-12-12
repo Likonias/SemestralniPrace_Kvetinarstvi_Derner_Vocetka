@@ -17,7 +17,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils
         //public LowStockLogChecker()
         //{
         //    dbUtil = new OracleDbUtil();
-        //    timer = new Timer(CheckLowStockLog, null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
+        //    timer = new Timer(CheckLowStockLog, null, TimeSpan.Zero, TimeSpan.FromSeconds(30));
         //}
 
         //private void CheckLowStockLog(object state)

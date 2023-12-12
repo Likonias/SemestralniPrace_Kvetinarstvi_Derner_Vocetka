@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 {
+    //TODO ALSO SKIPPED, BECAUSE NOT USED
     public class GoodsRepository : IRepository<Goods>
     {
         public ObservableCollection<Goods> Goods { get; set; }
@@ -25,7 +26,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         public async Task<Goods> GetById(Int32 id)
         {
             string command = $"SELECT * FROM zbozi WHERE ID_ZBOZI = {id}";
-            var dataTable = await dbUtil.ExecuteQueryAsync(command);
+            var dataTable = await dbUtil.ExecuteCommandAsync(command);
 
             if (dataTable.Rows.Count == 0)
                 return null;
@@ -47,7 +48,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         {
             Goods.Clear();
             string command = "SELECT * FROM zbozi";
-            DataTable dataTable = await dbUtil.ExecuteQueryAsync(command);
+            DataTable dataTable = await dbUtil.ExecuteCommandAsync(command);
 
             foreach (DataRow row in dataTable.Rows)
             {
