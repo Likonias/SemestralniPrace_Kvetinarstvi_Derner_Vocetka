@@ -113,7 +113,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateCustomerNavigationService()
         {
-            return new LayoutNavigationService<CustomerViewModel>(navigationStore, () => new CustomerViewModel(CreateCustomerFormNavigationService(), customerStore), CreateNavigationBarViewModel);
+            return new LayoutNavigationService<CustomerViewModel>(navigationStore, () => new CustomerViewModel(CreateCustomerFormNavigationService(), customerStore, accountStore), CreateNavigationBarViewModel);
         }
 
         private INavigationService CreateCustomerFormNavigationService()

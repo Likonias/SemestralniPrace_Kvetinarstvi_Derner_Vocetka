@@ -23,32 +23,30 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             get { return isCheckedPrivate; }
             set
             {
-                if (isCheckedPrivate != value)
+                
+                isCheckedPrivate = value;
+                if (!isBoot)
                 {
-                    isCheckedPrivate = value;
-                    if (!isBoot)
+                    if (IsCheckedPrivate)
                     {
-                        if (IsCheckedPrivate)
-                        {
-                            var parameters = new Dictionary<string, object>
-                        {
-                            { "p_id", accountStore.CurrentAccount.Id },
-                        };
-                            dbUtil.ExecuteStoredProcedureAsync("UDELEJ_PRIVATNIHO_ZAKAZNIKA", parameters);
-                        }
-                        else
-                        {
-                            var parameters = new Dictionary<string, object>
-                        {
-                            { "p_id", accountStore.CurrentAccount.Id },
-                        };
-                            dbUtil.ExecuteStoredProcedureAsync("UDELEJ_PUBLIC_ZAKAZNIKA", parameters);
-                        }
+                        var parameters = new Dictionary<string, object>
+                    {
+                        { "p_id", accountStore.CurrentAccount.Id },
+                    };
+                        dbUtil.ExecuteStoredProcedureAsync("UDELEJ_PRIVATNIHO_ZAKAZNIKA", parameters);
                     }
-                    isBoot = false;
-                    OnPropertyChanged(nameof(IsCheckedPrivate));
-
+                    else
+                    {
+                        var parameters = new Dictionary<string, object>
+                    {
+                        { "p_id", accountStore.CurrentAccount.Id },
+                    };
+                        dbUtil.ExecuteStoredProcedureAsync("UDELEJ_PUBLIC_ZAKAZNIKA", parameters);
+                    }
                 }
+                isBoot = false;
+                OnPropertyChanged(nameof(IsCheckedPrivate));
+
             }
         }
         private bool isCustomer;

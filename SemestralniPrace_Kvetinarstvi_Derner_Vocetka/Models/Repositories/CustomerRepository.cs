@@ -21,7 +21,14 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             Customers = new ObservableCollection<Customer>();
             dbUtil = new OracleDbUtil();
         }
-        
+        private bool isAdmin;
+        public CustomerRepository(bool isAdmin)
+        {
+            Customers = new ObservableCollection<Customer>();
+            dbUtil = new OracleDbUtil();
+            this.isAdmin = isAdmin;
+        }
+
         public async Task<Customer> GetById(Int32 id)
         {
             string command = "GET_ZAKAZNIK_BY_ID";
@@ -45,7 +52,18 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         public async Task GetAll()
         {
             Customers.Clear();
-            string command = "GET_ALL_ZAKAZNICI";
+
+            string command = "";
+
+            if (isAdmin)
+            {
+                command = "GET_ALL_ZAKAZNICI_ADMIN";
+            }
+            else
+            {
+                command = "GET_ALL_ZAKAZNICI";
+            }
+
             DataTable dataTable = await dbUtil.ExecuteCommandAsync(command);
 
             foreach (DataRow row in dataTable.Rows)
@@ -77,6 +95,16 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task Update(int id, string firstName, string lastName, string email, string tel)
         {
+            string command = "";
+
+            if (isAdmin)
+            {
+                command = "UPDATEZAKAZNICI_ADMIN";
+            }
+            else
+            {
+                command = "UPDATEZAKAZNICI";
+            }
             var parameters = new Dictionary<string, object>
             {
                 { "ID_ZAKAZNIK", id },
@@ -85,16 +113,26 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "EMAIL", email },
                 { "TELEFON", tel },
             };
-            await dbUtil.ExecuteStoredProcedureAsync("updatezakaznici", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync(command, parameters);
         }
 
         public async Task Delete(int id)
         {
+            string command = "";
+
+            if (isAdmin)
+            {
+                command = "DELETEZAKAZNICI_ADMIN";
+            }
+            else
+            {
+                command = "DELETEZAKAZNICI";
+            }
             var parameters = new Dictionary<string, object>
             {
                 { "ID_ZAKAZNIK", id }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("deletezakaznici", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync(command, parameters);
         }
 
         public async Task<DataTable> ConvertToDataTable()

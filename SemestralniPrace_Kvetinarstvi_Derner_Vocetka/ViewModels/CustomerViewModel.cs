@@ -21,7 +21,26 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public RelayCommand BtnAdd { get; }
         public RelayCommand BtnEdit { get; }
         public RelayCommand BtnDelete { get; }
-        public DataRowView SelectedItem { get; set; }
+        private bool isAnonymous;
+        public bool IsAnonymous { get { return isAnonymous; } set { isAnonymous = value; OnPropertyChanged(nameof(IsAnonymous)); } }
+        private DataRowView selectedItem;
+        public DataRowView SelectedItem 
+        { 
+            get { return selectedItem; } 
+            set 
+            {
+                selectedItem = value;
+                if (SelectedItem.Row[1].ToString() == "anonymous")
+                {
+                    IsAnonymous = false;
+                }
+                else
+                {
+                    IsAnonymous = true;
+                }
+                 OnPropertyChanged(nameof(SelectedItem)); 
+            } 
+        }
         public DataTable TableData
         {
             get { return tableData; }
@@ -33,16 +52,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         }
         private INavigationService createCustomerForm;
         private CustomerRepository customerRepository;
-        public CustomerViewModel(INavigationService createCustomerForm, CustomerStore customerStore)
+        public CustomerViewModel(INavigationService createCustomerForm, CustomerStore customerStore, AccountStore accountStore)
         {
             this.customerStore = customerStore;
             this.createCustomerForm = createCustomerForm;
-            customerRepository = new CustomerRepository();
+            customerRepository = new CustomerRepository(accountStore.CurrentAccount.EmployeePosition == Models.Enums.EmployeePositionEnum.ADMIN);
             BtnAdd = new RelayCommand(BtnAddPresseed);
             BtnEdit = new RelayCommand(BtnEditPressed);
             BtnDelete = new RelayCommand(BtnDeletePressed);
             dbUtil = new OracleDbUtil();
             InitializeTableData();
+            IsAnonymous = true;
         }
 
         private async void BtnDeletePressed()
