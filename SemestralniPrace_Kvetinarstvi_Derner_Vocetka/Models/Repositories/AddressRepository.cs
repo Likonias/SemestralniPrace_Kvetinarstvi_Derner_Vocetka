@@ -24,6 +24,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             Addresses = new ObservableCollection<Address>();
             dbUtil = new OracleDbUtil();
         }
+        private bool isAdmin;
+        public AddressRepository(bool isAdmin)
+        {
+            Addresses = new ObservableCollection<Address>();
+            dbUtil = new OracleDbUtil();
+            this.isAdmin = isAdmin;
+        }
 
         public async Task Add(Address entity)
         {
@@ -43,11 +50,21 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         public async Task Delete(int id)
         {
+            string command = "";
+
+            if (isAdmin)
+            {
+                command = "DELETEADRESY_ADMIN";
+            }
+            else
+            {
+                command = "DELETEADRESY";
+            }
             var parameters = new Dictionary<string, object>
             {
                 { "ID_ADRESA", id }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("deleteadresy", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync(command, parameters);
         }
 
         
@@ -55,7 +72,16 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
         public async Task GetAll()
         {
             Addresses.Clear();
-            string command = "GET_ALL_ADDRESSES";
+            string command = "";
+
+            if (isAdmin)
+            {
+                command = "GET_ALL_ADRESY_ADMIN";
+            }
+            else
+            {
+                command = "GET_ALL_ADDRESSES";
+            }
             DataTable dataTable = await dbUtil.ExecuteCommandAsync(command);
 
             foreach (DataRow row in dataTable.Rows)
@@ -116,7 +142,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "ZAKAZNICI_ID_ZAKAZNIK", entity.CustomerId },
                 { "DRUHY_ADRES_ID_DRUH_ADRESY", entity.AddressTypeId },
             };
-            await dbUtil.ExecuteStoredProcedureAsync("updateadresy", parameters);
+            string command = "";
+
+            if (isAdmin)
+            {
+                command = "UPDATEADRESY_ADMIN";
+            }
+            else
+            {
+                command = "UPDATEADRESY";
+            }
+            await dbUtil.ExecuteStoredProcedureAsync(command, parameters);
         }
 
         public async Task<DataTable> ConvertToDataTable()

@@ -23,7 +23,26 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public RelayCommand BtnAdd { get; }
         public RelayCommand BtnEdit { get; }
         public RelayCommand BtnDelete { get; }
-        public DataRowView SelectedItem { get; set; }
+        private bool isAnonymous;
+        public bool IsAnonymous { get { return isAnonymous; } set { isAnonymous = value; OnPropertyChanged(nameof(IsAnonymous)); } }
+        private DataRowView selectedItem;
+        public DataRowView SelectedItem
+        {
+            get { return selectedItem; }
+            set
+            {
+                selectedItem = value;
+                if (SelectedItem.Row[1].ToString() == "anonymous")
+                {
+                    IsAnonymous = false;
+                }
+                else
+                {
+                    IsAnonymous = true;
+                }
+                OnPropertyChanged(nameof(SelectedItem));
+            }
+        }
         public DataTable TableData
         {
             get { return tableData; }
@@ -36,17 +55,20 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private INavigationService createAddressForm;
         private AddressStore addressStore;
         private AddressRepository addressRepository;
-        public AddressViewModel(INavigationService createAddressForm, AddressStore addressStore)
+        private AccountStore accountStore;
+        public AddressViewModel(INavigationService createAddressForm, AddressStore addressStore, AccountStore accountStore)
         {
             this.createAddressForm = createAddressForm;
+            this.accountStore = accountStore;
             BtnAdd = new RelayCommand(BtnAddPresseed);
             BtnEdit = new RelayCommand(BtnEditPressed);
             BtnDelete = new RelayCommand(BtnDeletePressed);
             dbUtil = new OracleDbUtil();
             this.addressStore = addressStore;
             tableData = new DataTable();
-            addressRepository = new AddressRepository();
+            addressRepository = new AddressRepository(accountStore.CurrentAccount.EmployeePosition == Models.Enums.EmployeePositionEnum.ADMIN);
             InitializeTableData();
+            IsAnonymous = true;
         }
 
         private async void BtnDeletePressed()
