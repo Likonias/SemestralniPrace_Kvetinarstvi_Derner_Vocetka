@@ -47,7 +47,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private INavigationService accountNavigationService;
         private OracleDbUtil dbUtil; // Instance OracleDbUtil, díky které jsme schopni komunikovat s databází
         private AccountStore accountStore;
-        public LoginViewModel(AccountStore accountStore, INavigationService closeModalNavigationService, INavigationService accountNavigationService)
+        private INavigationService lowStockLog;
+        private LowStockLogChecker lowStockLogChecker;
+        public LoginViewModel(AccountStore accountStore, INavigationService closeModalNavigationService, INavigationService accountNavigationService, INavigationService lowStockLog, LowStockLogChecker lowStockLogChecker)
         {
             dbUtil = new OracleDbUtil();
             this.accountStore = accountStore;
@@ -55,7 +57,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             CancelCommand = new RelayCommand(Close);
             this.closeNavigationService = closeModalNavigationService;
             this.accountNavigationService = accountNavigationService;
-            
+            this.lowStockLog = lowStockLog;
+            this.lowStockLogChecker = lowStockLogChecker;
         }
 
         private async void Login()
@@ -65,6 +68,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 accountStore.CurrentAccount = await GetUser(Email);
                 closeNavigationService.Navigate();
                 accountNavigationService.Navigate();
+                if(accountStore.CurrentAccount.EmployeePosition != null && lowStockLogChecker.TableData.Rows.Count > 0)
+                {
+                    lowStockLog.Navigate();
+                }
             }
             else
             {

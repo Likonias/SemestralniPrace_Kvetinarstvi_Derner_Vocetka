@@ -1,6 +1,7 @@
 ﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views;
 using System;
@@ -36,6 +37,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private readonly NavigationServiceManager serviceManager;
 
+        private readonly LowStockLogChecker lowStockLogChecker;
+
         public App()
         {
             serviceManager = new NavigationServiceManager();
@@ -60,7 +63,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
             occasionStore = new OccasionStore();
             orderStatusStore = new OrderStatusStore();
 
-            CreateNavigationBarViewModel(); 
+            CreateNavigationBarViewModel();
+
+            lowStockLogChecker = new LowStockLogChecker(accountStore, CreateLowStockLogNavigationService());
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -84,7 +89,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateLoginNavigationService()
         {
-            return new ModalNavigationService<LoginViewModel>(modalNavigationStore, () => new LoginViewModel(accountStore, new CloseModalNavigationService(modalNavigationStore), CreateAccountNavigationService()));
+            return new ModalNavigationService<LoginViewModel>(modalNavigationStore, () => new LoginViewModel(accountStore, new CloseModalNavigationService(modalNavigationStore), CreateAccountNavigationService(), CreateLowStockLogNavigationService(), lowStockLogChecker));
         }
 
         private INavigationService CreateAccountNavigationService()
@@ -249,6 +254,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
         private INavigationService CreateUserFlowerNavigationService()
         {
             return new LayoutNavigationService<UserFlowerViewModel>(navigationStore, () => new UserFlowerViewModel(), CreateNavigationBarViewModel);
+        }
+
+        private INavigationService CreateLowStockLogNavigationService()
+        {
+            return new ModalNavigationService<LowStockLogViewModel>(modalNavigationStore, () => new LowStockLogViewModel(accountStore, CreateCloseModalNavigationService(), lowStockLogChecker));
         }
 
         private NavigationBarViewModel CreateNavigationBarViewModel()

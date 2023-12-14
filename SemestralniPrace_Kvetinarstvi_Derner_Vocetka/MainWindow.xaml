@@ -122,6 +122,9 @@
             <DataTemplate DataType="{x:Type viewmodels:UserOtherViewModel}">
                 <views:UserOtherVIew/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:LowStockLogViewModel}">
+                <views:LowStockLogView/>
+            </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:LayoutViewModel}" >
                 <components:Layout/>
             </DataTemplate>
