@@ -7,7 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="600">
     <Grid Width="600">
-        <DataGrid  SelectedItem="{Binding SelectedItem}"  DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,10,56">
+        <Label Content="Low Stock Alert!" FontSize="50" Margin="0,0,0,375"/>
+        <DataGrid  SelectedItem="{Binding SelectedItem}"  DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,80,10,56">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn Width="*" Header="Previous Stock" Binding="{Binding PreviousStock}"/>

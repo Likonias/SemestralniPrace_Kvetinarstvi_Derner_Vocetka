@@ -58,57 +58,71 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         {
             switch (SelectedSystemCatalogComboBoxItem)
             {
-                case "Tables":
-                    commandText = "SELECT object_name, object_type FROM user_objects WHERE object_type = 'TABLE'";
+                case "Table":
+                    commandText = "GET_SYS_TABLE";
                     break;
-                case "Views":
-                    commandText = "SELECT object_name, object_type FROM user_objects WHERE object_type = 'VIEW'";
+                case "View":
+                    commandText = "GET_SYS_VIEW";
                     break;
-                case "Tables_Views":
-                    commandText = "SELECT object_name, object_type FROM user_objects WHERE object_type IN ('TABLE', 'VIEW')";
+                case "Procedure":
+                    commandText = "GET_SYS_PROCEDURE";
                     break;
-                case "Procedures":
-                    commandText = "SELECT object_name, procedure_name, object_type FROM user_procedures";
+                case "Trigger":
+                    commandText = "GET_SYS_TRIGGER";
                     break;
-                case "All_Objects":
-                    commandText = "SELECT object_name, object_type FROM user_objects";
+                case "Sequence":
+                    commandText = "GET_SYS_SEQUENCE";
                     break;
-                case "All_Tab_Columns":
-                    commandText = "SELECT table_name, column_name, data_type, data_length FROM all_tab_columns";
+                case "Index":
+                    commandText = "GET_SYS_INDEX";
                     break;
-                case "All_Ind_Columns":
-                    commandText = "SELECT index_name, table_name, column_name FROM all_ind_columns";
+                case "Function":
+                    commandText = "GET_SYS_FUNCTION";
                     break;
-                case "Statistics":
-                    commandText = "SELECT table_name, num_rows, tablespace_name FROM user_tables";
+                case "Type":
+                    commandText = "GET_SYS_TYPE";
                     break;
-                case "Complete_Ind_Columns":
-                    commandText = "SELECT * FROM all_ind_columns";
+                case "Lob":
+                    commandText = "GET_SYS_LOB";
                     break;
-                case "User_Tables":
-                    commandText = "SELECT * FROM user_tables";
+                case "Package":
+                    commandText = "GET_SYS_PACKAGE";
+                    break;
+                case "Package_Body":
+                    commandText = "GET_SYS_PACKAGE_BODY";
                     break;
                 default:
-                    commandText = "SELECT object_name, object_type FROM user_objects WHERE object_type IN ('TABLE', 'VIEW')";
+                    commandText = "GET_SYS_ALL";
                     break;
             }
+            DataTable dt = await dbUtil.ExecuteCommandAsync(commandText);
+            TableData = new DataTable();
+            TableData.Columns.Add("ObjectName");
+            TableData.Columns.Add("ObjectType");
 
-            TableData = await dbUtil.ExecuteQueryAsync(commandText, null);
+            foreach (DataRow row in dt.Rows)
+            {
+                TableData.Rows.Add(
+                    row["OBJECT_NAME"].ToString(),
+                    row["OBJECT_TYPE"].ToString()
+                );
+            }
 
         }
 
         private enum SystemCatalogEnum
         {
-            Tables,
-            Views,
-            Tables_Views,
-            Procedures,
-            All_Objects,
-            All_Tab_Columns,
-            All_Ind_Columns,
-            Statistics,
-            Complete_Ind_Columns,
-            User_Tables
+            Table,
+            View,
+            Procedure,
+            Trigger,
+            Sequence,
+            Index,
+            Function,
+            Type,
+            Lob,
+            Package,
+            Package_Body
             
         }
 

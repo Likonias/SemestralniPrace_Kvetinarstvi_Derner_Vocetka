@@ -10,7 +10,12 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <Grid Width="1000">
-        <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="true" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10"/>
+        <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Object Type" Binding="{Binding ObjectType}"/>
+                <DataGridTextColumn Width="*" Header="Object Name" Binding="{Binding ObjectName}"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <Label Content="Select System Catalogue" HorizontalAlignment="Left" Width="150" Height="30" Margin="820,10,0,410"/>
         <ComboBox HorizontalAlignment="Left" ItemsSource="{Binding SystemCatalogComboBoxItems}" SelectedItem="{Binding SelectedSystemCatalogComboBoxItem, Mode=TwoWay}" Grid.Column="0" Margin="820,71,0,0" VerticalAlignment="Top" Width="138" Height="22"/>
     </Grid>

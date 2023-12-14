@@ -9,7 +9,7 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
-    <Grid>
+    <Grid Width="900">
         <Label FontSize="50" Content="Order Form"/>
         <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="478,239,52,97">
             <DataGrid.Columns>
