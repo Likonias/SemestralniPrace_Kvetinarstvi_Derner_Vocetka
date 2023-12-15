@@ -203,7 +203,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateInvoiceNavigationService()
         {
-            return new LayoutNavigationService<InvoiceViewModel>(navigationStore, () => new InvoiceViewModel(CreateInvoiceFormNavigationService(), invoiceStore), CreateNavigationBarViewModel);
+            return new LayoutNavigationService<InvoiceViewModel>(navigationStore, () => new InvoiceViewModel(CreateInvoiceFormNavigationService(), invoiceStore, accountStore), CreateNavigationBarViewModel);
         }
 
         private INavigationService CreateInvoiceFormNavigationService()

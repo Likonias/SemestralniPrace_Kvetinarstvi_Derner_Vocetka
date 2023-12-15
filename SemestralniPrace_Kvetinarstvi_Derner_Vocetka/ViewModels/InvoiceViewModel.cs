@@ -5,6 +5,7 @@ using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using System;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,7 +15,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
     //todo doesnt dowload pdf
     public class InvoiceViewModel : ViewModelBase
     {
-        private readonly Navigation.Stores.InvoiceStore invoiceStore;
+        private InvoiceStore invoiceStore;
         private Models.Invoice invoice;
         public DataRowView SelectedItem { get; set; }
         public RelayCommand BtnDownloadPdf { get; }
@@ -31,7 +32,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         }
         private InvoiceRepository invoiceRepository;
         private INavigationService createInvoiceForm;
-        public InvoiceViewModel(INavigationService createInvoiceForm, InvoiceStore invoiceStore)
+        private AccountStore accountStore;
+        public InvoiceViewModel(INavigationService createInvoiceForm, InvoiceStore invoiceStore, AccountStore accountStore)
         {
             dbUtil = new OracleDbUtil();
             this.createInvoiceForm = createInvoiceForm;
@@ -39,6 +41,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             invoiceRepository = new InvoiceRepository();
             this.invoiceStore = invoiceStore;
             tableData = new DataTable();
+            this.accountStore = accountStore;
 
             InitializeTableData();
         }
@@ -46,7 +49,33 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private async Task InitializeTableData()
         {
             TableData = new DataTable();
-            TableData = await invoiceRepository.ConvertToDataTable();
+            if (accountStore.CurrentAccount.EmployeePosition == null)
+            {
+                DataTable dt = await dbUtil.GetInvoicesForCustomer(accountStore.CurrentAccount.Id);
+
+                TableData.Columns.Add("Id", typeof(int));
+                TableData.Columns.Add("Datum", typeof(DateTime));
+                TableData.Columns.Add("Cena", typeof(int));
+                TableData.Columns.Add("ID_ORDER", typeof(int));
+                TableData.Columns.Add("PDF", typeof(byte[]));
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    byte[] pdfBytes = row["FAKTURA_PDF"] as byte[] ?? new byte[0];
+
+                    TableData.Rows.Add(
+                            Convert.ToInt32(row["ID_FAKTURY"]),
+                            Convert.ToDateTime(row["DATUM"]),
+                            Convert.ToInt32(row["CENA"]),
+                            Convert.ToInt32(row["OBJEDNAVKY_ID_OBJEDNAVKY"]),
+                            pdfBytes
+                        );
+                }
+            }
+            else
+            {
+                TableData = await invoiceRepository.ConvertToDataTable();
+            }
         }
 
         private async void BtnDownloadPdfPressed()
