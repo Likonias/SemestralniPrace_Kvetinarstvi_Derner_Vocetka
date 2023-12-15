@@ -100,7 +100,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "ZAMESTNANCI_ID_ZAMESTNANEC", idSupervisor},
                 { "POZICE", position.ToString() }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("updatezamestnanec", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("UpdateData.updatezamestnanec", parameters);
         }
 
         public async Task Delete(int id)
@@ -109,7 +109,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             {
                 { "ID_ZAMESTNANEC", id }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("deletezamestnanec", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("DeleteData.deletezamestnanec", parameters);
         }
 
         public async Task<DataTable> ConvertToDataTable()

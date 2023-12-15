@@ -86,7 +86,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "TYP", entity.Type },
                 { "SKLAD", entity.Warehouse }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("updatezbozi", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("UpdateData.updatezbozi", parameters);
         }
 
         public async Task Delete(int id)
@@ -95,7 +95,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             {
                 { "ID_ZBOZI", id }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("deletezbozi", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("DeleteData.deletezbozi", parameters);
         }
 
         public async Task<DataTable> ConvertToDataTable()

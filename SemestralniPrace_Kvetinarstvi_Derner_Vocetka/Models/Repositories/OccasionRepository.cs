@@ -54,7 +54,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories{
                 {"ID_PRILEZITOST", entity.Id},
                 {"DRUH_PRILEZITOSTI", entity.OccasionType.ToString()}
             };
-            await dbUtil.ExecuteStoredProcedureAsync("updateprilezitosti", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("UpdateData.updateprilezitosti", parameters);
         }
 
         public async Task Delete(int id)
@@ -63,7 +63,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories{
             {
                 {"ID_PRILEZITOST", id}
             };
-            await dbUtil.ExecuteStoredProcedureAsync("deleteprilezitosti", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("DeleteData.deleteprilezitosti", parameters);
         }
 
         public async Task<DataTable> ConvertToDataTable()

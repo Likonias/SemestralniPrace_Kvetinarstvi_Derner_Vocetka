@@ -58,7 +58,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             }
             else
             {
-                command = "DELETEADRESY";
+                command = "DeleteData.DELETEADRESY";
             }
             var parameters = new Dictionary<string, object>
             {
@@ -150,7 +150,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             }
             else
             {
-                command = "UPDATEADRESY";
+                command = "UpdateData.UPDATEADRESY";
             }
             await dbUtil.ExecuteStoredProcedureAsync(command, parameters);
         }

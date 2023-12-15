@@ -132,7 +132,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             blobParameter.OracleDbType = OracleDbType.Blob;
             blobParameter.Value = entity.Image;
 
-            await dbUtil.ExecuteStoredProcedureAsyncWithBlob("updateostatni", blobParameter, parameters);
+            await dbUtil.ExecuteStoredProcedureAsyncWithBlob("UpdateData.updateostatni", blobParameter, parameters);
         }
 
         public async Task Delete(OtherGoods otherGoods)
@@ -143,7 +143,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 {"ID_ZBOZI", otherGoods.IdGoods},
                 {"ID_OSTATNI", otherGoods.IdOtherGoods }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("deleteostatni", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("DeleteData.deleteostatni", parameters);
         }
 
         public async Task<DataTable> ConvertToDataTable()

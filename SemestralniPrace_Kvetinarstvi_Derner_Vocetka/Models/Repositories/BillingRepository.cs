@@ -38,7 +38,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             {
                 { "ID_PLATBA", id}
             };
-            await dbUtil.ExecuteStoredProcedureAsync("deleteplatby", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("DeleteData.deleteplatby", parameters);
         }
 
         public async Task GetAll()
@@ -91,7 +91,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "DRUH_PLATBY", entity.BillingType.ToString() },
                 { "POZNAMKA", entity.Note ?? null }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("updateplatby", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("UpdateData.updateplatby", parameters);
         }
 
         public async Task<DataTable> ConvertToDataTable()

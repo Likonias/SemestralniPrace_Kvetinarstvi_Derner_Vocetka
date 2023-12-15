@@ -80,7 +80,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "DATUM_PRIJETI", entity.OrderDate },
                 { "DATUM_UHRADY", entity.PaymentDate }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("updatestavy", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("UpdateData.updatestavy", parameters);
         }
 
         public async Task Delete(int id)
@@ -89,7 +89,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             {
                 { "ID_STAV", id }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("deletestavy", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("DeleteData.deletestavy", parameters);
         }
 
         public async Task<DataTable> ConvertToDataTable()

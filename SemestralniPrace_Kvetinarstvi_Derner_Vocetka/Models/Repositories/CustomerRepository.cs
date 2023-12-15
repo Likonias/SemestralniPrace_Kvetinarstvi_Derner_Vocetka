@@ -103,7 +103,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             }
             else
             {
-                command = "UPDATEZAKAZNICI";
+                command = "UpdateData.UPDATEZAKAZNICI";
             }
             var parameters = new Dictionary<string, object>
             {
@@ -126,7 +126,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             }
             else
             {
-                command = "DELETEZAKAZNICI";
+                command = "DeleteData.DELETEZAKAZNICI";
             }
             var parameters = new Dictionary<string, object>
             {

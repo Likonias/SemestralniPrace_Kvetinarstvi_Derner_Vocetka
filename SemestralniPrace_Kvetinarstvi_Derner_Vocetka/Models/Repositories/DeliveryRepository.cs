@@ -101,7 +101,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "id_zpusob_prevzeti", entity.IdDeliveryMethod },
                 { "ID_DORUCENI", entity.IdDelivery }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("deletedoruceni", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("DeleteData.deletedoruceni", parameters);
         }
 
         public async Task<DataTable> ConvertToDataTable()

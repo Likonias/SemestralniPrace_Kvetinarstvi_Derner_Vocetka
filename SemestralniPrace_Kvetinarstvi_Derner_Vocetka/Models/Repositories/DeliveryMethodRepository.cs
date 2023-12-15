@@ -72,7 +72,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "DATUM_VYDANI", entity.WarehouseReleaseDate },
                 { "TYP", entity.Method.ToString() }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("adddoruceni", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("AddData.adddoruceni", parameters);
         }
 
         public async Task Update(DeliveryMethod entity)
@@ -83,7 +83,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "DATUM_VYDANI", entity.WarehouseReleaseDate },
                 { "TYP", entity.Method.ToString() }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("updatedoruceni", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("UpdateData.updatedoruceni", parameters);
         }
 
         public async Task Delete(int id)
@@ -92,7 +92,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             {
                 { "ID_DORUCENI", id }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("deletedoruceni", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("DeleteData.deletedoruceni", parameters);
         }
 
         public async Task<DataTable> ConvertToDataTable()

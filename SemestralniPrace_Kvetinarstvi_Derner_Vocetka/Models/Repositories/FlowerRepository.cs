@@ -125,7 +125,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             blobParameter.OracleDbType = OracleDbType.Blob;
             blobParameter.Value = entity.Image;
 
-            await dbUtil.ExecuteStoredProcedureAsyncWithBlob("updatekvetiny", blobParameter, parameters);
+            await dbUtil.ExecuteStoredProcedureAsyncWithBlob("UpdateData.updatekvetiny", blobParameter, parameters);
         }
 
         public async Task Delete(Flower entity)
@@ -135,7 +135,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 {"ID_ZBOZI", entity.IdGoods},
                 {"ID_KVETINA", entity.IdFlower}
             };
-            await dbUtil.ExecuteStoredProcedureAsync("deletekvetiny", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("DeleteData.deletekvetiny", parameters);
         }
 
         public async Task<DataTable> ConvertToDataTable()
