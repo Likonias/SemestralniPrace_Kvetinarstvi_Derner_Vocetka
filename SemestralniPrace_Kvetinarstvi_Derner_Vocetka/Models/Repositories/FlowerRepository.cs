@@ -105,7 +105,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             await dbUtil.ExecuteStoredProcedureAsyncWithBlob("addkvetiny",blobParameter, parameters);
         }
 
-        public async Task Update(Flower entity)
+        public async Task Update(Flower entity, string fileName, string fileExtension)
         {
             var parameters = new Dictionary<string, object>
             {
@@ -115,7 +115,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "SKLAD", entity.Warehouse },
                 {"ID_KVETINA", entity.IdFlower},
                 {"STAV", entity.State.ToString()},
-                {"STARI", entity.Age}
+                {"STARI", entity.Age},
+                { "FILE_NAME", fileName },
+                { "FILE_EXTENSION", fileExtension }
             };
 
             OracleParameter blobParameter = new OracleParameter();

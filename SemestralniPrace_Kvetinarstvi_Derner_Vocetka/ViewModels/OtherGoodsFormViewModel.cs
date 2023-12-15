@@ -84,7 +84,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 else
                 {
                     otherGoods = new OtherGoods(otherGoodsStore.OtherGoods.IdGoods, Name, Price, 'O', Warehouse, Image, otherGoodsStore.OtherGoods.IdOtherGoods, CountryOfOrigin, (DateOnly)ExpirationDate);
-                    await otherGoodsRepository.Update(otherGoods);
+                    await otherGoodsRepository.Update(otherGoods, fileName, fileExtension);
                 }
 
                 closeNavSer.Navigate();

@@ -128,7 +128,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateEmployeeNavigationService()
         {
-            return new LayoutNavigationService<EmployeeViewModel>(navigationStore, () => new EmployeeViewModel(CreateEmployeeFormNavigationService(), employeeStore), CreateNavigationBarViewModel);
+            return new LayoutNavigationService<EmployeeViewModel>(navigationStore, () => new EmployeeViewModel(CreateEmployeeFormNavigationService(), CreateSupervisorNavigationService(), employeeStore), CreateNavigationBarViewModel);
         }
 
         private INavigationService CreateEmployeeFormNavigationService()
@@ -239,6 +239,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
         private INavigationService CreateOrderFlowerNavigationService()
         {
             return new ModalNavigationService<OrderFlowerViewModel>(modalNavigationStore, () => new OrderFlowerViewModel(orderStore, CreateCloseModalNavigationService()));
+        }
+
+        private INavigationService CreateSupervisorNavigationService() {
+            return new ModalNavigationService<SupervisorViewModel>(modalNavigationStore, () => new SupervisorViewModel(employeeStore, CreateCloseModalNavigationService()));
         }
 
         private INavigationService CreateSystemCatalogNavigationService()

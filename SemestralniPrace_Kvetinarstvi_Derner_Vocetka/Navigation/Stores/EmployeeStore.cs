@@ -9,7 +9,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores
 {
     public class EmployeeStore
     {
-
+        public int Id { get; set; }
         private Action employeeChanged;
         private Employee employee;
         public Employee Employee { get { return employee; } set { employee = value; OnCurrentCustomerChanged(); } }

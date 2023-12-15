@@ -111,7 +111,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
 
         }
 
-        public async Task Update(OtherGoods entity)
+        public async Task Update(OtherGoods entity, string fileName, string fileExtension)
         {
             var parameters = new Dictionary<string, object>
             {
@@ -122,7 +122,9 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "SKLAD", entity.Warehouse },
                 {"ID_OSTATNI", entity.IdOtherGoods},
                 { "ZEME_PUVODU", entity.CountryOfOrigin },
-                { "DATUM_TRVANLIVOSTI", entity.ExpirationDate.Value.Day + "." + entity.ExpirationDate.Value.Month + "." + entity.ExpirationDate.Value.Year}
+                { "DATUM_TRVANLIVOSTI", entity.ExpirationDate.Value.Day + "." + entity.ExpirationDate.Value.Month + "." + entity.ExpirationDate.Value.Year},
+                { "FILE_NAME", fileName },
+                { "FILE_EXTENSION", fileExtension }
             };
 
             OracleParameter blobParameter = new OracleParameter();
@@ -204,5 +206,10 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             //not using rn
             throw new NotImplementedException();
         }
+        public Task Update(OtherGoods entity)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

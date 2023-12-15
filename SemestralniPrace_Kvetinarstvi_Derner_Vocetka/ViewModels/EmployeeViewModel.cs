@@ -14,16 +14,19 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
     public class EmployeeViewModel : ViewModelBase
     {
         private INavigationService employeeForm;
+        private INavigationService supervisorView;
         private EmployeeStore employeeStore;
         private DataTable tableData;
 
         public RelayCommand BtnAdd { get; }
         public RelayCommand BtnEdit { get; }
         public RelayCommand BtnDelete { get; }
+        public RelayCommand BtnSuperVisor { get; }
         public DataRowView SelectedItem { get; set; }
+        
         public DataTable TableData
         {
-            get { return tableData; }
+            get { return tableData; } 
             set
             {
                 tableData = value;
@@ -31,13 +34,15 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             }
         }
         private EmployeeRepository employeeRepository;
-        public EmployeeViewModel(INavigationService employeeForm, EmployeeStore employeeStore)
+        public EmployeeViewModel(INavigationService employeeForm, INavigationService supervisorView, EmployeeStore employeeStore)
         {
             BtnAdd = new RelayCommand(BtnAddPresseed);
             BtnEdit = new RelayCommand(BtnEditPressed);
             BtnDelete = new RelayCommand(BtnDeletePressed);
+            BtnSuperVisor = new RelayCommand(BtnSupervisorClicked);
             this.employeeForm = employeeForm;
             this.employeeStore = employeeStore;
+            this.supervisorView = supervisorView;
             tableData = new DataTable();
             employeeRepository = new EmployeeRepository();
             InitializeTableData();
@@ -59,10 +64,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                 employeeStore.Employee = await employeeRepository.GetById(int.Parse(SelectedItem.Row[0].ToString()));
                 employeeForm.Navigate();
             }
-
-
-
         }
+
+        private void BtnSupervisorClicked()
+        {
+            if (SelectedItem?.Row[0].ToString() != null)
+            {
+                employeeStore.Id = int.Parse(SelectedItem.Row[0].ToString());
+                supervisorView.Navigate();
+            }
+        }
+
         private void BtnAddPresseed()
         {
 

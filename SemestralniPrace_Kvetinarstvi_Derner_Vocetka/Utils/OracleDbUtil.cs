@@ -425,4 +425,24 @@ public class OracleDbUtil
         } 
     }
 
+    public async Task<DataTable> GetHierarchyAsync(string procedureName, int id)
+    {
+        using (OracleConnection connection = new OracleConnection(connectionString))
+        {
+            using (OracleCommand command = new OracleCommand(procedureName, connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("pEmployeeId", OracleDbType.Int32).Value = id;
+                command.Parameters.Add("pResultCursor", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+                using (OracleDataAdapter adapter = new OracleDataAdapter(command))
+                {
+                    DataTable dataTable = new DataTable();
+                    adapter.Fill(dataTable);
+
+                    return dataTable;
+                }
+            }
+        }
+    }
 }
