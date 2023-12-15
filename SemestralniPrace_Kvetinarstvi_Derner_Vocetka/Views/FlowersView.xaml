@@ -29,9 +29,9 @@
                 <DataGridTextColumn Width="*" Header="Image Name" Binding="{Binding Image_name}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Přidej" Command="{Binding BtnAdd}" Visibility="{Binding IsNotCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" Margin="860,45,0,0" Width="80" VerticalAlignment="Top"/>
-        <Button Content="Uprav" Command="{Binding BtnEdit}" Visibility="{Binding IsNotCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" Margin="860,105,0,0" Width="80"  VerticalAlignment="Top"/>
-        <Button Content="Vymaž" Command="{Binding BtnDelete}" Visibility="{Binding IsNotCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" Margin="860,150,0,0" Width="80" VerticalAlignment="Top"/>
+        <Button Content="Add" Command="{Binding BtnAdd}" Visibility="{Binding IsNotCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" Margin="860,45,0,0" Width="80" VerticalAlignment="Top"/>
+        <Button Content="Edit" Command="{Binding BtnEdit}" Visibility="{Binding IsNotCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" Margin="860,105,0,0" Width="80"  VerticalAlignment="Top"/>
+        <Button Content="Delete" Command="{Binding BtnDelete}" Visibility="{Binding IsNotCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" Margin="860,150,0,0" Width="80" VerticalAlignment="Top"/>
         <Label Content="Search bar:" Margin="800,240,130,0" Visibility="{Binding IsNotCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" Height="30" VerticalAlignment="Top"/>
         <TextBox Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsNotCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" Margin="875,246,0,0" Width="103" VerticalAlignment="Top"/>
 
