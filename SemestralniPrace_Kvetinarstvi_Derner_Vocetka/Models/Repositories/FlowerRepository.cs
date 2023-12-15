@@ -102,7 +102,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             blobParameter.OracleDbType = OracleDbType.Blob;
             blobParameter.Value = entity.Image;
 
-            await dbUtil.ExecuteStoredProcedureAsyncWithBlob("addkvetiny",blobParameter, parameters);
+            await dbUtil.ExecuteStoredProcedureAsyncWithBlob("AddData.addkvetiny", blobParameter, parameters);
         }
 
         public async Task Update(Flower entity, string fileName, string fileExtension)

@@ -90,7 +90,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "TELEFON", entity.Tel },
                 { "HESLO", entity.Password }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("addzakaznici", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("AddData.addzakaznici", parameters);
         }
 
         public async Task Update(int id, string firstName, string lastName, string email, string tel)

@@ -55,7 +55,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "cas", entity.Time }
             };
           
-            await dbUtil.ExecuteStoredProcedureAsync("addosobne", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("AddData.addosobne", parameters);
         }
 
         public async Task Update(InPersonPickup entity)

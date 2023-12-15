@@ -107,7 +107,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             blobParameter.OracleDbType = OracleDbType.Blob;
             blobParameter.Value = entity.Image;
 
-            await dbUtil.ExecuteStoredProcedureAsyncWithBlob("addostatni", blobParameter, parameters);
+            await dbUtil.ExecuteStoredProcedureAsyncWithBlob("AddData.addostatni", blobParameter, parameters);
 
         }
 

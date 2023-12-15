@@ -69,7 +69,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "DATUM_PRIJETI", entity.OrderDate },
                 { "DATUM_UHRADY", entity.PaymentDate }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("addstavy", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("AddData.addstavy", parameters);
         }
 
         public async Task Update(OrderStatus entity)

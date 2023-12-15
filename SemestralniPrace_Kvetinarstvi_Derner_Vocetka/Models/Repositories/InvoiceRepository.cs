@@ -74,7 +74,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "date", entity.Date },
                 { "price", entity.Price }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("addfaktura", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("AddData.addfaktura", parameters);
         }
 
         public async Task Update(Invoice entity)

@@ -44,7 +44,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories{
             {
                 {"DRUH_PRILEZITOSTI", entity.OccasionType.ToString()}
             };
-            await dbUtil.ExecuteStoredProcedureAsync("addprilezitosti", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("AddData.addprilezitosti", parameters);
         }
 
         public async Task Update(Occasion entity)

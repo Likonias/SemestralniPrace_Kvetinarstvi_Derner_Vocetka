@@ -29,7 +29,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "DRUH_PLATBY", entity.BillingType.ToString() },
                 { "POZNAMKA", entity.Note}
             };
-            await dbUtil.ExecuteStoredProcedureAsync("addplatby", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("AddData.addplatby", parameters);
         }
 
         public async Task Delete(int id)

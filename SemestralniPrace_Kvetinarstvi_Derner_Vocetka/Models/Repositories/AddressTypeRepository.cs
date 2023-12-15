@@ -44,7 +44,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             {
                 { "DRUH_ADRESY", entity.addressType.ToString() }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("adddruh_adresy", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("AddData.adddruh_adresy", parameters);
         }
         public async Task Update(AddressType entity)
         {

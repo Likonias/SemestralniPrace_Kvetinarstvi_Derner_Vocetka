@@ -84,7 +84,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "HESLO", entity.Password },
                 { "POZICE", entity.Position.ToString() }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("addzamestnanec", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("AddData.addzamestnanec", parameters);
         }
 
         public async Task Update(int id, string firstName, string lastName, double wage, string email, string tel, int? idSupervisor, EmployeePositionEnum position)

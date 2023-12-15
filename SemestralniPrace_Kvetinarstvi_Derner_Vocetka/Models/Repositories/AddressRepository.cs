@@ -44,7 +44,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "ZAKAZNICI_ID_ZAKAZNIK", entity.CustomerId },
                 { "DRUHY_ADRES_ID_DRUH_ADRESY", entity.AddressTypeId },
             };
-            await dbUtil.ExecuteStoredProcedureAsync("addadresy", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("AddData.addadresy", parameters);
 
         }
 

@@ -73,7 +73,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "TYP", entity.Type },
                 { "SKLAD", entity.Warehouse }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("addzbozi", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("AddData.addzbozi", parameters);
         }
 
         public async Task Update(Goods entity)
