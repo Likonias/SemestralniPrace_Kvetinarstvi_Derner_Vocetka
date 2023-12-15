@@ -65,7 +65,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             {
                 { "p_id", orderStore.Id },
             };
-                dbUtil.ExecuteCommandAsync("pay_order", parameters);
+                dbUtil.ExecuteStoredProcedureAsync("pay_order", parameters);
                 createOrder.Navigate();
             }
             
