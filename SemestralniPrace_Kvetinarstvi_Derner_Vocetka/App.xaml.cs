@@ -94,7 +94,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka
 
         private INavigationService CreateAccountNavigationService()
         {
-            return new LayoutNavigationService<AccountViewModel>(navigationStore, () => new AccountViewModel(accountStore), CreateNavigationBarViewModel);
+            return new LayoutNavigationService<AccountViewModel>(navigationStore, () => new AccountViewModel(accountStore, CreateAccountNavigationService()), CreateNavigationBarViewModel);
         }
 
         private INavigationService CreateFlowersNavigationService()

@@ -1,4 +1,5 @@
-﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
+﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
                     };
                         dbUtil.ExecuteStoredProcedureAsync("UDELEJ_PUBLIC_ZAKAZNIKA", parameters);
                     }
+                    navigateAccount.Navigate();
                 }
                 isBoot = false;
                 OnPropertyChanged(nameof(IsCheckedPrivate));
@@ -60,9 +62,11 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             }
         }
         private bool isBoot;
-        public AccountViewModel(AccountStore accountStore)
+        private INavigationService navigateAccount;
+        public AccountViewModel(AccountStore accountStore, INavigationService navigateAccount)
         {
             dbUtil = new OracleDbUtil();
+            this.navigateAccount = navigateAccount;
             isBoot = true;
             this.accountStore = accountStore;
             IsCustomer = accountStore.CurrentAccount.EmployeePosition == null;
