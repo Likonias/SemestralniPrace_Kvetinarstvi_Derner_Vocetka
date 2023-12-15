@@ -60,15 +60,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         {
             if (SelectedItem?.Row[0].ToString() != null)
             {
-                orderStore.Id = int.Parse(SelectedItem.Row[0].ToString());
-                var parameters = new Dictionary<string, object>
-            {
-                { "p_id", orderStore.Id },
-            };
-                dbUtil.ExecuteStoredProcedureAsync("pay_order", parameters);
-                createOrder.Navigate();
+                if (SelectedItem?.Row[6].ToString() != "Cash")
+                {
+                    orderStore.Id = int.Parse(SelectedItem.Row[0].ToString());
+                    var parameters = new Dictionary<string, object>
+                {
+                    { "p_id", orderStore.Id }
+                };
+                    dbUtil.ExecuteStoredProcedureAsync("pay_order", parameters);
+                    createOrder.Navigate();
+                }
             }
-            
         }
 
         private void BtnCreateOrderClicked()
