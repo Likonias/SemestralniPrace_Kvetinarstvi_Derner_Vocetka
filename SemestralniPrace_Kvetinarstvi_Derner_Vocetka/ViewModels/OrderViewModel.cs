@@ -21,6 +21,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         public RelayCommand BtnFlowers { get; }
         public RelayCommand BtnOthers { get; }
         public RelayCommand BtnCreateOrder { get; }
+        public RelayCommand BtnPayOrder { get; }
         private INavigationService createOrderFlower;
         private INavigationService createOrderOther;
         private INavigationService createOrderFormView;
@@ -36,7 +37,8 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 
         public DataRowView SelectedItem { get; set; }
         private AccountStore accountStore;
-        public OrderViewModel(INavigationService navigationService, OrderStore orderStore, INavigationService createOrderFlower, INavigationService createOrderOther, INavigationService createOrderFormView, AccountStore accountStore)
+        private INavigationService createOrder;
+        public OrderViewModel(INavigationService navigationService, OrderStore orderStore, INavigationService createOrderFlower, INavigationService createOrderOther, INavigationService createOrderFormView, AccountStore accountStore, INavigationService createOrder)
         {
             this.navigationService = navigationService;
             this.orderStore = orderStore;
@@ -44,12 +46,29 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             this.createOrderOther = createOrderOther;
             this.createOrderFormView = createOrderFormView;
             this.accountStore = accountStore;
+            this.createOrder = createOrder;
             dbUtil = new OracleDbUtil();
             tableData = new DataTable();
             BtnFlowers = new RelayCommand(BtnFlowersClicked);
             BtnOthers = new RelayCommand(BtnOthersClicked);
             BtnCreateOrder = new RelayCommand(BtnCreateOrderClicked);
+            BtnPayOrder = new RelayCommand(BtnPayOrderClicked);
             InitializeTableData();
+        }
+
+        private void BtnPayOrderClicked()
+        {
+            if (SelectedItem?.Row[0].ToString() != null)
+            {
+                orderStore.Id = int.Parse(SelectedItem.Row[0].ToString());
+                var parameters = new Dictionary<string, object>
+            {
+                { "p_id", orderStore.Id },
+            };
+                dbUtil.ExecuteCommandAsync("pay_order", parameters);
+                createOrder.Navigate();
+            }
+            
         }
 
         private void BtnCreateOrderClicked()

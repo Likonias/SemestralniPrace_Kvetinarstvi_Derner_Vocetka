@@ -31,5 +31,6 @@
         <Button Content="Show Flowers" Command="{Binding BtnFlowers}" HorizontalAlignment="Left" Margin="892,180,0,240" Width="82" Height="30"/>
         <Button Content="Show Others" Command="{Binding BtnOthers}" HorizontalAlignment="Left" Margin="892,128,0,292" Width="82" Height="30"/>
         <Button Content="Create Order" Command="{Binding BtnCreateOrder}" HorizontalAlignment="Left" Margin="892,248,0,172" Width="82" Height="30"/>
+        <Button Content="Pay Order" Command="{Binding BtnPayOrder}" HorizontalAlignment="Left" Margin="892,296,0,124" Width="82" Height="30"/>
     </Grid>
 </UserControl>
