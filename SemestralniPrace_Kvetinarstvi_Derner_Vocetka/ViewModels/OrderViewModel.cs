@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
@@ -62,13 +63,17 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             {
                 if (SelectedItem?.Row[6].ToString() != "Cash")
                 {
-                    orderStore.Id = int.Parse(SelectedItem.Row[0].ToString());
-                    var parameters = new Dictionary<string, object>
+                        orderStore.Id = int.Parse(SelectedItem.Row[0].ToString());
+                        var parameters = new Dictionary<string, object>
+                    {
+                        { "p_id", orderStore.Id }
+                    };
+                        dbUtil.ExecuteStoredProcedureAsync("pay_order", parameters);
+                        createOrder.Navigate();
+                }
+                else
                 {
-                    { "p_id", orderStore.Id }
-                };
-                    dbUtil.ExecuteStoredProcedureAsync("pay_order", parameters);
-                    createOrder.Navigate();
+                    MessageBox.Show("Can not pay via card or transfer!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
