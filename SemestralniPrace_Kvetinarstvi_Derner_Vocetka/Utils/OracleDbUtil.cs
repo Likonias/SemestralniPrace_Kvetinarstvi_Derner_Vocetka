@@ -445,4 +445,32 @@ public class OracleDbUtil
             }
         }
     }
+
+    public async Task<DataTable> GetInvoicesForCustomer(int id)
+    {
+        using (OracleConnection connection = new OracleConnection(connectionString))
+        {
+            using (OracleCommand command = new OracleCommand("BEGIN :result := get_faktury_by_zakaznik(:p_id_zakaznik); END;", connection))
+            {
+                command.Parameters.Add("result", OracleDbType.RefCursor).Direction = ParameterDirection.ReturnValue;
+                command.Parameters.Add("p_id_zakaznik", OracleDbType.Int32).Value = id;
+
+                try
+                {
+                    using (OracleDataAdapter adapter = new OracleDataAdapter(command))
+                    {
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+
+                        return dataTable;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+        }
+    }
 }
