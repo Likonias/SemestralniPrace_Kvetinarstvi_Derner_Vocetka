@@ -7,7 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Width="900">
-        <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single" Margin="10,10,163,10"/>
+        <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,132,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="First Name" Binding="{Binding Jmeno}"/>
+                <DataGridTextColumn Width="*" Header="Last Name" Binding="{Binding Prijmeni}"/>
+                <DataGridTextColumn Width="*" Header="Email" Binding="{Binding Email}"/>
+                <DataGridTextColumn Width="*" Header="Tel. number" Binding="{Binding Telefon}"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <Button Content="Close" Command="{Binding BtnClose}" HorizontalAlignment="Left" Margin="769,210,0,210" Width="55" />
     </Grid>
 </UserControl>

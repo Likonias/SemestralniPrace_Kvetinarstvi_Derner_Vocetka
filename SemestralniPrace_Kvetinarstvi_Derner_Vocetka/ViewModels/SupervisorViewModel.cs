@@ -39,8 +39,22 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         {
             
             DataTable dt = await dbUtil.GetHierarchyAsync("GetEmployeeHierarchy", employeeStore.Id);
-            TableData = dt;
+            TableData = new DataTable();
 
+            TableData.Columns.Add("Jmeno");
+            TableData.Columns.Add("Prijmeni");
+            TableData.Columns.Add("Email");
+            TableData.Columns.Add("Telefon");
+
+            foreach (DataRow row in dt.Rows)
+            {
+                TableData.Rows.Add(
+                        row["JMENO"].ToString(),
+                        row["PRIJMENI"].ToString(),
+                        row["EMAIL"].ToString(),
+                        row["TELEFON"].ToString()
+                    );
+            }
         }
 
         private void BtnCloseClicked()
