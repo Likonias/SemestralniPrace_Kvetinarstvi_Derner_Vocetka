@@ -44,7 +44,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             {
                 { "DRUH_ADRESY", entity.addressType.ToString() }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("adddruh_adresy", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("AddData.adddruh_adresy", parameters);
         }
         public async Task Update(AddressType entity)
         {
@@ -53,7 +53,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "ID_DRUH_ADRESY", entity.Id },
                 { "DRUH_ADRESY", entity.addressType.ToString() }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("updatedruh_adresy", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("UpdateData.updatedruh_adresy", parameters);
         }
 
         public async Task Delete(int id)
@@ -62,7 +62,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             {
                 { "ID_DRUH_ADRESY", id }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("deletedruh_adresy", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("DeleteData.deletedruh_adresy", parameters);
         }
 
         public async Task<DataTable> ConvertToDataTable()

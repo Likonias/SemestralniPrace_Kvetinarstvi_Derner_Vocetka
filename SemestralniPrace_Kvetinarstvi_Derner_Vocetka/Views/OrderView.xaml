@@ -10,19 +10,19 @@
         <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,97,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id objednávky" Binding="{Binding ID_OBJEDNAVKY}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="Celková cena" Binding="{Binding CELKOVA_CENA}"/>
+                <DataGridTextColumn Header="Total price" Binding="{Binding CELKOVA_CENA}"/>
                 <DataGridTextColumn Header="Id stavu" Binding="{Binding ID_STAV}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="Datum úhrady" Binding="{Binding DATUM_UHRADY}"/>
-                <DataGridTextColumn Header="Datum přijetí" Binding="{Binding DATUM_PRIJETI}"/>
+                <DataGridTextColumn Header="Date of payment" Binding="{Binding DATUM_UHRADY}"/>
+                <DataGridTextColumn Header="Creating date" Binding="{Binding DATUM_PRIJETI}"/>
                 <DataGridTextColumn Header="Id platby" Binding="{Binding ID_PLATBA}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="Druh platby" Binding="{Binding DRUH_PLATBY}"/>
-                <DataGridTextColumn Header="Poznámka" Binding="{Binding POZNAMKA}"/>
+                <DataGridTextColumn Header="Payment method" Binding="{Binding DRUH_PLATBY}"/>
+                <DataGridTextColumn Header="Note" Binding="{Binding POZNAMKA}"/>
                 <DataGridTextColumn Header="Id zákazníka" Binding="{Binding ID_ZAKAZNIK}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="Jméno zákazníka" Binding="{Binding ZAKAZNIK_FULL_NAME}"/>
-                <DataGridTextColumn Header="Email zákazníka" Binding="{Binding ZAKAZNIK_EMAIL}"/>
-                <DataGridTextColumn Header="Jméno zaměstnance" Binding="{Binding ZAMESTNANEC_FULL_NAME}"/>
-                <DataGridTextColumn Header="Email zaměstnance" Binding="{Binding ZAMESTNANEC_EMAIL}"/>
-                <DataGridTextColumn Header="Druh příležitosti" Binding="{Binding DRUH_PRILEZITOSTI}"/>
+                <DataGridTextColumn Header="Customer name" Binding="{Binding ZAKAZNIK_FULL_NAME}"/>
+                <DataGridTextColumn Header="Customer email" Binding="{Binding ZAKAZNIK_EMAIL}"/>
+                <DataGridTextColumn Header="Employee name" Binding="{Binding ZAMESTNANEC_FULL_NAME}"/>
+                <DataGridTextColumn Header="Employee email" Binding="{Binding ZAMESTNANEC_EMAIL}"/>
+                <DataGridTextColumn Header="Occasion" Binding="{Binding DRUH_PRILEZITOSTI}"/>
             </DataGrid.Columns>
         </DataGrid>
 

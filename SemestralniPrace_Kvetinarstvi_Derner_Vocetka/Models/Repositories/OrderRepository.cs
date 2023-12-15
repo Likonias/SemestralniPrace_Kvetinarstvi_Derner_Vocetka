@@ -89,7 +89,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             {
                 {"ID_OBJEDNAVKA", id}
             };
-            await dbUtil.ExecuteStoredProcedureAsync("deleteobjednavky", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("DeleteData.deleteobjednavky", parameters);
         }
 
         public async Task<DataTable> ConvertToDataTable()

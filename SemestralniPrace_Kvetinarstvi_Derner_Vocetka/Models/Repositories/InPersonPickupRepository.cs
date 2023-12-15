@@ -55,7 +55,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "cas", entity.Time }
             };
           
-            await dbUtil.ExecuteStoredProcedureAsync("addosobne", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("AddData.addosobne", parameters);
         }
 
         public async Task Update(InPersonPickup entity)
@@ -70,7 +70,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "cas", entity.Time }
             };
           
-            await dbUtil.ExecuteStoredProcedureAsync("updateosobne", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("UpdateData.updateosobne", parameters);
           
         }
 
@@ -82,7 +82,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "id_osobne", entity.IdPickup }
             };
           
-            await dbUtil.ExecuteStoredProcedureAsync("deleteosobne", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("DeleteData.deleteosobne", parameters);
         }
 
         public async Task<DataTable> ConvertToDataTable()

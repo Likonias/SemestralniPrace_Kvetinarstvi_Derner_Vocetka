@@ -74,7 +74,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "date", entity.Date },
                 { "price", entity.Price }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("addfaktura", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("AddData.addfaktura", parameters);
         }
 
         public async Task Update(Invoice entity)
@@ -85,7 +85,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
                 { "date", entity.Date },
                 { "price", entity.Price }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("updatefaktura", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("UpdateData.updatefaktura", parameters);
         }
 
         public async Task Delete(int id)
@@ -94,7 +94,7 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models.Repositories
             {
                 { "id", id }
             };
-            await dbUtil.ExecuteStoredProcedureAsync("deletefaktura", parameters);
+            await dbUtil.ExecuteStoredProcedureAsync("DeleteData.deletefaktura", parameters);
         }
 
         public async Task<DataTable> ConvertToDataTable()
