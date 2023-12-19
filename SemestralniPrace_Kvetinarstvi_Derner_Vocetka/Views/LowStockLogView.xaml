@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views.LowStockLogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="600">
+    <Grid Width="600">
+        <Label Content="Low Stock Alert!" FontSize="50" Margin="0,0,0,375"/>
+        <DataGrid  SelectedItem="{Binding SelectedItem}"  DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,80,10,56">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn Width="*" Header="Previous Stock" Binding="{Binding PreviousStock}"/>
+                <DataGridTextColumn Width="*" Header="New Stock" Binding="{Binding NewStock}"/>
+                <DataGridTextColumn Width="*" Header="Alert Date" Binding="{Binding AlertDate}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Cancel" Height="30" Width="100" Command="{Binding BtnCancel}" HorizontalAlignment="Center" Margin="0,410,0,10"/>
+
+    </Grid>
+</UserControl>

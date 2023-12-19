@@ -4,12 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
-             xmlns:vml = "clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.VML"
-             vml:ViewModelLocator.AutoHookedUpViewModel = "True"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1000">
     <Grid>
-        <Button Content="Login" HorizontalAlignment="Left" Margin="925,25,0,0" VerticalAlignment="Top" Width="60" Command="{Binding ShowLoginView}"/>
-        <Button Content="Register" HorizontalAlignment="Left" Margin="925,64,0,0" VerticalAlignment="Top" Width="60"/>
+        <Label FontSize="50" Height="600" Content="Welcome to the database application!"/>
     </Grid>
 </UserControl>

@@ -1,14 +1,10 @@
-﻿using Oracle.ManagedDataAccess.Client;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Models;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation;
+using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
-using System.ComponentModel;
-using System.Windows.Input;
 
 namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
@@ -17,6 +13,13 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
         private string email;
         private string password;
         private string errorMessage;
+        public string ErrorMessage { get { return errorMessage; }
+            set
+            {
+                errorMessage = value;
+                OnPropertyChanged("ErrorMessage");
+            }
+        }
 
         public string Email
         {
@@ -38,71 +41,55 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
             }
         }
 
-        public string ErrorMessage
+        public RelayCommand LoginCommand { get; }
+        public RelayCommand CancelCommand { get; }
+        private INavigationService closeNavigationService;
+        private INavigationService accountNavigationService;
+        private OracleDbUtil dbUtil; // Instance OracleDbUtil, díky které jsme schopni komunikovat s databází
+        private AccountStore accountStore;
+        private INavigationService lowStockLog;
+        private LowStockLogChecker lowStockLogChecker;
+        public LoginViewModel(AccountStore accountStore, INavigationService closeModalNavigationService, INavigationService accountNavigationService, INavigationService lowStockLog, LowStockLogChecker lowStockLogChecker)
         {
-            get { return errorMessage; }
-            set
+            dbUtil = new OracleDbUtil();
+            this.accountStore = accountStore;
+            LoginCommand = new RelayCommand(Login);
+            CancelCommand = new RelayCommand(Close);
+            this.closeNavigationService = closeModalNavigationService;
+            this.accountNavigationService = accountNavigationService;
+            this.lowStockLog = lowStockLog;
+            this.lowStockLogChecker = lowStockLogChecker;
+        }
+
+        private async void Login()
+        {
+            if (await dbUtil.ExecuteStoredValidateLoginFunctionAsync("validateLogin", Email, PasswordHash.PasswordHashing(Password)))
             {
-                errorMessage = value;
-                OnPropertyChanged("ErrorMessage");
-            }
-        }
-
-        public ICommand LoginCommand { get; }
-
-        private OracleDbUtil dbUtil; // Use your OracleDbUtil class for database operations
-
-        public LoginViewModel()
-        {
-            dbUtil = new OracleDbUtil(); // Initialize the database utility with the connection string
-            LoginCommand = new RelayCommand(Login, CanLogin);
-        }
-
-        private bool CanLogin(object parameter)
-        {
-            // Add validation logic here if needed
-            return !string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Password);
-        }
-
-        private void Login(object parameter)
-        {
-            // Authenticate the user here, e.g., by checking the credentials against a database
-            if (AuthenticateUser(Email, Password))
-            {
-                // Successful login
-                MessageBox.Show("Login successful.");
-                // Navigate to the next view or perform other actions as needed
+                accountStore.CurrentAccount = await GetUser(Email);
+                closeNavigationService.Navigate();
+                accountNavigationService.Navigate();
+                if(accountStore.CurrentAccount.EmployeePosition != null && lowStockLogChecker.TableData.Rows.Count > 0)
+                {
+                    lowStockLog.Navigate();
+                }
             }
             else
             {
-                ErrorMessage = "Invalid email or password. Please try again.";
+                ErrorMessage = "Login failed!";
             }
+
         }
 
-        private bool AuthenticateUser(string email, string password)
+        private async Task<Account> GetUser(string email)
         {
-            // Use the ExecuteQuery method from OracleDbUtil to retrieve user data
-            string query = "SELECT Jmeno, Prijmeni FROM Zakaznici WHERE Email = :email AND Heslo = :password";
-            var parameters = new List<OracleParameter>
-            {
-                new OracleParameter("email", email),
-                new OracleParameter("password", password)
-            };
-
-            DataTable result = dbUtil.ExecuteQuery(query, parameters);
-            if (result != null && result.Rows.Count > 0)
-            {
-                // Successfully authenticated, you can load customer data from the database into your Customer model
-                string firstName = result.Rows[0]["FirstName"].ToString();
-                string lastName = result.Rows[0]["LastName"].ToString();
-
-                // Instantiate a Customer model
-                Customer authenticatedCustomer = new Customer(firstName, lastName, email, "", password);
-                // You can now work with the authenticatedCustomer object
-                return true;
-            }
-
-            return false;
+            Account acc = await dbUtil.ExecuteGetAccountFunctionAsync("getUserByEmail", email);
+            return acc;
         }
+
+        private void Close()
+        {
+            closeNavigationService.Navigate();
+        }
+
     }
 }

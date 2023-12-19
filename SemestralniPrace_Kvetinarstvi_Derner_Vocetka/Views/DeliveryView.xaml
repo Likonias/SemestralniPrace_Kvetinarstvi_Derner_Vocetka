@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views.DeliveryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Width="1000">
+        <DataGrid SelectedItem="{Binding SelectedItem}"  DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,200,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Id" Binding="{Binding ID_DORUCENI}" Visibility="Hidden"/>
+                <DataGridTextColumn Width="*" Header="Transport Company" Binding="{Binding SPOLECNOST}"/>
+                <DataGridTextColumn Width="*" Header="Delivery Date" Binding="{Binding DATUM_VYDANI}"/>
+                <DataGridTextColumn Width="*" Header="Order Id" Binding="{Binding OBJEDNAVKY_ID_OBJEDNAVKA}" Visibility="Hidden"/>
+                <DataGridTextColumn Width="*" Header="Delivery Method" Binding="{Binding TYP}"/>
+                <!-- Add more columns based on your model properties -->
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Content="Search bar:" Margin="800,240,130,0" Height="30" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="875,246,0,0" Width="103" VerticalAlignment="Top"/>
+    </Grid>
+</UserControl>

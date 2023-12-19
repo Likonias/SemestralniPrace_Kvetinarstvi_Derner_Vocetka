@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views.InvoiceFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Width="300" Height="250">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Date -->
+        <DatePicker Grid.Row="0" x:Name="DateDatePicker" HorizontalAlignment="Left" Margin="110,10,0,0" VerticalAlignment="Top" Width="120" SelectedDate="{Binding Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="0" Content="Date" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+
+        <!-- Price -->
+        <TextBox Grid.Row="1" x:Name="PriceTextBox" HorizontalAlignment="Left" Margin="110,10,0,0" TextWrapping="Wrap" Text="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Row="1" Content="Price" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+
+        <!-- InvoicePdf -->
+        <!-- Use an appropriate control for displaying or handling byte[] data, e.g., an Image control for displaying images -->
+        <Image Grid.Row="4" x:Name="InvoicePdfImage" HorizontalAlignment="Left" Margin="110,10,0,0" VerticalAlignment="Top" Width="120" Height="80" Source="{Binding InvoicePdf, Converter={StaticResource ByteArrayToImageConverter}}"/>
+        <Label Grid.Row="4" Content="InvoicePdf" HorizontalAlignment="Left" Margin="20,6,0,0" VerticalAlignment="Top"/>
+
+        <!-- TextBlock for ErrorMessage -->
+        <TextBlock Grid.Row="6" Text="{Binding ErrorMessage, Mode=TwoWay}" Foreground="Red" TextAlignment="Center"/>
+
+        <!-- Buttons -->
+        <Button Content="Ok" Command="{Binding BtnOk}" HorizontalAlignment="Left" Margin="60,0,0,0" Grid.Row="7" VerticalAlignment="Center" />
+        <Button Content="Cancel" Command="{Binding BtnCancel}" HorizontalAlignment="Left" Margin="190,0,0,0" Grid.Row="7"/>
+    </Grid>
+</UserControl>

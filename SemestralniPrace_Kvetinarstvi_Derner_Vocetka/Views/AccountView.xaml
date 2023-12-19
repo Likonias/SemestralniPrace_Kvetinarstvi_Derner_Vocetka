@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views.AccountView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <TextBlock Text="Account" FontSize="50" />
+        <TextBlock Margin="0,74,0,-74" FontSize="30">
+            <Run Text="Name: "/>
+            <Run Text="{Binding Name, Mode=TwoWay}" />
+        </TextBlock>
+        <TextBlock Margin="0,133,0,-133" FontSize="30">
+            <Run Text="Email: "/>
+            <Run Text="{Binding Email, Mode=TwoWay}" />
+        </TextBlock>
+        <Label FontSize="20" Content="I want to make my account private" Visibility="{Binding IsCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,225,0,-225"/>
+        <CheckBox IsChecked="{Binding IsCheckedPrivate}" Visibility="{Binding IsCustomer, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="318,238,640,248"/>
+    </Grid>
+</UserControl>

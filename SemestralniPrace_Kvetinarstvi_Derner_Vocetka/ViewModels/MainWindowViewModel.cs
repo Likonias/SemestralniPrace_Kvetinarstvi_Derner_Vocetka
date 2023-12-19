@@ -1,4 +1,4 @@
-﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Utils;
+﻿using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Navigation.Stores;
 using SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views;
 using System;
 using System.Collections.Generic;
@@ -12,16 +12,29 @@ namespace SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public ICommand LoadLoginCommand { get; private set; }
-        public MainWindowViewModel()
+        private readonly NavigationStore navigationStore;
+        private readonly ModalNavigationStore modalNavigationStore;
+        public ViewModelBase CurrentViewModel => navigationStore.CurrentViewModel;
+        public ViewModelBase CurrentModalViewModel => modalNavigationStore.CurrentViewModel;
+        public bool IsOpen => modalNavigationStore.IsOpen;
+        public MainWindowViewModel(NavigationStore navigation, ModalNavigationStore modalNavigationStore)
         {
-            //LoadLoginCommand = new RelayCommand(ShowLoginView);
+            this.navigationStore = navigation;
+            this.navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+            this.modalNavigationStore = modalNavigationStore;
+            this.modalNavigationStore.CurrentViewModelChanged += OnCurrentModalViewModelChanged;
         }
 
-        private void ShowLoginView()
+        private void OnCurrentViewModelChanged()
         {
-            LoginView loginView = new LoginView();
-            
+            //Update of the viewModel when the change occours
+            OnPropertyChanged(nameof(CurrentViewModel));
+        }
+
+        private void OnCurrentModalViewModelChanged()
+        {
+            OnPropertyChanged(nameof(CurrentModalViewModel));
+            OnPropertyChanged(nameof(IsOpen));
         }
     }
 }

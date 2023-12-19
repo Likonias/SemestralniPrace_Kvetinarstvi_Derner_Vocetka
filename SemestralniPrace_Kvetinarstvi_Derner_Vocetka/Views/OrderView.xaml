@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views.OrderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="1000">
+    <Grid Width="980">
+        <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="10,10,97,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id objednávky" Binding="{Binding ID_OBJEDNAVKY}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Total price" Binding="{Binding CELKOVA_CENA}"/>
+                <DataGridTextColumn Header="Id stavu" Binding="{Binding ID_STAV}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Date of payment" Binding="{Binding DATUM_UHRADY}"/>
+                <DataGridTextColumn Header="Creating date" Binding="{Binding DATUM_PRIJETI}"/>
+                <DataGridTextColumn Header="Id platby" Binding="{Binding ID_PLATBA}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Payment method" Binding="{Binding DRUH_PLATBY}"/>
+                <DataGridTextColumn Header="Note" Binding="{Binding POZNAMKA}"/>
+                <DataGridTextColumn Header="Id zákazníka" Binding="{Binding ID_ZAKAZNIK}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Customer name" Binding="{Binding ZAKAZNIK_FULL_NAME}"/>
+                <DataGridTextColumn Header="Customer email" Binding="{Binding ZAKAZNIK_EMAIL}"/>
+                <DataGridTextColumn Header="Employee name" Binding="{Binding ZAMESTNANEC_FULL_NAME}"/>
+                <DataGridTextColumn Header="Employee email" Binding="{Binding ZAMESTNANEC_EMAIL}"/>
+                <DataGridTextColumn Header="Occasion" Binding="{Binding DRUH_PRILEZITOSTI}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Label Content="Search bar:" Margin="892,10,6,0" Height="30" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="891,32,0,0" Width="83" VerticalAlignment="Top"/>
+        <Button Content="Show Flowers" Command="{Binding BtnFlowers}" HorizontalAlignment="Left" Margin="892,180,0,240" Width="82" Height="30"/>
+        <Button Content="Show Others" Command="{Binding BtnOthers}" HorizontalAlignment="Left" Margin="892,128,0,292" Width="82" Height="30"/>
+        <Button Content="Create Order" Command="{Binding BtnCreateOrder}" HorizontalAlignment="Left" Margin="892,248,0,172" Width="82" Height="30"/>
+        <Button Content="Pay Order" Command="{Binding BtnPayOrder}" HorizontalAlignment="Left" Margin="892,296,0,124" Width="82" Height="30"/>
+    </Grid>
+</UserControl>

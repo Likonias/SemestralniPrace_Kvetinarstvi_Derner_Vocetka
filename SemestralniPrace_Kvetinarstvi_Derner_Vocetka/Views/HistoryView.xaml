@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views.HistoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="1000">
+    <Grid Width="980">
+        <DataGrid SelectedItem="{Binding SelectedItem}" DataGrid.ItemsSource="{Binding TableData}" AutoGenerateColumns="true" IsReadOnly="True" SelectionMode="Single" Margin="10,10,10,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Tablename" Binding="{Binding Tablename}"/>
+                <DataGridTextColumn Width="*" Header="Modiftype" Binding="{Binding Modiftype}" />
+                <DataGridTextColumn Width="*" Header="Modifdate" Binding="{Binding Modifdate}" />
+                <DataGridTextColumn Width="*" Header="Modifuser" Binding="{Binding Modifuser}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

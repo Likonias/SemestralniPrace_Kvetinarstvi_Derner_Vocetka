@@ -5,29 +5,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Views"
              xmlns:viewModel = "clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.ViewModels" 
-             xmlns:vml = "clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.VML"
-             vml:ViewModelLocator.AutoHookedUpViewModel = "True"
+             xmlns:components="clr-namespace:SemestralniPrace_Kvetinarstvi_Derner_Vocetka.Components"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="1000">
+             d:DesignHeight="200" d:DesignWidth="400">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <StackPanel Margin="10" Width="400" Height="200">
+            <TextBlock Text="Email:"/>
+            <TextBox x:Name="EmailTextBox" HorizontalAlignment="Stretch" Text="{Binding Email, Mode=TwoWay}"/>
 
-        <TextBlock Grid.Row="0" Text="Login" HorizontalAlignment="Center" FontSize="18"/>
+            <TextBlock Text="Password:"/>
+            <components:BindablePasswordBox x:Name="PasswordBox" HorizontalAlignment="Stretch" Password="{Binding Password, Mode=TwoWay}"/>
 
-        <Label Grid.Row="1" Content="Email:"/>
-        <TextBox Grid.Row="1" Name="EmailTextBox" Text="{Binding Email, Mode=TwoWay}"/>
-
-        <Label Grid.Row="2" Content="Password:"/>
-        <TextBox Grid.Row="2" Name="PasswordBox" Text="{Binding Password, Mode=TwoWay}"/>
-
-        <Button Grid.Row="3" Content="Login" Command="{Binding LoginCommand}"/>
-        <TextBlock Grid.Row="4" Text="{Binding ErrorMessage, Mode=TwoWay}" Foreground="Red"/>
+            <Button Content="Login" Command="{Binding LoginCommand}" Margin="0,21,0,-41"/>
+            <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="0,62,0,-82"/>
+            <TextBlock Grid.Row="6" 
+               Text="{Binding ErrorMessage, Mode=TwoWay}" 
+               Foreground="Red" 
+               TextAlignment="Center"/>
+        </StackPanel>
     </Grid>
 </UserControl>
